@@ -5,26 +5,21 @@ agent {
         }
     }
     stages {
-        stage('Build') {  
+        stage('Plan') {  
             steps {
-                echo "building"
-            }
-        }
-        stage('Deploy to testing') {  
-            steps {
-                echo "deployed to testing"
+                echo "Terraform Planning code goes here..."
             }
         }
         stage('Approval') {  
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
-                    input "Deploy to prod?"
+                    input "Do you approve the plan?"
                 }
             }
         }
-        stage('Deploy to Production') {  
+        stage('Deploy') {  
             steps {
-                echo "deployed"
+                echo "Terraform Apply code goes here..."
             }
         }
     }
