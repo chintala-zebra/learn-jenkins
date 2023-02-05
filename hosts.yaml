@@ -1,0 +1,13 @@
+---
+all:
+    vars:
+        ansible_user: appadmin
+        ansible_ssh_private_key_file: /home/appadmin/the_key
+        ansible_ssh_host_key_checking: False
+    children:
+        http-servers:
+            hosts:
+                httpserver.jenkins_mynetwork:
+        app-servers:
+            hosts:
+                websphere.jenkins_mynetwork:
