@@ -13,7 +13,7 @@ agent {
           sh """
                 echo $ANSIBLE_VALUT > .mysecret
                 export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
-                ansible-vault decrypt the_key
+                ansible-vault decrypt the-key
                 echo "removed the key" > .mysecret
             """
       }
