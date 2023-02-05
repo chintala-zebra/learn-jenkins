@@ -13,7 +13,7 @@ agent {
           sh """
                 echo $ANSIBLE_VALUT > .mysecret
                 export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
-                ansible-vault decrypt ~/the_key
+                ansible-vault decrypt the_key
                 echo "removed the key" > .mysecret
             """
       }
@@ -21,7 +21,7 @@ agent {
     stage('Run Play') {  
       steps {
           sh """
-               ansible http-servers -i /home/appadmin/hosts.yaml -m ping
+               ansible http-servers -i hosts.yaml -m ping
             """
       }
     }
