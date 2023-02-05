@@ -4,21 +4,26 @@ agent {
             label 'ansible'
         }
     }
-    environment {
-        ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
-    }
     stages {
-        stage('Build') {
-            echo "building"
+        stage('Build') {  
+            steps {
+                echo "building"
+            }
         }
-        stage('Deploy to testing') {
-            echo "deployed"
+        stage('Deploy to testing') {  
+            steps {
+                echo "deployed to testing"
+            }
         }
-        stage('QA Team certification') {
-            input "Deploy to prod?"
+        stage('Approval') {  
+            steps {
+                input "Deploy to prod?"
+            }
         }
-        stage('Deploy to prod') {
-            echo "deployed"
+        stage('Deploy to testing') {  
+            steps {
+                echo "deployed"
+            }
         }
     }
     post {
