@@ -2,6 +2,6 @@
     - all
   tasks:
     - action: ping
-    - name: print facts
+    - name: print IPv4 Address
       debug:
         msg: "IPv4 address: {{ hostvars[inventory_hostname]['ansible_env'].SSH_CONNECTION.split(' ')[2] }}"
