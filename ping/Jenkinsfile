@@ -20,11 +20,6 @@ agent {
     }
     stage('Run Play') {  
       steps {
-          script {
-              timeout(time: 10, unit: 'MINUTES') {
-                input(id: "Proceed ?", message: "Deploy?", ok: 'Deploy')
-              }
-          }
           sh """
               export ANSIBLE_HOST_KEY_CHECKING=False
               ansible-playbook -i hosts.yaml ping-play.yaml
