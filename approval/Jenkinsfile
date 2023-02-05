@@ -20,7 +20,7 @@ agent {
                 input "Deploy to prod?"
             }
         }
-        stage('Deploy to testing') {  
+        stage('Deploy to Production') {  
             steps {
                 echo "deployed"
             }
