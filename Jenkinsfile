@@ -22,7 +22,7 @@ agent {
       steps {
           sh """
               export ANSIBLE_HOST_KEY_CHECKING=False
-              ansible http-servers -i hosts.yaml -m ping
+              ansible all -i hosts.yaml -m ping
             """
       }
     }
