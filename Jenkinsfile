@@ -26,10 +26,9 @@ agent {
       }
     }
   }
-/*    post {
+    post {
         always {
             cleanWs()
         }
     }
-    */
 }
