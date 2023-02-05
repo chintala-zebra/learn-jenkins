@@ -17,7 +17,9 @@ agent {
         }
         stage('Approval') {  
             steps {
-                input "Deploy to prod?"
+                timeout(time: 2, unit: 'MINUTES') {
+                    input "Deploy to prod?"
+                }
             }
         }
         stage('Deploy to Production') {  
