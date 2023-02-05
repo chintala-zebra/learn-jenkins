@@ -1,0 +1,29 @@
+pipeline {
+agent { 
+        node {
+            label 'ansible'
+        }
+    }
+    environment {
+        ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
+    }
+    stages {
+        stage('Build') {
+            echo "building"
+        }
+        stage('Deploy to testing') {
+            echo "deployed"
+        }
+        stage('QA Team certification') {
+            input "Deploy to prod?"
+        }
+        stage('Deploy to prod') {
+            echo "deployed"
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
