@@ -9,6 +9,11 @@ all:
         http-servers:
             hosts:
                 httpserver.jenkins_mynetwork:
+        vars:
+            ansible_user: appadmin
+            ansible_ssh_private_key_file: the-key
+            ansible_ssh_host_key_checking: false
+            ansible_host_key_checking: false
         app-servers:
             hosts:
                 websphere.jenkins_mynetwork:
