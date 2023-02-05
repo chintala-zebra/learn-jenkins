@@ -22,7 +22,7 @@ agent {
       steps {
           sh """
               export ANSIBLE_HOST_KEY_CHECKING=False
-              ansible-playbook -i hosts.yaml ping-play.yaml
+              ansible-playbook -i hosts/hosts.yaml ping-play.yaml
             """
       }
     }
