@@ -1,5 +1,7 @@
----
-- hosts: all
-  gather_facts: yes
+- hosts:
+    - all
   tasks:
-    - debug: var=hostvars[inventory_hostname]['ansible_env'].SSH_CONNECTION.split(' ')[2]
+    - action: ping
+    - name: print facts
+      debug:
+        msg: "IPv4 address: {{ hostvars[inventory_hostname]['ansible_env'].SSH_CONNECTION.split(' ')[2] }}"
