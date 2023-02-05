@@ -21,7 +21,7 @@ agent {
     stage('Run Play') {  
       steps {
           sh """
-              export ANSIBLE_SSH_HOST_KEY_CHECKING=False
+              export ANSIBLE_HOST_KEY_CHECKING=False
               ansible http-servers -i hosts.yaml -m ping
             """
       }
