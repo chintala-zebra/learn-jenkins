@@ -10,3 +10,4 @@ all:
         appservers:
             hosts:
                 websphere.jenkins_mynetwork:
+                httpserver.jenkins_mynetwork:
