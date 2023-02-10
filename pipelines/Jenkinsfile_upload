@@ -1,7 +1,7 @@
 pipeline {
-  agent any  
+  agent any
   parameters {
-    base64File 'THEFILE'  
+    base64File 'THEFILE'
   } 
   stages {
     stage('Example') {
