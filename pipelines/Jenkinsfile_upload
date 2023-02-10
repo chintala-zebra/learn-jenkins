@@ -11,6 +11,7 @@ pipeline {
           echo $THEFILE
           echo $target_file
           cp $THEFILE $target_file
+          ls
           cat $target_file
           """
         }
