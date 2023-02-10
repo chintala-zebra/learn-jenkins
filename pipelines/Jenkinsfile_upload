@@ -7,7 +7,11 @@ pipeline {
     stage('Example') {
       steps {
         withFileParameter('THEFILE') {
-          sh 'cat $THEFILE > $target_file'
+          sh """
+          echo $THEFILE
+          echo $target_file
+          cat $THEFILE > $target_file
+          """
         }
       }
     }
