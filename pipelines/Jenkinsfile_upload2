@@ -2,7 +2,7 @@ pipeline {
   agent any
   parameters {
     base64File 'small'
-    string 'file_name'
+    string(name: 'target_name')
   }
   stages {
     stage('Example') {
