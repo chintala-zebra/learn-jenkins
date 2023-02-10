@@ -10,7 +10,8 @@ pipeline {
           sh """
           echo $THEFILE
           echo $target_file
-          cat $THEFILE > $target_file
+          cp $THEFILE $target_file
+          cat $target_file
           """
         }
       }
