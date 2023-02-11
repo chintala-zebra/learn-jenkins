@@ -1,9 +1,9 @@
 pipeline {
     agent any
     parameters {
-        base64File 'file'
-        string(name: 'target_file_name')
-        string(name: 'host_name')
+        base64File('file', description: 'Please select the file you want to copy.')
+        string(name: 'target_file_path', description: 'Path to where the file needs copied - Must Include the file name')
+        string(name: 'host_name', description: 'Host to which the file Needs Copied'))
     }
     environment {
         ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
@@ -34,7 +34,7 @@ pipeline {
         stage('Approval') {
             steps {
                 timeout(time: 5, unit: 'MINUTES') {
-                    input "Do you approve the copy of file to  $host_name:$target_file_name?"
+                    input "Do you approve the copy of file to $host_name @ Path$target_file_path?"
                 }
             }
         }
@@ -43,8 +43,8 @@ pipeline {
                 withFileParameter('file') {
                     sh """
                         set +x
-                        scp -o 'StrictHostKeyChecking no' -i the-key $file $host_name:$target_file_name
-                        echo "Copy of file to $host_name:$target_file_name is successful!"
+                        scp -o 'StrictHostKeyChecking no' -i the-key $file $host_name:$target_file_path
+                        echo "Copy of file to Host : $host_name @ Path : $target_file_path is successful!"
                     """
                 }
             }
@@ -57,3 +57,4 @@ pipeline {
         }
     }
 }
+
