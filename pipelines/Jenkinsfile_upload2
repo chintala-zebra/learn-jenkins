@@ -22,9 +22,7 @@ pipeline {
             steps {
                 withFileParameter('file') {
                     sh """
-                        cp $file $target_file_name
-                        cat $target_file_name
-                        scp -o 'StrictHostKeyChecking no' -i the-key $target_file_name httpserver.jenkins_mynetwork:/tmp
+                        scp -o 'StrictHostKeyChecking no' -i the-key $file httpserver.jenkins_mynetwork:$target_file_name
                     """
                 }
             }
