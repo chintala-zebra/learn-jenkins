@@ -24,6 +24,8 @@ pipeline {
             steps {
                 withFileParameter('file') {
                     sh """
+                        set +x
+                        echo "The file content that you are going to copy is : "
                         cat $file
                     """
                 }
@@ -40,6 +42,7 @@ pipeline {
             steps {
                 withFileParameter('file') {
                     sh """
+                        set +x
                         scp -o 'StrictHostKeyChecking no' -i the-key $file $host_name:$target_file_name
                         echo "Copy is successful!"
                     """
