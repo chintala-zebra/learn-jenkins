@@ -20,12 +20,18 @@ pipeline {
                 """
             }
         }
+        stage('Show Conent') {
+            steps {
+                withFileParameter('THEFILE') {
+                    sh """
+                        cat $THEFILE
+                    """
+                }
+            }
+        }
         stage('Approval') {
             steps {
-                sh """
-                    cat $file
-                """
-                timeout(time: 2, unit: 'MINUTES') {
+                timeout(time: 5, unit: 'MINUTES') {
                     input "Do you approve the copy of file to  $host_name:$target_file_name?"
                 }
             }
