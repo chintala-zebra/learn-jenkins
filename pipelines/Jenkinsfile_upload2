@@ -41,6 +41,7 @@ pipeline {
                 withFileParameter('file') {
                     sh """
                         scp -o 'StrictHostKeyChecking no' -i the-key $file $host_name:$target_file_name
+                        echo "Copy is successful!"
                     """
                 }
             }
