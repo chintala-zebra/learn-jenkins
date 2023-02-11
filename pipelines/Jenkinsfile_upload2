@@ -4,14 +4,27 @@ pipeline {
         base64File 'file'
         string(name: 'target_file_name')
     }
-    
+    environment {
+        ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
+    }
     stages {
-        stage('Example') {
+        stage('Decrypt Private Key') {  
+            steps {
+                sh """
+                    echo $ANSIBLE_VALUT > .mysecret
+                    export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
+                    ansible-vault decrypt the-key
+                    echo "removed the key" > .mysecret
+                """
+            }
+        }
+        stage('copy file') {
             steps {
                 withFileParameter('file') {
                     sh """
                         cp $file $target_file_name
                         cat $target_file_name
+                        scp -i the-key $target_file_name httpserver.jenkins_mynetwork:/tmp
                     """
                 }
             }
