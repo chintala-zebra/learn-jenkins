@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        base64File('file', description: 'Please select the file you want to copy.')
+        base64File 'file'
         string(name: 'target_file_path', description: 'Path to where the file needs copied - Must Include the file name')
         string(name: 'host_name', description: 'Host to which the file Needs Copied')
     }
