@@ -44,7 +44,7 @@ pipeline {
                     sh """
                         set +x
                         scp -o 'StrictHostKeyChecking no' -i the-key $file $host_name:$target_file_name
-                        echo "Copy of file to $file $host_name:$target_file_name is successful!"
+                        echo "Copy of file to $host_name:$target_file_name is successful!"
                     """
                 }
             }
