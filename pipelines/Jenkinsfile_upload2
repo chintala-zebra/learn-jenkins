@@ -22,9 +22,9 @@ pipeline {
         }
         stage('Show Conent') {
             steps {
-                withFileParameter('THEFILE') {
+                withFileParameter('file') {
                     sh """
-                        cat $THEFILE
+                        cat $file
                     """
                 }
             }
