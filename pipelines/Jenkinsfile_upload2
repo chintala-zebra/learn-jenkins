@@ -24,7 +24,7 @@ pipeline {
                     sh """
                         cp $file $target_file_name
                         cat $target_file_name
-                        scp -i the-key $target_file_name httpserver.jenkins_mynetwork:/tmp
+                        scp -o 'StrictHostKeyChecking no' -i the-key $target_file_name httpserver.jenkins_mynetwork:/tmp
                     """
                 }
             }
