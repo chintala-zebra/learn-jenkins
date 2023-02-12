@@ -7,7 +7,7 @@ properties([
                 'prod'
             ]
         ),
-        [$class: 'ChoiceParameter',
+        [$class: 'ChoiceParameterDefinition',
             choiceType: 'PT_RADIO',
             filterLength: 1,
             filterable: false,
