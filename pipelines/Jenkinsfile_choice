@@ -57,7 +57,7 @@ pipeline {
                                             ] 
                                     ]
                                 ],
-                                [$class: 'DynamicReferenceParameter', 
+                                [$class: 'ChoiceParameterDefinition', 
                                     choiceType: 'ET_ORDERED_LIST', 
                                     description: 'Select the  AMI based on the following information', 
                                     name: 'Image Information', 
