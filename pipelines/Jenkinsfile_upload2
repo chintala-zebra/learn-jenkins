@@ -1,5 +1,9 @@
 pipeline {
-    agent ansible
+    agent { 
+        node {
+            label 'ansible'
+        }
+    }
     options {
         ansiColor('xterm')
     }
