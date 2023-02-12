@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    options {
+        ansiColor('xterm')
+    }
     parameters {
         base64File 'file'
         string(name: 'target_file_path', description: 'Path to where the file needs copied - Must Include the file name')
