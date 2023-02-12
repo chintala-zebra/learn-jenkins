@@ -28,8 +28,9 @@ pipeline {
                 withFileParameter('file') {
                     sh """
                         set +x
-                        echo "The file content that you are going to copy is : "
+                        echo "The file content that you are going to copy is : \033[31m "
                         cat $file
+                        echo "\033[0m"
                     """
                 }
             }
