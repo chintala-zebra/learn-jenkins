@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent ansible
     options {
         ansiColor('xterm')
     }
