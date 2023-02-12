@@ -28,7 +28,7 @@ pipeline {
                                         ]
                                     ]
                                 ],
-                                [$class: 'CascadeChoiceParameterDefinition', 
+                                [$class: 'ChoiceParameterDefinition', 
                                     choiceType: 'PT_SINGLE_SELECT', 
                                     description: 'Select the AMI from the Dropdown List',
                                     name: 'AMI List', 
@@ -57,7 +57,7 @@ pipeline {
                                             ] 
                                     ]
                                 ],
-                                [$class: 'DynamicReferenceParameterDefinition', 
+                                [$class: 'DynamicReferenceParameter', 
                                     choiceType: 'ET_ORDERED_LIST', 
                                     description: 'Select the  AMI based on the following information', 
                                     name: 'Image Information', 
