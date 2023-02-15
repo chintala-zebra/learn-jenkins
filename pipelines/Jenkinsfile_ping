@@ -22,6 +22,7 @@ agent {
     stage('Run Play') {  
       steps {
           sh """
+              pwd
               export ANSIBLE_HOST_KEY_CHECKING=False
               ansible-playbook -i hosts/hosts.yaml ping-play.yaml
             """
