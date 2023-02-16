@@ -1,89 +1,37 @@
 properties([
-  parameters([
-    [
-      $class: 'ChoiceParameter',
-      choiceType: 'PT_SINGLE_SELECT',
-      name: 'Single',
-      script: [
-        $class: 'GroovyScript',
-        script: [
-            script: "return ['Single 1', 'Single 2:selected']",
-            sandbox: 'true',
-            classpath: []
+    parameters([
+        choice(
+            name: 'ENV',
+            choices: [
+                'dev',
+                'prod'
+            ]
+        ),
+        [
+            name: 'Single',
+            $class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            script: [
+                $class: 'GroovyScript',
+                script: [
+                    script: "return ['Single 1', 'Single 2:selected']",
+                    sandbox: 'true',
+                    classpath: []
+                ]
+            ]
         ]
-
-      ]
-    ],
-    [
-      $class: 'ChoiceParameter',
-      choiceType: 'PT_MULTI_SELECT',
-      name: 'Multi',
-      script: [
-        $class: 'GroovyScript',
-        script: [
-            script: "return ['Multi 1:selected', 'Multi 2']",
-            sandbox: 'true',
-            classpath: []
-        ]
-
-      ]
-    ],
-    [
-      $class: 'ChoiceParameter',
-      choiceType: 'PT_CHECKBOX',
-      name: 'Checkbox',
-      script: [
-        $class: 'GroovyScript',
-        script: [
-            script: "return ['Check 1', 'Check 2']",
-            sandbox: 'true',
-            classpath: []
-        ]
-
-      ]
-    ],
-    [
-      $class: 'ChoiceParameter',
-      choiceType: 'PT_RADIO',
-      name: 'Radio',
-      script: [
-        $class: 'GroovyScript',
-        script: [
-            script: "return ['Radio 1', 'Radio 2']",
-            sandbox: 'true',
-            classpath: []
-        ]
-
-      ]
-    ],
-    [
-      $class: 'CascadeChoiceParameter',
-      choiceType: 'PT_SINGLE_SELECT',
-      name: 'CascadeToSingle',
-      referencedParameters: 'Single',
-      script: [
-        $class: 'GroovyScript',
-        script: [
-            script: "return ['none', Single]",
-            sandbox: 'true',
-            classpath: []
-        ]
-      ]
-   ]
-  ])
+    ])
 ])
 
 pipeline {
-  agent any
-  stages {
-    stage('Build') {
-      steps {
-        echo "Single: ${params.Single}"
-        echo "Multi: ${params.Multi}"
-        echo "Checkbox: ${params.Checkbox}"
-        echo "Radio: ${params.Radio}"
-        echo "Cascade: ${params.CascadeToSingle}"
-      }
+    agent any
+
+    stages {
+        stage('Print the Values') {
+            steps {
+                echo "Environment: ${params.ENV}"
+                echo "Choice: ${params.CHOICES}"
+            }
+        }
     }
-  }
 }
