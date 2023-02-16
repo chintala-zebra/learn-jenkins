@@ -7,17 +7,17 @@ properties([
                 'prod'
             ]
         ),
-        [$class: 'ChoiceParameterDefinition',
-            choiceType: 'PT_RADIO',
-            filterLength: 1,
-            filterable: false,
-            name: 'CHOICES',
+        [
+            $class: 'CascadeChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            description: 'Select the Cluster',
+            name: 'ENV_TYPE',
             script: [
                 $class: 'GroovyScript',
                 fallbackScript: [
                     classpath: [],
                     sandbox: false,
-                    script: 'return ["Check Jenkins ScriptApproval page"]'
+                    script: 'return [\'ERROR\']'
                 ],
                 script: [
                     classpath: [],
