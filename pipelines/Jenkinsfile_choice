@@ -3,6 +3,7 @@ properties([
         choice(
             name: 'ENV',
             choices: [
+                '',
                 'dev',
                 'prod'
             ]
@@ -14,7 +15,7 @@ properties([
             script: [
                 $class: 'GroovyScript',
                 script: [
-                    script: "return ['Single 1', 'Single 2:selected']",
+                    script: "return [':selected','Single 1', 'Single 2']",
                     sandbox: 'true',
                     classpath: []
                 ]
@@ -30,7 +31,7 @@ pipeline {
         stage('Print the Values') {
             steps {
                 echo "Environment: ${params.ENV}"
-                echo "Choice: ${params.CHOICES}"
+                echo "Choice: ${params.Single}"
             }
         }
     }
