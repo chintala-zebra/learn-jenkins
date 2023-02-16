@@ -16,6 +16,8 @@ properties([
                 $class: 'GroovyScript',
                 script: [
                     script: '''
+                    String JOB_NAME = build.project.name;
+                    echo $JOB_NAME
                     return [':selected','Single 1', 'Single 2']
                     ''',
                     sandbox: 'true',
