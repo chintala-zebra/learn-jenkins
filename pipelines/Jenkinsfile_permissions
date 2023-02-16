@@ -1,38 +1,40 @@
 properties([
-  parameters([
-    [
-      $class: 'ChoiceParameter',
-      choiceType: 'PT_SINGLE_SELECT',
-      name: 'Environment',
-      script: [
-        $class: 'ScriptlerScript',
-        scriptlerScriptId:'Environments.groovy'
-      ]
-    ],
-    [
-      $class: 'CascadeChoiceParameter',
-      choiceType: 'PT_SINGLE_SELECT',
-      name: 'Host',
-      referencedParameters: 'Environment',
-      script: [
-        $class: 'ScriptlerScript',
-        scriptlerScriptId:'HostsInEnv.groovy',
-        parameters: [
-          [name:'Environment', value: '$Environment']
+    parameters([
+        choice(
+            name: 'ENV',
+            choices: [
+                '',
+                'dev',
+                'prod'
+            ]
+        ),
+        [
+            name: 'Single',
+            $class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            script: [
+                $class: 'GroovyScript',
+                script: [
+                    script: '''
+                    return [':selected','Single 1', 'Single 2']
+                    ''',
+                    sandbox: 'true',
+                    classpath: []
+                ]
+            ]
         ]
-      ]
-   ]
- ])
+    ])
 ])
 
 pipeline {
-  agent any
-  stages {
-    stage('Build') {
-      steps {
-        echo "${params.Environment}"
-        echo "${params.Host}"
-      }
+    agent any
+
+    stages {
+        stage('Print the Values') {
+            steps {
+                echo "Environment: ${params.ENV}"
+                echo "Choice: ${params.Single}"
+            }
+        }
     }
-  }
 }
