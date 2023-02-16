@@ -1,0 +1,40 @@
+properties([
+    parameters([
+        choice(
+            name: 'ENV',
+            choices: [
+                '',
+                'dev',
+                'prod'
+            ]
+        ),
+        [
+            name: 'Single',
+            $class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            script: [
+                $class: 'GroovyScript',
+                script: [
+                    script: '''
+                    return [':selected','Single 1', 'Single 2']
+                    ''',
+                    sandbox: 'true',
+                    classpath: []
+                ]
+            ]
+        ]
+    ])
+])
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Print the Values') {
+            steps {
+                echo "Environment: ${params.ENV}"
+                echo "Choice: ${params.Single}"
+            }
+        }
+    }
+}
