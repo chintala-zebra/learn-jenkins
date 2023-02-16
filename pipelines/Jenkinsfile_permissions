@@ -16,6 +16,8 @@ properties([
                 $class: 'GroovyScript',
                 script: [
                     script: '''
+                    def build = Thread.currentThread().toString()
+                    echo build
                     return [':selected','Single 1', 'Single 2']
                     ''',
                     sandbox: 'true',
