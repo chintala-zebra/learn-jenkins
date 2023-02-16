@@ -17,8 +17,10 @@ properties([
                 script: [
                     script: '''
                     def build = Thread.currentThread().toString()
-                    echo build
-                    return [':selected','Single 1', 'Single 2']
+                    def regexp= ".+?/job/([^/]+)/.*"
+                    def match = build  =~ regexp
+                    def jobName = match[0][1]
+                    return [jobName]
                     ''',
                     sandbox: 'true',
                     classpath: []
