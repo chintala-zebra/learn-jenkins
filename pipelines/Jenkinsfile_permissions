@@ -17,6 +17,7 @@ properties([
                 script: [
                     script: '''
                     String JOB_NAME = build.project.name;
+                    echo "Hello"
                     echo $JOB_NAME
                     return [':selected','Single 1', 'Single 2']
                     ''',
