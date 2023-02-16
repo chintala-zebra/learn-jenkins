@@ -16,7 +16,11 @@ properties([
                 $class: 'GroovyScript',
                 script: [
                     script: '''
-                    return [':selected','Single 1', 'Single 2']
+                    def build = Thread.currentThread().toString()
+                    def regexp= ".+?/job/([^/]+)/.*"
+                    def match = build  =~ regexp
+                    def jobName = match[0][1]
+                    return ['jobName:selected','Single 1', 'Single 2']
                     ''',
                     sandbox: 'true',
                     classpath: []
