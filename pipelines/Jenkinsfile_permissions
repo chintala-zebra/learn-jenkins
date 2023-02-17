@@ -56,8 +56,8 @@ pipeline {
     stages {
         stage('Print the Values') {
             steps {
-                echo "Environment: ${params.ENV}"
-                echo "Choice: ${params.Single}"
+                echo "Environment: ${params.ENVIRONMENT}"
+                echo "Choice: ${params.CLUSTER}"
             }
         }
     }
