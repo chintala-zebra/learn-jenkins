@@ -34,7 +34,11 @@ properties([
                     def match = build  =~ regexp
                     def jobName = match[0][1]
                     def parts = jobName.split('_');
-                    return [parts[3]]
+                    if (parts.size > 3){
+                        return [parts[3]]
+                    } else {
+                        return "EMPTY"
+                    }
                     ''',
                     sandbox: 'true',
                     classpath: []
