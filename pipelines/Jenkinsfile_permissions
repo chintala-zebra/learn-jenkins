@@ -63,40 +63,35 @@ pipeline {
             steps {
                 echo "Environment: ${params.ENVIRONMENT}"
                 echo "Choice: ${params.CLUSTER}"
-                sh "exit 1"
+                //sh "exit 1"
             }
         }
-        stage("Build Success") {
+        stage("Build Notification") {
 			steps {
-                 script {
-                if (params.NOTIFY_MIDDLEWARE) {
-				office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
-					message: "Job ${env.JOB_NAME} completed!",
-					status: "Success",
-                    factDefinitions: [
-                        [name: "Environment", template:  ENVIRONMENT],
-                        [name: "Cluster", template: CLUSTER]
-                    ]
+                script {
+                    if (params.NOTIFY_MIDDLEWARE) {
+                    office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
+                        color: "#00FF00",
+                        //message: "Job ${env.JOB_NAME} completed!",
+                        status: "Success",
+                        factDefinitions: [
+                            [name: "Environment", template:  ENVIRONMENT],
+                            [name: "Cluster", template: CLUSTER]
+                        ]
+                    }
                 }
-                 }
 			}
 		}
     }
     post {
         unsuccessful {
             office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
+                color: "#FF0000",
                 factDefinitions: [
                         [name: "Environment", template:  ENVIRONMENT],
                         [name: "Cluster", template: CLUSTER]
                     ]
         }
-        // success {
-        //     office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
-        //         factDefinitions: [
-        //                 [name: "Environment", template:  ENVIRONMENT],
-        //                 [name: "Cluster", template: CLUSTER]
-        //             ]
-        // }
         cleanup {
             cleanWs()
         }
