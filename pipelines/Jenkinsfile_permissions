@@ -1,6 +1,6 @@
 properties([
     parameters([
-        booleanParam(name: 'NOTIFY_MIDDLEWARE', defaultValue: false, description: 'Do you want to publish results to Middleware Channel?'),
+        booleanParam(name: 'NOTIFY_MIDDLEWARE', defaultValue: true, description: 'Do you want to publish results to Middleware Channel?'),
         [
             name: 'ENVIRONMENT',
             $class: 'ChoiceParameter',
