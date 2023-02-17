@@ -45,13 +45,22 @@ properties([
                         }
                         else
                         {
-                            def list = []
-                            list.add('')
-                            def dir = new File("/inventory/${ENVIRONMENT}/")
-                            dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
-                                list << file.name
+                            def build = Thread.currentThread().toString()
+                            def regexp= ".+?/job/([^/]+)/.*"
+                            def match = build  =~ regexp
+                            def jobName = match[0][1]
+                            def parts = jobName.split('_');
+                            if (parts[3].isEmpty() || parts[3]==""){
+                                def list = []
+                                list.add('')
+                                def dir = new File("/inventory/${ENVIRONMENT}/")
+                                dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
+                                    list << file.name
+                                }
+                                return list.sort() - 'group_vars' 
+                            } else{
+                                return [parts[3]]
                             }
-                            return list.sort() - 'group_vars' 
                         }
                     '''
                 ]
