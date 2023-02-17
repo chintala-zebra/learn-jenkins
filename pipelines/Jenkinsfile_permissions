@@ -67,9 +67,16 @@ pipeline {
         }
         stage("Build Success") {
 			steps {
-				office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
+                exit
+				office365ConnectorSend 
+                    webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
 					message: "Job ${env.JOB_NAME} completed!",
-					status: "Success"
+					status: "Success",
+                    factDefinitions: [
+                        [name: "Environment", template:  ENVIRONMENT],
+                        [name: "Cluster", template: CLUSTER]
+                    ]
+
 			}
 		}
     }
