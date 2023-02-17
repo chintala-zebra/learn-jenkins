@@ -33,8 +33,12 @@ properties([
                     def regexp= ".+?/job/([^/]+)/.*"
                     def match = build  =~ regexp
                     def jobName = match[0][1]
-                    def parts = jobName.split('_');
+                    def parts = inputDetails.tokenize("_");
+                    if ( parts.size() > 3) {
                         return [parts[3]]
+                    } else {
+                        return ''
+                    }
                     ''',
                     sandbox: 'true',
                     classpath: []
