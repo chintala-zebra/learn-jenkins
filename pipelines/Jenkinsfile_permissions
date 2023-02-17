@@ -44,7 +44,7 @@ properties([
                         // }else{
                             def list = []
                             list.add('')
-                            def dir = new File("/inventory/${ENVIRONMENT}/${CLUSTER_NAME}")
+                            def dir = new File("/inventory/${ENVIRONMENT}}")
                             dir.eachFile (FileType.FILES) { file ->
                                 list << file.name.replaceAll('.yml','');
                             }
