@@ -76,7 +76,6 @@ properties([
                     script:  
                     '''
                         import groovy.io.FileType
-                        import groovy.io.FileType
                         if (CLUSTER_NAME.isEmpty() || CLUSTER_NAME==""){
                             return ''
                         }
