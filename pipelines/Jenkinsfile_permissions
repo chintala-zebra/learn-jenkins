@@ -50,6 +50,7 @@ properties([
                             def match = build  =~ regexp
                             def jobName = match[0][1]
                             def parts = jobName.split('_');
+                            return parts[3]
                             if (parts[3].isEmpty() || parts[3]==""){
                                 def list = []
                                 list.add('')
