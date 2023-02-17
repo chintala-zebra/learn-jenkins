@@ -38,18 +38,17 @@ properties([
                         def match = build  =~ regexp
                         def jobName = match[0][1]
 
-                        // def myList = jobName.tokenize("_")
-                        // if ( myList.size() == 4) {
-                        //     return [myList[3]]
-                        // }else{
+                        def myList = jobName.tokenize("_")
+                        if ( myList.size() == 4) {
+                             return [myList[3]]
+                        } else {
                             def list = []
-                            list.add('')
-                            def dir = new File("/inventory/${ENVIRONMENT}}")
-                            dir.eachFile (FileType.FILES) { file ->
-                                list << file.name.replaceAll('.yml','');
+                            def dir = new File("/application/ansible/inventory/${ENV_TYPE}/")
+                            dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
+                                list << file.name
                             }
-                            return list
-                        // }
+                            return list.sort() - 'group_vars' 
+                        }
                     ''',
                     sandbox: 'true',
                     classpath: []
