@@ -34,7 +34,7 @@ properties([
                     def match = build  =~ regexp
                     def jobName = match[0][1]
                     def parts = inputDetails.tokenize("_");
-                    println (" DEBUG : Input details are, ${cNum.get(0)} : ${cNum.get(1)} : ${cNum.get(2)} \n");
+                    println (" DEBUG : Input details are, ${parts.get(0)} : ${parts.get(1)} : ${parts.get(2)}: ${parts.get(3)} \n");
                     if ( parts.size() > 3) {
                         return [parts.get(3)]
                     } else {
