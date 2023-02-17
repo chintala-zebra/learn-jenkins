@@ -20,6 +20,78 @@ properties([
                     classpath: []
                 ]
             ]
+        ],
+        [
+            name: 'CLUSTER_NAME',
+            $class: 'CascadeChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            referencedParameters: 'ENVIRONMENT',
+            script: 
+            [
+                $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script: 'return [\'ERROR\']'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script:  
+                    '''
+                        import groovy.io.FileType
+                        if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
+                            return ''
+                        }
+                        else
+                        {
+                            def list = []
+                            list.add('')
+                            def dir = new File("/inventory/${ENVIRONMENT}/")
+                            dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
+                                list << file.name
+                            }
+                            return list.sort() - 'group_vars' 
+                        }
+                    '''
+                ]
+            ]
+        ],
+        [
+            name: 'Application',
+            $class: 'CascadeChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            description: '',
+            referencedParameters: 'ENVIRONMENT, CLUSTER_NAME',
+            script: [
+                $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script: 'return [\'ERROR\']'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script:  
+                    '''
+                        import groovy.io.FileType
+                        if (CLUSTER_NAME.isEmpty() || CLUSTER_NAME==""){
+                            return ''
+                        }
+                        else
+                        {                        
+                            def list = []
+                            list.add('')
+                            def dir = new File("/inventory/${ENVIRONMENT}/${CLUSTER_NAME}")
+                            dir.eachFile (FileType.FILES) { file ->
+                                list << file.name.replaceAll('.yml','');
+                            }
+                            return list
+                        }
+                    '''
+                ]
+            ]
         ]
         
     ])
@@ -31,6 +103,7 @@ pipeline {
         stage('Print the Values') {
             steps {
                 echo "Environment: ${params.ENVIRONMENT}"
+                echo "Choice: ${params.CLUSTER_NAME}"
                 //sh "exit 1"
             }
         }
@@ -41,7 +114,8 @@ pipeline {
                     office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
                         status: "Success",
                         factDefinitions: [
-                            [name: "Environment", template:  ENVIRONMENT]
+                            [name: "Environment", template:  ENVIRONMENT],
+                            [name: "Cluster", template: CLUSTER_NAME]
                         ]
                     }
                 }
@@ -52,7 +126,8 @@ pipeline {
         unsuccessful {
             office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
                 factDefinitions: [
-                        [name: "Environment", template:  ENVIRONMENT]
+                        [name: "Environment", template:  ENVIRONMENT],
+                        [name: "Cluster", template: CLUSTER_NAME]
                     ]
         }
         cleanup {
