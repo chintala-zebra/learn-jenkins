@@ -26,32 +26,34 @@ properties([
             $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             referencedParameters: 'ENVIRONMENT',
-            script: [
+            script: 
+            [
                 $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script: 'return [\'ERROR\']'
+                ],
                 script: [
-                    script: '''
+                    classpath: [],
+                    sandbox: false,
+                    script:  
+                    '''
                         import groovy.io.FileType
-                        import groovy.io.FileType
-
-                        def build = Thread.currentThread().toString()
-                        def regexp= ".+?/job/([^/]+)/.*"
-                        def match = build  =~ regexp
-                        def jobName = match[0][1]
-
-                        def myList = jobName.tokenize("_")
-                        if ( myList.size() == 4) {
-                             return [myList[3]]
-                        } else {
+                        if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
+                            return ''
+                        }
+                        else
+                        {
                             def list = []
-                            def dir = new File("/application/ansible/inventory/${ENV_TYPE}/")
+                            list.add('')
+                            def dir = new File("/inventory/${ENVIRONMENT}/")
                             dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
                                 list << file.name
                             }
                             return list.sort() - 'group_vars' 
                         }
-                    ''',
-                    sandbox: 'true',
-                    classpath: []
+                    '''
                 ]
             ]
         ],
