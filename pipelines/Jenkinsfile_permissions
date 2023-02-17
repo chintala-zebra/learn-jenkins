@@ -75,7 +75,7 @@ pipeline {
                     ]
         }
         success {
-            office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
+            office365ConnectorSend color:"#00FF00", webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
                 factDefinitions: [
                         [name: "Environment", template:  ENVIRONMENT],
                         [name: "Cluster", template: CLUSTER]
