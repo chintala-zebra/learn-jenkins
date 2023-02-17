@@ -63,7 +63,7 @@ pipeline {
             steps {
                 echo "Environment: ${params.ENVIRONMENT}"
                 echo "Choice: ${params.CLUSTER}"
-                sh "exit 1"
+                //sh "exit 1"
             }
         }
         stage("Build Notification") {
@@ -71,8 +71,7 @@ pipeline {
                 script {
                     if (params.NOTIFY_MIDDLEWARE) {
                     office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
-                        color: "#00FF00",
-                        //message: "Job ${env.JOB_NAME} completed!",
+                        color: "#96CEB4",
                         status: "Success",
                         factDefinitions: [
                             [name: "Environment", template:  ENVIRONMENT],
