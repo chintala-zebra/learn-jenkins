@@ -38,10 +38,10 @@ properties([
                         def match = build  =~ regexp
                         def jobName = match[0][1]
 
-                        def myList = jobName.tokenize("_")
-                        if ( myList.size() == 4) {
-                        return [myList[3]]
-                        }else{
+                        // def myList = jobName.tokenize("_")
+                        // if ( myList.size() == 4) {
+                        //     return [myList[3]]
+                        // }else{
                             def list = []
                             list.add('')
                             def dir = new File("/inventory/${ENVIRONMENT}/${CLUSTER_NAME}")
@@ -49,7 +49,7 @@ properties([
                                 list << file.name.replaceAll('.yml','');
                             }
                             return list
-                        }
+                        // }
                     ''',
                     sandbox: 'true',
                     classpath: []
