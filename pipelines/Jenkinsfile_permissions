@@ -13,7 +13,8 @@ properties([
                     def regexp= ".+?/job/([^/]+)/.*"
                     def match = build  =~ regexp
                     def jobName = match[0][1]
-                    return [jobName]
+                    String[] str = a.split('-');
+                    return [str[0]]
                     ''',
                     sandbox: 'true',
                     classpath: []
