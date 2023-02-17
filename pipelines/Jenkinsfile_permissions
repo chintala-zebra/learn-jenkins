@@ -63,7 +63,7 @@ pipeline {
             steps {
                 echo "Environment: ${params.ENVIRONMENT}"
                 echo "Choice: ${params.CLUSTER}"
-                //sh "exit 1"
+                sh "exit 1"
             }
         }
         stage("Build Notification") {
