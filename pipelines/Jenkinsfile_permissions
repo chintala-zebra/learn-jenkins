@@ -60,10 +60,10 @@ pipeline {
     agent any
     stages {
         stage('Print the Values') {
+            failFast true
             steps {
                 echo "Environment: ${params.ENVIRONMENT}"
                 echo "Choice: ${params.CLUSTER}"
-                return 1
             }
         }
         stage("Build Success") {
