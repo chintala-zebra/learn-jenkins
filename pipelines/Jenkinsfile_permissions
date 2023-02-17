@@ -65,6 +65,13 @@ pipeline {
                 echo "Choice: ${params.CLUSTER}"
             }
         }
+        stage("Build Success") {
+			steps {
+				office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
+					message: "Job ${env.JOB_NAME} completed!",
+					status: "Success"
+			}
+		}
     }
     post {
         failure {
@@ -74,13 +81,13 @@ pipeline {
                         [name: "Cluster", template: CLUSTER]
                     ]
         }
-        success {
-            office365ConnectorSend color:"#00FF00", webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
-                factDefinitions: [
-                        [name: "Environment", template:  ENVIRONMENT],
-                        [name: "Cluster", template: CLUSTER]
-                    ]
-        }
+        // success {
+        //     office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
+        //         factDefinitions: [
+        //                 [name: "Environment", template:  ENVIRONMENT],
+        //                 [name: "Cluster", template: CLUSTER]
+        //             ]
+        // }
         always {
             cleanWs()
         }
