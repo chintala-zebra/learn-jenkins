@@ -25,21 +25,28 @@ properties([
             name: 'CLUSTER_NAME',
             $class: 'ChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
+            referencedParameters: 'ENVIRONMENT',
             script: [
                 $class: 'GroovyScript',
                 script: [
                     script: '''
-                    def build = Thread.currentThread().toString()
-                    def regexp= ".+?/job/([^/]+)/.*"
-                    def match = build  =~ regexp
-                    def jobName = match[0][1]
-                    def parts = inputDetails.tokenize("_");
-                    println (" DEBUG : Input details are, ${parts.get(0)} : ${parts.get(1)} : ${parts.get(2)}: ${parts.get(3)} \n");
-                    if ( parts.size() > 3) {
-                        return [parts.get(3)]
-                    } else {
-                        return ''
-                    }
+                        def build = Thread.currentThread().toString()
+                        def regexp= ".+?/job/([^/]+)/.*"
+                        def match = build  =~ regexp
+                        def jobName = match[0][1]
+
+                        def myList = jobName.tokenize("_")
+                        if ( myList.size() == 4) {
+                        return [myList[3]]
+                        }else{
+                            def list = []
+                            list.add('')
+                            def dir = new File("/inventory/${ENVIRONMENT}")
+                            dir.eachFile (FileType.FILES) { file ->
+                                list << file.name.replaceAll('.yml','');
+                            }
+                            return list
+                        }
                     ''',
                     sandbox: 'true',
                     classpath: []
