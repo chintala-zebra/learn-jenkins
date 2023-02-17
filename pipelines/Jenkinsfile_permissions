@@ -71,7 +71,6 @@ pipeline {
                 script {
                     if (params.NOTIFY_MIDDLEWARE) {
                     office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
-                        color: "#96CEB4",
                         status: "Success",
                         factDefinitions: [
                             [name: "Environment", template:  ENVIRONMENT],
@@ -85,7 +84,6 @@ pipeline {
     post {
         unsuccessful {
             office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
-                color: "#FF0000",
                 factDefinitions: [
                         [name: "Environment", template:  ENVIRONMENT],
                         [name: "Cluster", template: CLUSTER]
