@@ -26,7 +26,35 @@ properties([
                     classpath: []
                 ]
             ]
+        ],
+        [
+            name: 'Second',
+            $class: 'CascadeChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            referencedParameters: 'Single',
+            script: 
+            [
+                $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script: 'return [\'ERROR\']'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script:  
+                    '''
+                        if (Single == "Sandbox"){
+                            return ['Sandbox 1', 'Sandbox 2']
+                        } else {
+                            return ['PreProd 1', 'PreProd 2']
+                        }
+                    '''
+                ]
+            ]
         ]
+        
     ])
 ])
 
