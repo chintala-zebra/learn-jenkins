@@ -81,5 +81,9 @@ pipeline {
                         [name: "Cluster", template: CLUSTER]
                     ]
         }
+        always {
+            cleanWs()
+        }
+
     }
 }
