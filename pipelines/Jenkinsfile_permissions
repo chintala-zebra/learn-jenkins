@@ -40,7 +40,7 @@ properties([
                     sandbox: 'true',
                     classpath: []
                 ]
-
+            ]
         ],
         [
             name: 'APPLICATION_NAME',
