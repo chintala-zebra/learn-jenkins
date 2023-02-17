@@ -8,9 +8,10 @@ agent {
         stage('Plan') {  
             steps {
                 echo "Terraform Planning code goes here..."
+                
             }
         }
-        stage('Approval') {  
+        stage('Approval') {
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
                     input "Do you approve the plan?"
