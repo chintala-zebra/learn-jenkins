@@ -23,7 +23,7 @@ properties([
         ],
         [
             name: 'CLUSTER_NAME',
-            $class: 'ChoiceParameter',
+            $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             referencedParameters: 'ENVIRONMENT',
             script: [
