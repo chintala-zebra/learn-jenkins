@@ -65,8 +65,6 @@ pipeline {
                 echo "Environment: ${params.ENVIRONMENT}"
                 echo "Choice: ${params.CLUSTER}"
             }
-        }
-        stage("Build Success") {
 			steps {
 				office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
 					message: "Job ${env.JOB_NAME} completed!",
@@ -77,7 +75,7 @@ pipeline {
                     ]
 
 			}
-		}
+        }
     }
     post {
         failure {
