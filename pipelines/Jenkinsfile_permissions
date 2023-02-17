@@ -23,9 +23,8 @@ properties([
         ],
         [
             name: 'CLUSTER_NAME',
-            $class: 'CascadeChoiceParameter',
+            $class: 'ChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
-            referencedParameters: 'ENVIRONMENT',
             script: [
                 $class: 'GroovyScript',
                 script: [
