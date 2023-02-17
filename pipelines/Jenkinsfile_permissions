@@ -36,7 +36,7 @@ properties([
                 ],
                 script: [
                     classpath: [],
-                    sandbox: false,
+                    sandbox: true,
                     script:  
                     '''
                         import groovy.io.FileType
