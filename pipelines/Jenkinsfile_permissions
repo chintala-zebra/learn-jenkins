@@ -1,15 +1,8 @@
 properties([
     parameters([
-        choice(
-            name: 'ENV',
-            choices: [
-                '',
-                'dev',
-                'prod'
-            ]
-        ),
+      
         [
-            name: 'Single',
+            name: 'ENVIRONMENT',
             $class: 'ChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             script: [
@@ -31,7 +24,7 @@ properties([
             name: 'Second',
             $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
-            referencedParameters: 'Single',
+            referencedParameters: 'ENVIRONMENT',
             script: 
             [
                 $class: 'GroovyScript',
@@ -45,10 +38,14 @@ properties([
                     sandbox: false,
                     script:  
                     '''
-                        if (Single == "Sandbox"){
+                        if (ENVIRONMENT == "GCP_Sandbox_Maintenance"){
                             return ['Sandbox 1', 'Sandbox 2']
-                        } else {
+                        } else if (ENVIRONMENT == "GCP_PreProd_Maintenance"){
                             return ['PreProd 1', 'PreProd 2']
+                        } else if (ENVIRONMENT == "GCP_Production_Maintenance"){
+                            return ['Production 1', 'Production 2']
+                        } else {
+                            return ['Contact Middleware']
                         }
                     '''
                 ]
