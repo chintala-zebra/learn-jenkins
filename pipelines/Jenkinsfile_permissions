@@ -36,7 +36,7 @@ properties([
                     sandbox: false,
                     script:  
                     '''
-                      if (SNOWTICKET == "Sandbox"){
+                      if (SNOWTICKET == "Sandbox") {
                         return '[SB001,SB002]'
                       }
                       else
@@ -46,7 +46,7 @@ properties([
                     '''
                 ]
             ]
-        ],
+        ]
     ])
 ])
 
