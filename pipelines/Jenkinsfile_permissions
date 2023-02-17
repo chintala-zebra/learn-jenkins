@@ -39,14 +39,18 @@ properties([
                     sandbox: false,
                     script:  
                     '''
-                        if (ENVIRONMENT == "Sandbox"){
-                            return ['','MWCL01SB', 'MWCL02SB']
-                        } else if (ENVIRONMENT == "PreProd"){
-                            return ['','MWCL01PP', 'MWCL02PP']
-                        } else if (ENVIRONMENT == "Production"){
-                            return ['','MWCL01PR', 'MWCL02PR']
-                        } else {
-                            return ['Contact Middleware']
+                        import groovy.io.FileType
+                        if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
+                            return ''
+                        }
+                        else
+                        {
+                            def list = []
+                            def dir = new File("/inventory/${ENV_TYPE}/")
+                            dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
+                                list << file.name
+                            }
+                            return list.sort() - 'group_vars' 
                         }
                     '''
                 ]
