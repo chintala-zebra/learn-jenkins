@@ -30,6 +30,9 @@ properties([
                 $class: 'GroovyScript',
                 script: [
                     script: '''
+                        import groovy.io.FileType
+                        import groovy.io.FileType
+
                         def build = Thread.currentThread().toString()
                         def regexp= ".+?/job/([^/]+)/.*"
                         def match = build  =~ regexp
@@ -41,7 +44,7 @@ properties([
                         }else{
                             def list = []
                             list.add('')
-                            def dir = new File("/inventory/${ENVIRONMENT}")
+                            def dir = new File("/inventory/${ENVIRONMENT}/${CLUSTER_NAME}")
                             dir.eachFile (FileType.FILES) { file ->
                                 list << file.name.replaceAll('.yml','');
                             }
