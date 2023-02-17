@@ -1,7 +1,15 @@
 properties([
-    parameters(
+    parameters([
+        choice(
+            name: 'ENV',
+            choices: [
+                '',
+                'dev',
+                'prod'
+            ]
+        ),
         [
-            name: 'ENVIRONMENT',
+            name: 'Single',
             $class: 'ChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             script: [
@@ -18,36 +26,8 @@ properties([
                     classpath: []
                 ]
             ]
-        ],[
-            name: 'CLUSTER',
-            $class: 'CascadeChoiceParameter',
-            choiceType: 'PT_SINGLE_SELECT',
-            description: 'Select the Cluster',
-            referencedParameters: 'ENVIRONMENT',
-            script: [
-                $class: 'GroovyScript',
-                fallbackScript: [
-                    classpath: [],
-                    sandbox: false,
-                    script: 'return [\'ERROR\']'
-                ],
-                script: [
-                    classpath: [],
-                    sandbox: false,
-                    script:  
-                    '''
-                      if (SNOWTICKET == "Sandbox") {
-                        return '[SB001,SB002]'
-                      }
-                      else
-                      {
-                        return '[PP001,PP002]'
-                      }
-                    '''
-                ]
-            ]
         ]
-    )
+    ])
 ])
 
 pipeline {
@@ -56,8 +36,8 @@ pipeline {
     stages {
         stage('Print the Values') {
             steps {
-                echo "Environment: ${params.ENVIRONMENT}"
-                echo "Choice: ${params.CLUSTER}"
+                echo "Environment: ${params.ENV}"
+                echo "Choice: ${params.Single}"
             }
         }
     }
