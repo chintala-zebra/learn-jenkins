@@ -64,7 +64,9 @@ pipeline {
                 echo "Environment: ${params.ENVIRONMENT}"
                 echo "Choice: ${params.CLUSTER}"
             }
+            script {
                 currentBuild.result = 'FAILURE'
+            }
         }
         stage("Build Success") {
 			steps {
