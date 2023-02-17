@@ -21,7 +21,7 @@ properties([
             ]
         ],
         [
-            name: 'Second',
+            name: 'CLUSTER',
             $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             referencedParameters: 'ENVIRONMENT',
@@ -61,8 +61,8 @@ pipeline {
     stages {
         stage('Print the Values') {
             steps {
-                echo "Environment: ${params.ENV}"
-                echo "Choice: ${params.Single}"
+                echo "Environment: ${params.ENVIRONMENT}"
+                echo "Choice: ${params.CLUSTER}"
             }
         }
     }
