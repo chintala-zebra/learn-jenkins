@@ -13,8 +13,8 @@ properties([
                     def regexp= ".+?/job/([^/]+)/.*"
                     def match = build  =~ regexp
                     def jobName = match[0][1]
-                    String[] str = a.split('-');
-                    return [str[0]]
+                    def parts = jobName.split('_');
+                    return [parts[2]]
                     ''',
                     sandbox: 'true',
                     classpath: []
@@ -39,11 +39,11 @@ properties([
                     sandbox: false,
                     script:  
                     '''
-                        if (ENVIRONMENT == "GCP_Sandbox_Maintenance"){
+                        if (ENVIRONMENT == "Sandbox"){
                             return ['Sandbox 1', 'Sandbox 2']
-                        } else if (ENVIRONMENT == "GCP_PreProd_Maintenance"){
+                        } else if (ENVIRONMENT == "PreProd"){
                             return ['PreProd 1', 'PreProd 2']
-                        } else if (ENVIRONMENT == "GCP_Production_Maintenance"){
+                        } else if (ENVIRONMENT == "Production"){
                             return ['Production 1', 'Production 2']
                         } else {
                             return ['Contact Middleware']
