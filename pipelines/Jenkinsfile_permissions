@@ -69,13 +69,13 @@ pipeline {
     post {
         failure {
             office365ConnectorSend webhookUrl: "https://zebra.webhook.office.com/webhookb2/0584c854-0f47-406e-8d4c-a88ca04a5ede@4d3d260a-9c40-4306-8dac-0d64717039ec/IncomingWebhook/d47f3a79bceb47e59727b44bce4d8c94/43af838d-3064-48ff-90d2-e28239743081",
-                factDefinitions: [[name: "Environment", template:  {params.ENVIRONMENT}],
-                                  [name: "Cluster", template: {params.CLUSTER}]]
+                factDefinitions: [[name: "Environment", template:  ENVIRONMENT],
+                                  [name: "Cluster", template: CLUSTER]]
         }
         success {
             office365ConnectorSend webhookUrl: "https://zebra.webhook.office.com/webhookb2/0584c854-0f47-406e-8d4c-a88ca04a5ede@4d3d260a-9c40-4306-8dac-0d64717039ec/IncomingWebhook/d47f3a79bceb47e59727b44bce4d8c94/43af838d-3064-48ff-90d2-e28239743081",
-                factDefinitions: [[name: "Environment", template:  {params.ENVIRONMENT}],
-                                  [name: "Cluster", template: {params.CLUSTER}]]
+                factDefinitions: [[name: "Environment", template:  ENVIRONMENT],
+                                  [name: "Cluster", template: CLUSTER]]
         }
     }
 }
