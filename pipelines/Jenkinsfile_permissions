@@ -46,7 +46,7 @@ properties([
                         else
                         {
                             def list = []
-                            def dir = new File("/inventory/${ENV_TYPE}/")
+                            def dir = new File("/inventory/${ENVIRONMENT}/")
                             dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
                                 list << file.name
                             }
