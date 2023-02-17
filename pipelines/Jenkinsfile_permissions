@@ -1,6 +1,6 @@
 properties([
     parameters([
-      
+        booleanParam(name: 'NOTIFY_MIDDLEWARE', defaultValue: false, description: 'Do you want to publish results to Middleware Channel?'),
         [
             name: 'ENVIRONMENT',
             $class: 'ChoiceParameter',
@@ -63,7 +63,7 @@ pipeline {
             steps {
                 echo "Environment: ${params.ENVIRONMENT}"
                 echo "Choice: ${params.CLUSTER}"
-                sh "exit 1"
+                //sh "exit 1"
             }
         }
         stage("Build Success") {
