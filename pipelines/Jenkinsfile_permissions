@@ -22,7 +22,7 @@ properties([
             ]
         ],
         [
-            name: 'CLUSTER',
+            name: 'CLUSTER_NAME',
             $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             referencedParameters: 'ENVIRONMENT',
@@ -51,6 +51,42 @@ properties([
                                 list << file.name
                             }
                             return list.sort() - 'group_vars' 
+                        }
+                    '''
+                ]
+            ]
+        ],
+        [
+            name: 'Application',
+            $class: 'CascadeChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            description: '',
+            referencedParameters: 'ENVIRONMENT, CLUSTER_NAME',
+            script: [
+                $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script: 'return [\'ERROR\']'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script:  
+                    '''
+                        import groovy.io.FileType
+                        import groovy.io.FileType
+                        if (CLUSTER_NAME.isEmpty() || CLUSTER_NAME==""){
+                            return ''
+                        }
+                        else
+                        {                        
+                            def list = []
+                            def dir = new File("/inventory/${ENVIRONMENT}/${CLUSTER_NAME}")
+                            dir.eachFile (FileType.FILES) { file ->
+                                list << file.name.replaceAll('.yml','');
+                            }
+                            return list
                         }
                     '''
                 ]
