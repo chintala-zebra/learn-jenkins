@@ -44,7 +44,7 @@ properties([
                         } else if (ENVIRONMENT == "PreProd"){
                             return ['','MWCL01PP', 'MWCL02PP']
                         } else if (ENVIRONMENT == "Production"){
-                            return ['','MWCL01PR', 'MWCL01PR']
+                            return ['','MWCL01PR', 'MWCL02PR']
                         } else {
                             return ['Contact Middleware']
                         }
