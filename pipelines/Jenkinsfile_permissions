@@ -60,10 +60,14 @@ pipeline {
     agent any
     stages {
         stage('Print the Values') {
-            failFast true
             steps {
                 echo "Environment: ${params.ENVIRONMENT}"
                 echo "Choice: ${params.CLUSTER}"
+                currentBuild.result = 'FAILURE'
+            }
+        }
+        stage("Build Success") {
+			steps {
 				office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
 					message: "Job ${env.JOB_NAME} completed!",
 					status: "Success",
@@ -71,9 +75,8 @@ pipeline {
                         [name: "Environment", template:  ENVIRONMENT],
                         [name: "Cluster", template: CLUSTER]
                     ]
-
 			}
-        }
+		}
     }
     post {
         failure {
