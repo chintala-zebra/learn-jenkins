@@ -51,17 +51,7 @@ properties([
                             def jobName = match[0][1]
                             def parts = jobName.split('_');
                             return parts[3]
-                            if (parts[3].isEmpty() || parts[3]==""){
-                                def list = []
-                                list.add('')
-                                def dir = new File("/inventory/${ENVIRONMENT}/")
-                                dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
-                                    list << file.name
-                                }
-                                return list.sort() - 'group_vars' 
-                            } else{
-                                return [parts[3]]
-                            }
+                           
                         }
                     '''
                 ]
