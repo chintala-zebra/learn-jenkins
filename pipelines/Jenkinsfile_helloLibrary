@@ -1,22 +1,18 @@
 @Library('middleware-library') _
 
-// properties([
-//     parameters([
-//         [
-//             name: 'ENVIRONMENT',
-//             $class: 'ChoiceParameter',
-//             choiceType: 'PT_SINGLE_SELECT',
-//             script: [
-//                 $class: 'GroovyScript',
-//                     sandbox: 'true',
-//                     classpath: [],
-//                 script: [
-//            //         return listFolders('GCP-Sandbox')
-//                 ]
-//             ]
-//         ]
-//     ])
-// ])
+properties([
+    parameters([
+        [
+            name: 'ENVIRONMENT',
+            $class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            script: [
+                def list = listFolders('GCP-Sandbox')
+                return list
+            ]
+        ]
+    ])
+])
 pipeline {
     agent any
     options {
