@@ -6,10 +6,10 @@ properties([
             name: 'ENVIRONMENT',
             $class: 'ChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
-            script {
+            script: [
                 def list = listFolders('GCP-Sandbox')
                 return list
-            }
+            ]
         ]
     ])
 ])
@@ -23,9 +23,9 @@ pipeline {
             steps {
                 script {
                     log.info('Starting')
-                    sayHello 'Dave'
-                    log.warning 'Nothing'
-                    log.error 'Failed!'
+                    sayHello('Dave')
+                    log.warning('Nothing')
+                    log.error('Failed!')
                     //listFolders 'GCP-Sandbox'
                 }
             }
