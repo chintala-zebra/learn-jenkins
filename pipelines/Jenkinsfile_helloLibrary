@@ -1,6 +1,7 @@
 @Library('middleware-library') _
 
 properties([
+    parameters([
         [
             name: 'ENVIRONMENT',
             $class: 'ChoiceParameter',
@@ -17,6 +18,7 @@ properties([
                 ]
             ]
         ]
+    ])
 ])
 pipeline {
     agent any
