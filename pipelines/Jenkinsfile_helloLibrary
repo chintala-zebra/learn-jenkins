@@ -11,7 +11,7 @@ properties([
                     sandbox: 'true',
                     classpath: [],
                 script: [
-                    return listFolders 'GCP-Sandbox'
+                    return listFolders('GCP-Sandbox')
                 ]
             ]
         ]
@@ -26,7 +26,7 @@ pipeline {
         stage('Print the Values') {
             steps {
                 script {
-                    log.info 'Starting'
+                    log.info('Starting')
                     sayHello 'Dave'
                     log.warning 'Nothing'
                     log.error 'Failed!'
