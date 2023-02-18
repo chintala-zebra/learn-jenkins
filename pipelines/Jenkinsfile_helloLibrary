@@ -1,13 +1,13 @@
-libraries {
-    lib('pipeline-library-demo')
-}
+@Library('pipeline-library-demo') _
 
 pipeline {
     agent any
     stages {
         stage('Print the Values') {
             steps {
-                sayHello 'Dave'
+                script {
+                    sayHello 'Dave'
+                }
             }
         }
     }
