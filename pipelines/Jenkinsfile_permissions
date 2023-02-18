@@ -135,7 +135,7 @@ pipeline {
                 factDefinitions: [
                         [name: "Environment", template:  ENVIRONMENT],
                         [name: "Cluster", template: CLUSTER_NAME],
-                        [name: "Application", template: APPLICATION
+                        [name: "Application", template: APPLICATION]
                     ]
         }
         cleanup {
