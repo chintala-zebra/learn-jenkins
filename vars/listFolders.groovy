@@ -2,6 +2,7 @@
 
 import groovy.io.FileType
 
+@NonCPS
 def call(String folderName) {
     def list = []
     list.add('')
