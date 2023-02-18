@@ -1,4 +1,4 @@
-@Library('pipeline-library-demo') _
+@Library('middleware-library') _
 
 pipeline {
     agent any
