@@ -13,6 +13,7 @@ properties([
                 script: [
                     script: '''
                     def list = []
+                    log.info('trying')
                     list = listFolders('GCP-Sandbox')
                     return list
                     '''
