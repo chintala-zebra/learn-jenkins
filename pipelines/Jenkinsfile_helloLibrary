@@ -6,7 +6,9 @@ pipeline {
         stage('Print the Values') {
             steps {
                 script {
+                    log.info 'Starting'
                     sayHello 'Dave'
+                    log.warning 'Nothing'
                 }
             }
         }
