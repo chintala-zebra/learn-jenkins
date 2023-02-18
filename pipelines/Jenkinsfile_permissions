@@ -63,7 +63,7 @@ properties([
             ]
         ],
         [
-            name: 'Application',
+            name: 'APPLICATION',
             $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             description: '',
@@ -108,7 +108,8 @@ pipeline {
         stage('Print the Values') {
             steps {
                 echo "Environment: ${params.ENVIRONMENT}"
-                echo "Choice: ${params.CLUSTER_NAME}"
+                echo "Cluster Name: ${params.CLUSTER_NAME}"
+                echo "Application Name: ${params.APPLICATION}"
                 //sh "exit 1"
             }
         }
@@ -120,7 +121,8 @@ pipeline {
                         status: "Success",
                         factDefinitions: [
                             [name: "Environment", template:  ENVIRONMENT],
-                            [name: "Cluster", template: CLUSTER_NAME]
+                            [name: "Cluster", template: CLUSTER_NAME],
+                            [name: "Application", template: APPLICATION]                            
                         ]
                     }
                 }
@@ -132,7 +134,8 @@ pipeline {
             office365ConnectorSend webhookUrl: MIDDLEWARE_TEAMS_CHANNEL,
                 factDefinitions: [
                         [name: "Environment", template:  ENVIRONMENT],
-                        [name: "Cluster", template: CLUSTER_NAME]
+                        [name: "Cluster", template: CLUSTER_NAME],
+                        [name: "Application", template: APPLICATION
                     ]
         }
         cleanup {
