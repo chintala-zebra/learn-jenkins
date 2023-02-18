@@ -1,20 +1,22 @@
 @Library('middleware-library') _
 
 properties([
-    parameters([
         [
             name: 'ENVIRONMENT',
             $class: 'ChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             script: [
-                '''
-                def list = []
-                list = listFolders('GCP-Sandbox')
-                return ["1"]
-                '''
+                $class: 'GroovyScript',
+                    sandbox: 'true',
+                    classpath: [],
+                script: [
+                    script: '''
+                    
+                    return ['parts']
+                    '''
+                ]
             ]
         ]
-    ])
 ])
 pipeline {
     agent any
