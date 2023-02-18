@@ -12,6 +12,7 @@ pipeline {
                     log.info 'Starting'
                     sayHello 'Dave'
                     log.warning 'Nothing'
+                    log.error 'Failed!'
                 }
             }
         }
