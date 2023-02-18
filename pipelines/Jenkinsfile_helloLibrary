@@ -2,6 +2,9 @@
 
 pipeline {
     agent any
+    options {
+        ansiColor('xterm')
+    }
     stages {
         stage('Print the Values') {
             steps {
