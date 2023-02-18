@@ -8,11 +8,10 @@ properties([
             choiceType: 'PT_SINGLE_SELECT',
             script: [
                 $class: 'GroovyScript',
-                    sandbox: 'true',
-                    classpath: [],
+                sandbox: 'true',
+                classpath: [],
                 script: [
                     script: '''
-                    @Library('middleware-library')
                     def list = []
                     list = listFolders('GCP-Sandbox')
                     return list
