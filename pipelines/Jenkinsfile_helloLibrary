@@ -13,7 +13,7 @@ pipeline {
                     sayHello 'Dave'
                     log.warning 'Nothing'
                     log.error 'Failed!'
-                    echo listFolders 'GCP-Sandbox'
+                    listFolders 'GCP-Sandbox'
                 }
             }
         }
