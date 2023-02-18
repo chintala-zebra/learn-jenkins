@@ -5,9 +5,9 @@ import groovy.io.FileType
 def call(String folderName) {
     def list = []
     list.add('')
-    def dir = new File("/inventory/${folderName}")
-    dir.eachFile (FileType.FILES) { file ->
-        list << file.name.replaceAll('.yml','');
+    def dir = new File("/inventory/${folderName}/")
+    dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
+        list << file.name
     }
-    return list
+    return list.sort() - 'group_vars' 
 }
