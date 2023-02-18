@@ -35,7 +35,7 @@ pipeline {
                     sayHello('Dave')
                     log.warning('Nothing')
                     log.error('Failed!')
-                    //listFolders 'GCP-Sandbox'
+                    listFolders 'GCP-Sandbox'
                 }
             }
         }
