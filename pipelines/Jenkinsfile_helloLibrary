@@ -1,0 +1,14 @@
+libraries {
+    lib('pipeline-library-demo')
+}
+
+pipeline {
+    agent any
+    stages {
+        stage('Print the Values') {
+            steps {
+                sayHello 'Dave'
+            }
+        }
+    }
+}
