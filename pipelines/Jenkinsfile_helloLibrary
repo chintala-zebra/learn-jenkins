@@ -11,7 +11,7 @@ properties([
                     sandbox: 'true',
                     classpath: [],
                 script: [
-                    return listFolders('GCP-Sandbox')
+           //         return listFolders('GCP-Sandbox')
                 ]
             ]
         ]
