@@ -1,5 +1,22 @@
 @Library('middleware-library') _
 
+properties([
+    parameters([
+        [
+            name: 'ENVIRONMENT',
+            $class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            script: [
+                $class: 'GroovyScript',
+                    sandbox: 'true',
+                    classpath: [],
+                script: [
+                    return listFolders 'GCP-Sandbox'
+                ]
+            ]
+        ]
+    ])
+])
 pipeline {
     agent any
     options {
@@ -13,7 +30,7 @@ pipeline {
                     sayHello 'Dave'
                     log.warning 'Nothing'
                     log.error 'Failed!'
-                    echo listFolders 'GCP-Sandbox'
+                    //listFolders 'GCP-Sandbox'
                 }
             }
         }
