@@ -12,6 +12,7 @@ properties([
                     classpath: [],
                 script: [
                     script: '''
+                    @Library('middleware-library')
                     def list = []
                     list = listFolders('GCP-Sandbox')
                     return list
