@@ -8,7 +8,8 @@ properties([
             choiceType: 'PT_SINGLE_SELECT',
             script: [
                 '''
-                def list = listFolders('GCP-Sandbox')
+                def list = []
+                list = listFolders('GCP-Sandbox')
                 return list
                 '''
             ]
