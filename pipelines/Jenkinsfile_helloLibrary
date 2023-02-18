@@ -10,7 +10,7 @@ properties([
                 '''
                 def list = []
                 list = listFolders('GCP-Sandbox')
-                return list
+                return ["1"]
                 '''
             ]
         ]
