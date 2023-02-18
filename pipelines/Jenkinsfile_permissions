@@ -7,6 +7,8 @@ properties([
             choiceType: 'PT_SINGLE_SELECT',
             script: [
                 $class: 'GroovyScript',
+                    sandbox: 'true',
+                    classpath: [],
                 script: [
                     script: '''
                     def build = Thread.currentThread().toString()
@@ -15,9 +17,7 @@ properties([
                     def jobName = match[0][1]
                     def parts = jobName.split('_');
                     return [parts[2]]
-                    ''',
-                    sandbox: 'true',
-                    classpath: []
+                    '''
                 ]
             ]
         ],
@@ -40,12 +40,6 @@ properties([
                     script:  
                     '''
                         import groovy.io.FileType
-
-                        def build = Thread.currentThread().toString()
-                        def regexp= ".+?/job/([^/]+)/.*"
-                        def match = build  =~ regexp
-                        def jobName = match[0][1]
-
                         if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
                             def build = Thread.currentThread().toString()
                             def regexp= ".+?/job/([^/]+)/.*"
