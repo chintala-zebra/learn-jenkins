@@ -14,8 +14,7 @@ properties([
                 script: [
                     script: '''
                     def list = []
-                    log.info('trying')
-                    list = listFolders('GCP-Sandbox')
+                    //list = listFolders('GCP-Sandbox')
                     //return list
                     def hello = new Hello()
                     def name = hello.printHello("Chintala")
