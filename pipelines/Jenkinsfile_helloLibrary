@@ -19,7 +19,7 @@ pipeline {
                     log.info(hello.printHello("Chintala"))
                     def list = listFolders 'GCP-Sandbox'
                     for(item in list){
-                        println item
+                       // println item
                     }
                 }
             }
