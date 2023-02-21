@@ -31,6 +31,8 @@ pipeline {
         stage('Print the Values') {
             steps {
                 script {
+                    import org.zebra.Hello
+                    
                     log.info('Starting')
                     sayHello('Dave')
                     log.warning('Nothing')
