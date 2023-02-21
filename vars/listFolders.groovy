@@ -8,7 +8,6 @@ def call(String folderName) {
     list.add('')
     def dir = new File("/inventory/${folderName}/")
     dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
-        echo file.name
         list << file.name
     }
     return list.sort() - 'group_vars' 
