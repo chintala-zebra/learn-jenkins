@@ -1,5 +1,5 @@
 @Library('middleware-library')_
-import org.zebra.Hello
+import org.zebra.jenkinslib.Hello
 def hello = new Hello()
 
 pipeline {
@@ -11,7 +11,6 @@ pipeline {
         stage('Print the Values') {
             steps {
                 script {
-                    
                     log.info('Starting')
                     log.warning('Nothing')
                     log.error('Failed!')

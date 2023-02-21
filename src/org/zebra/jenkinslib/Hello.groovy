@@ -1,4 +1,4 @@
-package org.zebra
+package org.zebra.jenkinslib
 
   public class Hello {
 
