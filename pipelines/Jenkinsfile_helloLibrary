@@ -1,4 +1,4 @@
-@Library('middleware-library') _
+@Library('middleware-library')_
 
 properties([
     parameters([
@@ -12,10 +12,15 @@ properties([
                 classpath: [],
                 script: [
                     script: '''
-                    def list = []
-                    log.info('trying')
-                    list = listFolders('GCP-Sandbox')
-                    return list
+                    
+                    //def list = []
+                    //log.info('trying')
+                    //list = listFolders('GCP-Sandbox')
+                    //return list
+                    import org.zebra.Hello;
+                    def hello = new Hello()
+                    return hello.printHello("Chintala")
+
                     '''
                 ]
             ]
