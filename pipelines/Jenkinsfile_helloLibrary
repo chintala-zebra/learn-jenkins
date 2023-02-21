@@ -17,8 +17,8 @@ pipeline {
                     log.error('Failed!')
                     sayHello('Dave')
                     log.info(hello.printHello("Chintala"))
-                    def list = listFolders('GCP-Sandbox')
-                    for(item in list){
+                    def listOfFolders = listFolders('GCP-Sandbox')
+                    for(item in listOfFolders){
                         println item
                     }
                 }
