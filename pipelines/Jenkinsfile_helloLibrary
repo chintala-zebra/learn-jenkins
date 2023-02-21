@@ -1,6 +1,27 @@
 @Library('middleware-library')_
 import org.zebra.Hello
+def hello = new Hello()
 
+properties([
+    parameters([
+        [
+            name: 'ENVIRONMENT',
+            $class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            script: [
+                $class: 'GroovyScript',
+                sandbox: 'true',
+                classpath: [],
+                script: [
+                    script: '''
+                    def name = hello.printHello("Chintala")
+                    return [name]
+                    '''
+                ]
+            ]
+        ]
+    ])
+])
 pipeline {
     agent any
     options {
@@ -16,7 +37,6 @@ pipeline {
                     log.warning('Nothing')
                     log.error('Failed!')
                     listFolders 'GCP-Sandbox'
-                    def hello = new Hello()
                     log.info(hello.printHello("Chintala"))
                 }
             }
