@@ -15,9 +15,9 @@ pipeline {
                     log.info('Starting')
                     log.warning('Nothing')
                     log.error('Failed!')
-                    listFolders 'GCP-Sandbox'
                     sayHello('Dave')
                     log.info(hello.printHello("Chintala"))
+                    listFolders 'GCP-Sandbox'
                 }
             }
         }
