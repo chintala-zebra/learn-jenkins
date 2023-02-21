@@ -8,7 +8,7 @@ properties([
             choiceType: 'PT_SINGLE_SELECT',
             script: [
                 $class: 'GroovyScript',
-                sandbox: 'false',
+                sandbox: 'true',
                 classpath: [],
                 script: [
                     script: '''
