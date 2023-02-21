@@ -19,8 +19,8 @@ properties([
                     //return list
                     import org.zebra.Hello;
                     def hello = new Hello()
-                    return hello.printHello("Chintala")
-
+                    def name= hello.printHello("Chintala")
+                    return [name]
                     '''
                 ]
             ]
