@@ -12,15 +12,9 @@ properties([
                 classpath: [],
                 script: [
                     script: '''
-                    import org.zebra.Hello
-                    
                     def list = []
-                    //log.info('trying')
-                    //list = listFolders('GCP-Sandbox')
-                    //return list
-                    def hello = new Hello()
-                    def name = hello.printHello("Chintala")
-                    list[0] = name
+                    log.info('trying')
+                    list = listFolders('GCP-Sandbox')
                     return list
                     '''
                 ]
@@ -42,6 +36,8 @@ pipeline {
                     log.warning('Nothing')
                     log.error('Failed!')
                     listFolders 'GCP-Sandbox'
+                    def hello = new Hello()
+                    log.info(hello.printHello("Chintala"))
                 }
             }
         }
