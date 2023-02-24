@@ -20,6 +20,10 @@ pipeline {
                     for(item in listOfFolders){
                         println item
                     }
+                    listOfFolders = listFolders('GCP-PreProd')
+                    for(item in listOfFolders){
+                        println item
+                    }
                 }
             }
         }
