@@ -14,8 +14,8 @@ agent {
                 set +x
                 echo $ANSIBLE_VALUT > .mysecret
                 export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
-                ansible-vault decrypt the-key
-                echo "removed the key" > .mysecret
+                //ansible-vault decrypt the-key
+                //echo "removed the key" > .mysecret
             """
       }
     }
@@ -24,7 +24,7 @@ agent {
           sh """
               pwd
               export ANSIBLE_HOST_KEY_CHECKING=False
-              ansible-playbook -i hosts/hosts.yaml ping-play.yaml
+              ansible-playbook -i hosts/hosts.yaml --vault-password-file .mysecret ping-play.yaml
             """
       }
     }
