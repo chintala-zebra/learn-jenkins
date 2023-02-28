@@ -16,10 +16,10 @@ pipeline {
                     log.error('Failed!')
                     //sayHello('Dave')
                     //log.info(hello.printHello("Chintala"))
-                    // def listOfFolders = listFolders('GCP-Sandbox')
-                    // for(item in listOfFolders){
-                    //     println item
-                    // }
+                    def listOfFolders = listFolders('GCP-Sandbox')
+                    for(item in listOfFolders){
+                         println item
+                     }
                     // listOfFolders = listFolders('GCP-PreProd')
                     // for(item in listOfFolders){
                     //     println item
