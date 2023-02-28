@@ -1,6 +1,6 @@
 @Library('middleware-library')_
-//import org.zebra.jenkinslib.Hello
-//def hello = new Hello()
+import org.zebra.jenkinslib.Hello
+def hello = new Hello()
 
 pipeline {
     agent any
@@ -15,7 +15,7 @@ pipeline {
                     log.warning('Nothing')
                     log.error('Failed!')
                     //sayHello('Dave')
-                    //log.info(hello.printHello("Chintala"))
+                    log.info(hello.printHello("Chintala"))
                     def listOfFolders = listFolders('GCP-Sandbox')
                     for(item in listOfFolders){
                          println item
