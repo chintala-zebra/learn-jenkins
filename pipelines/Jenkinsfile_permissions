@@ -32,12 +32,18 @@ properties([
                     classpath: [],
                 script: [
                     script: '''
-                    def build = Thread.currentThread().toString()
-                    def regexp= ".+?/job/([^/]+)/.*"
-                    def match = build  =~ regexp
-                    def jobName = match[0][1]
-                    def parts = jobName.split('_');
-                    return [jobName]
+                    if (CLUSTER_NAME.isEmpty() || CLUSTER_NAME==""){
+                            return ''
+                    }
+                    else
+                    {  
+                        def build = Thread.currentThread().toString()
+                        def regexp= ".+?/job/([^/]+)/.*"
+                        def match = build  =~ regexp
+                        def jobName = match[0][1]
+                        def parts = jobName.split('_');
+                        return [jobName]
+                    }
                     '''
                 ]
             ]
