@@ -25,13 +25,14 @@ properties([
             name: 'CLUSTER_NAME',
             $class: 'ChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
+            referencedParameters: 'ENVIRONMENT',
             script: [
                 $class: 'GroovyScript',
                     sandbox: 'true',
                     classpath: [],
                 script: [
                     script: '''
-                    if (CLUSTER_NAME.isEmpty() || CLUSTER_NAME==""){
+                    if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
                             return ''
                     }
                     else
