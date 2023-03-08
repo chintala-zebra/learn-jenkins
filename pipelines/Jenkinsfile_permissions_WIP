@@ -25,18 +25,27 @@ properties([
             $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             referencedParameters: 'ENVIRONMENT',
-            $class: 'GroovyScript',
-                sandbox: 'true',
-                classpath: [],
-            script: [
-                script: '''
-                def build = Thread.currentThread().toString()
-                def regexp= ".+?/job/([^/]+)/.*"
-                def match = build  =~ regexp
-                def jobName = match[0][1]
-                def parts = jobName.split('_');
-                return [parts[2]]
-                '''
+            script: 
+            [
+                $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script: 'return ["ERROR"]'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script: '''
+                        
+                            def build = Thread.currentThread().toString()
+                            def regexp= ".+?/job/([^/]+)/.*"
+                            def match = build  =~ regexp
+                            def jobName = match[0][1]
+                            def parts = jobName.split('_');
+                            return [parts[2]]
+                    '''.stripIndent()
+                ]
             ]
         ]
     ])
