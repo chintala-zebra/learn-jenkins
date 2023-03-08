@@ -38,16 +38,10 @@ properties([
                 ],
                 script: [
                     classpath: [],
-                    sandbox: false,
+                    sandbox: true,
                     script: """
                         def getGFEPartners(String partnerName) { 
-                            def build = Thread.currentThread().toString()
-                            def regexp= ".+?/job/([^/]+)/.*"
-                            def match = build  =~ regexp
-                            def jobName = match[0][1]
-                            def parts = jobName.split('_');
-                            return [partnerName+ parts[2]]
-                           
+                            return [partnerName+'_aaa', partnerName+'_bbb']
                         }
                         return getGFEPartners(PartnerName)
                          """.stripIndent()
