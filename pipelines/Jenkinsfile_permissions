@@ -26,31 +26,18 @@ properties([
             $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             referencedParameters: 'ENVIRONMENT',
-            script: 
-            [
+            script: [
                 $class: 'GroovyScript',
-                fallbackScript: [
+                    sandbox: 'true',
                     classpath: [],
-                    sandbox: false,
-                    script: 'return [\'ERROR\']'
-                ],
                 script: [
-                    classpath: [],
-                    sandbox: false,
-                    script:  
-                    '''
-                        import groovy.io.FileType
-
-
-                        def build = Thread.currentThread().toString()
-                        def regexp= ".+?/job/([^/]+)/.*"
-                        def match = build  =~ regexp
-                        def jobName = match[0][1]
-                        def parts = jobName.split('_');
-                        return [parts[2]]
-                        
-
-
+                    script: '''
+                    def build = Thread.currentThread().toString()
+                    def regexp= ".+?/job/([^/]+)/.*"
+                    def match = build  =~ regexp
+                    def jobName = match[0][1]
+                    def parts = jobName.split('_');
+                    return [parts[2]]
                     '''
                 ]
             ]
