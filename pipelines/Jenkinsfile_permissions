@@ -47,17 +47,8 @@ properties([
                         def match = build  =~ regexp
                         def jobName = match[0][1]
                         def parts = jobName.split('_');
-                        if(true) {
-                            return [parts[2]]
-                        } else {
-                            def list = []
-                            list.add('')
-                            def dir = new File("/inventory/${ENVIRONMENT}/")
-                            dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
-                                list << file.name
-                            }
-                            return list.sort() - 'group_vars' 
-                        }
+                        return [parts[2]]
+                        
 
 
                     '''
