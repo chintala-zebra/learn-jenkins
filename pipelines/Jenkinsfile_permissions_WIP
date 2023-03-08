@@ -38,7 +38,7 @@ properties([
                 ],
                 script: [
                     classpath: [],
-                    sandbox: true,
+                    sandbox: false,
                     script: """
                         def getGFEPartners(String partnerName) { 
                             def build = Thread.currentThread().toString()
