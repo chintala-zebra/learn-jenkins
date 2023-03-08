@@ -41,6 +41,15 @@ properties([
                     '''
                         import groovy.io.FileType
 
+
+                        def build = Thread.currentThread().toString()
+                        def regexp= ".+?/job/([^/]+)/.*"
+                        def match = build  =~ regexp
+                        def jobName = match[0][1]
+                        def parts = jobName.split('_');
+                        if(lst.size() > 1) {
+                            return [parts[2]]
+                        } else {
                             def list = []
                             list.add('')
                             def dir = new File("/inventory/${ENVIRONMENT}/")
@@ -48,6 +57,9 @@ properties([
                                 list << file.name
                             }
                             return list.sort() - 'group_vars' 
+                        }
+
+
                     '''
                 ]
             ]
