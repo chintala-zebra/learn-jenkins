@@ -7,7 +7,7 @@ pipeline {
         stage('Checkout from GitHub') {
             steps {
                 checkout([$class: 'GitSCM', 
-                branches: [[name: '*/cops-dev']], 
+                branches: [[name: MIDDLEWARE_GIT_BRANCH]], 
                 extensions: [[$class: 'RelativeTargetDirectory', 
                 relativeTargetDir: "${WORKSPACE}"], 
                 [$class: 'CleanBeforeCheckout']], 
