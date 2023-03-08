@@ -1,0 +1,18 @@
+pipeline {
+    agent any
+    options {
+        ansiColor('xterm')
+    }
+    stages {
+        stage('Checkout from GitHub') {
+            steps {
+                checkout([$class: 'GitSCM', 
+                branches: [[name: '*/cops-dev']], 
+                extensions: [[$class: 'RelativeTargetDirectory', 
+                relativeTargetDir: "${WORKSPACE}"], 
+                [$class: 'CleanBeforeCheckout']], 
+                userRemoteConfigs: [[credentialsId: 'MID_GITHUB', url: 'https://github.com/chintala-zebra/learn-jenkins.git']]])
+            }
+        }
+    }
+}
