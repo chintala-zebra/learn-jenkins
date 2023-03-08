@@ -47,7 +47,7 @@ properties([
                         def match = build  =~ regexp
                         def jobName = match[0][1]
                         def parts = jobName.split('_');
-                        if(lst.size() > 1) {
+                        if(parts.size() > 1) {
                             return [parts[2]]
                         } else {
                             def list = []
