@@ -100,7 +100,7 @@ pipeline {
                 echo "Environment: ${params.ENVIRONMENT}"
                 echo "Cluster Name: ${params.CLUSTER_NAME}"
                 echo "Application Name: ${params.APPLICATION}"
-                sh "exit 1"
+                //sh "exit 1"
             }
         }
         stage("Build Notification") {
