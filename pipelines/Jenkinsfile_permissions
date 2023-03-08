@@ -26,24 +26,38 @@ properties([
             $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             referencedParameters: 'ENVIRONMENT',
-            script: [
+            script: 
+            [
                 $class: 'GroovyScript',
-                    sandbox: 'true',
+                fallbackScript: [
                     classpath: [],
+                    sandbox: false,
+                    script: 'return [\'ERROR\']'
+                ],
                 script: [
-                    script: '''
-                    if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
-                            return 'HELLO'
-                    }
-                    else
-                    {  
-                        def build1 = Thread.currentThread().toString()
-                        def regexp1 = ".+?/job/([^/]+)/.*"
-                        def match1 = build1  =~ regexp1
-                        def jobName1 = match1[0][1]
-                        def parts1 = jobName1.split('_');
-                        return [jobName1]
-                    }
+                    classpath: [],
+                    sandbox: false,
+                    script:  
+                    '''
+                        import groovy.io.FileType
+                        if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
+                            def build = Thread.currentThread().toString()
+                            def regexp= ".+?/job/([^/]+)/.*"
+                            def match = build  =~ regexp
+                            def jobName = match[0][1]
+                            def parts = jobName.split('_');
+                            return [parts[2]]
+                        }
+                        else
+                        {
+                            def list = []
+                            list.add('')
+                            def dir = new File("/inventory/${ENVIRONMENT}/")
+                            dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
+                                list << file.name
+                            }
+                            return list.sort() - 'group_vars' 
+                        }
                     '''
                 ]
             ]
@@ -96,7 +110,7 @@ pipeline {
                 echo "Environment: ${params.ENVIRONMENT}"
                 echo "Cluster Name: ${params.CLUSTER_NAME}"
                 echo "Application Name: ${params.APPLICATION}"
-                //sh "exit 1"
+                sh "exit 1"
             }
         }
         stage("Build Notification") {
