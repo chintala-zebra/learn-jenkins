@@ -31,12 +31,12 @@ properties([
                 $class: 'GroovyScript',
                 fallbackScript: [
                     classpath: [],
-                    sandbox: false,
+                    sandbox: true,
                     script: 'return [\'ERROR\']'
                 ],
                 script: [
                     classpath: [],
-                    sandbox: false,
+                    sandbox: true,
                     script:  
                     '''
                         import groovy.io.FileType
@@ -72,12 +72,12 @@ properties([
                 $class: 'GroovyScript',
                 fallbackScript: [
                     classpath: [],
-                    sandbox: false,
+                    sandbox: true,
                     script: 'return [\'ERROR\']'
                 ],
                 script: [
                     classpath: [],
-                    sandbox: false,
+                    sandbox: true,
                     script:  
                     '''
                         import groovy.io.FileType
