@@ -15,11 +15,11 @@ properties([
                     sandbox: true,
                     script: """
                         def build = Thread.currentThread().toString()
-                    def regexp= ".+?/job/([^/]+)/.*"
-                    def match = build  =~ regexp
-                    def jobName = match[0][1]
-                    def parts = jobName.split('_');
-                    return [parts[2]]
+                        def regexp= ".+?/job/([^/]+)/.*"
+                        def match = build  =~ regexp
+                        def jobName = match[0][1]
+                        def parts = jobName.split('_');
+                        return [parts[2]]
                     """.stripIndent()
                 ]
             ]
@@ -41,7 +41,13 @@ properties([
                     sandbox: true,
                     script: """
                         def getGFEPartners(String partnerName) { 
-                            return [partnerName+'_aaa', partnerName+'_bbb']
+                            def build = Thread.currentThread().toString()
+                            def regexp= ".+?/job/([^/]+)/.*"
+                            def match = build  =~ regexp
+                            def jobName = match[0][1]
+                            def parts = jobName.split('_');
+                            return [partnerName+ parts[2]]
+                           
                         }
                         return getGFEPartners(PartnerName)
                          """.stripIndent()
