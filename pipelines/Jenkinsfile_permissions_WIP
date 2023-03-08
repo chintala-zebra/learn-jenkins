@@ -1,50 +1,45 @@
 properties([
     parameters([
-        [
-            name: 'ENVIRONMENT',
-            $class: 'ChoiceParameter',
+        [$class: 'ChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
-            script: [
-                $class: 'GroovyScript',
-                    sandbox: 'true',
-                    classpath: [],
-                script: [
-                    script: '''
-                    def build = Thread.currentThread().toString()
-                    def regexp= ".+?/job/([^/]+)/.*"
-                    def match = build  =~ regexp
-                    def jobName = match[0][1]
-                    def parts = jobName.split('_');
-                    return [parts[2]]
-                    '''
-                ]
-            ]
-        ],
-        [
-            name: 'CLUSTER_NAME',
-            $class: 'CascadeChoiceParameter',
-            choiceType: 'PT_SINGLE_SELECT',
-            referencedParameters: 'ENVIRONMENT',
-            script: 
-            [
-                $class: 'GroovyScript',
+            filterable: false,
+            name: 'PartnerName',
+            script: [$class: 'GroovyScript',
                 fallbackScript: [
                     classpath: [],
-                    sandbox: false,
+                    sandbox: true,
                     script: 'return ["ERROR"]'
                 ],
                 script: [
                     classpath: [],
-                    sandbox: false,
-                    script: '''
-                        
-                            def build = Thread.currentThread().toString()
-                            def regexp= ".+?/job/([^/]+)/.*"
-                            def match = build  =~ regexp
-                            def jobName = match[0][1]
-                            def parts = jobName.split('_');
-                            return [parts[2]]
-                    '''.stripIndent()
+                    sandbox: true,
+                    script: """
+                        return ["single_partner"]
+                    """.stripIndent()
+                ]
+            ]
+        ],
+        [$class: 'CascadeChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            filterLength: 1,
+            filterable: false,
+            name: 'AutoCalcParam',
+            referencedParameters: 'PartnerName',
+            script: [$class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: true,
+                    script: 'return ["ERROR"]'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: true,
+                    script: """
+                        def getGFEPartners(String partnerName) { 
+                            return [partnerName+'_aaa', partnerName+'_bbb']
+                        }
+                        return getGFEPartners(PartnerName)
+                         """.stripIndent()
                 ]
             ]
         ]
