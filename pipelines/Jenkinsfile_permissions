@@ -23,7 +23,7 @@ properties([
         ],
         [
             name: 'CLUSTER_NAME',
-            $class: 'ChoiceParameter',
+            $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             referencedParameters: 'ENVIRONMENT',
             script: [
@@ -37,12 +37,12 @@ properties([
                     }
                     else
                     {  
-                        def build = Thread.currentThread().toString()
-                        def regexp= ".+?/job/([^/]+)/.*"
-                        def match = build  =~ regexp
-                        def jobName = match[0][1]
-                        def parts = jobName.split('_');
-                        return [jobName]
+                        def build1 = Thread.currentThread().toString()
+                        def regexp1 = ".+?/job/([^/]+)/.*"
+                        def match1 = build1  =~ regexp1
+                        def jobName1 = match1[0][1]
+                        def parts1 = jobName1.split('_');
+                        return [jobName1]
                     }
                     '''
                 ]
