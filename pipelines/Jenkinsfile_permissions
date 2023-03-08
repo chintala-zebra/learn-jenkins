@@ -33,7 +33,7 @@ properties([
                 script: [
                     script: '''
                     if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
-                            return ''
+                            return 'HELLO'
                     }
                     else
                     {  
