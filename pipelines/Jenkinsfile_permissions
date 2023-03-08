@@ -37,7 +37,7 @@ properties([
                     def match = build  =~ regexp
                     def jobName = match[0][1]
                     def parts = jobName.split('_');
-                    return [parts[2]]
+                    return [jobName]
                     '''
                 ]
             ]
