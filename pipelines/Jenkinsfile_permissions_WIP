@@ -24,17 +24,14 @@ properties([
             choiceType: 'PT_SINGLE_SELECT',
             filterable: false,
             name: 'Environment',
+            referencedParameters: 'JobName',
             script: [$class: 'GroovyScript',
                 fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
                 script: [
                     classpath: [],
                     sandbox: true,
                     script: """
-                        def build = Thread.currentThread().getName()
-                        def regexp= ".+?/job/([^/]+)/.*"
-                        def match = build  =~ regexp
-                        def jobName = match[0][1]
-                        def parts = jobName.split('_');
+                        def parts = JobName.split('_');
                         return [parts[2]]
                     """.stripIndent()
                 ]
