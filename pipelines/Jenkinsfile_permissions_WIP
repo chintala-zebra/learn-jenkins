@@ -23,7 +23,7 @@ properties([
         [$class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             filterable: false,
-            name: 'Environment',
+            name: 'ENVIRONMENT',
             referencedParameters: 'JobName',
             script: [$class: 'GroovyScript',
                 fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
@@ -51,7 +51,7 @@ properties([
         [$class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             name: 'Cluster',
-            referencedParameters: 'Environment',
+            referencedParameters: 'ENVIRONMENT',
             script: [$class: 'GroovyScript',
                 fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
                 script: [
@@ -59,16 +59,16 @@ properties([
                     sandbox: true,
                     script: """
                         import groovy.io.FileType
-                        if (Environment.isEmpty() || Environment==""){
+                        if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
                             return ''
                         }
                         else
                         {                        
-                            def list = []
+                             def list = []
                             list.add('')
-                            def dir = new File("/inventory/${Environment}")
+                            def dir = new File("/inventory/${ENVIRONMENT}")
                             dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
-                                 list << file.name
+                                list << file.name
                             }
                             return list.sort() - 'group_vars' 
                         }
@@ -84,7 +84,7 @@ pipeline {
     stages {
         stage('Print the Values') {
             steps {
-                echo "Environment: ${params.HIDDEN_PARAM}"
+                echo "ENVIRONMENT: ${params.HIDDEN_PARAM}"
                 echo "Cluster Name: ${params.CLUSTER_NAME}"
                 echo "Application Name: ${params.APPLICATION}"
                 //sh "exit 1"
