@@ -11,7 +11,7 @@ properties([
                     classpath: [],
                     sandbox: true,
                     script: """
-                        def build = Thread.currentThread().toString()
+                        def build = Thread.currentThread().getName()
                         def regexp= ".+?/job/([^/]+)/.*"
                         def match = build  =~ regexp
                         def jobName = match[0][1]
