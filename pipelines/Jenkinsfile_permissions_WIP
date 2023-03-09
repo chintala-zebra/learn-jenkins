@@ -38,9 +38,11 @@ properties([
                     classpath: [],
                     sandbox: true,
                     script: """
+                    import hudson.model.*
+                    
                         def getValuesForEnvironment(String environment) { 
                             
-                            return [Thread.currentThread().toString() +'_aaa', JOB_NAME+'_bbb']
+                            return [Thread.currentThread().toString() +'_aaa', currentJob.getName() +'_bbb']
                         }
                         return getValuesForEnvironment(Environment)
                          """.stripIndent()
