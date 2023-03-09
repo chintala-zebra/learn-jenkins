@@ -67,7 +67,7 @@ properties([
                             def list = []
                             list.add('')
                             def dir = new File("/inventory/${Environment}")
-                            dir.eachFile (FileType.DIRECTORIES) { file ->
+                            dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
                                  list << file.name
                             }
                             return list.sort() - 'group_vars' 
