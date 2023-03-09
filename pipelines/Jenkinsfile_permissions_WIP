@@ -3,7 +3,7 @@ properties([
         [$class: 'ChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             filterable: false,
-            name: 'PartnerName',
+            name: 'Environment',
             script: [$class: 'GroovyScript',
                 fallbackScript: [
                     classpath: [],
@@ -26,10 +26,8 @@ properties([
         ],
         [$class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
-            filterLength: 1,
-            filterable: false,
-            name: 'AutoCalcParam',
-            referencedParameters: 'PartnerName',
+            name: 'Cluster',
+            referencedParameters: 'Environment',
             script: [$class: 'GroovyScript',
                 fallbackScript: [
                     classpath: [],
@@ -40,10 +38,10 @@ properties([
                     classpath: [],
                     sandbox: true,
                     script: """
-                        def getGFEPartners(String partnerName) { 
-                            return [partnerName+'_aaa', partnerName+'_bbb']
+                        def getGFEPartners(String environment) { 
+                            return [environment+'_aaa', environment+'_bbb']
                         }
-                        return getGFEPartners(PartnerName)
+                        return getGFEPartners(Environment)
                          """.stripIndent()
                 ]
             ]
