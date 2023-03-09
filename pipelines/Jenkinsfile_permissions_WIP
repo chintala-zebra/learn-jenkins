@@ -1,5 +1,27 @@
 properties([
     parameters([
+        [$class     : 'WHideParameterDefinition',
+            name       : 'HIDDEN_PARAM',
+            description: 'Hidden param for...',
+            script: [$class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: true,
+                    script: 'return ["ERROR"]'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: true,
+                    script: """
+                        def build = Thread.currentThread().toString()
+                        def regexp= ".+?/job/([^/]+)/.*"
+                        def match = build  =~ regexp
+                        def jobName = match[0][1]
+                        return jobName
+                    """.stripIndent()
+                ]
+            ]
+        ],
         [$class: 'ChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             filterable: false,
@@ -38,11 +60,9 @@ properties([
                     classpath: [],
                     sandbox: true,
                     script: """
-                    import hudson.model.*
-                    
                         def getValuesForEnvironment(String environment) { 
                             
-                            return [Thread.currentThread().toString() +'_aaa', currentJob.getName() +'_bbb']
+                            return [Thread.currentThread().toString() +'_aaa', environment+'_bbb']
                         }
                         return getValuesForEnvironment(Environment)
                          """.stripIndent()
@@ -57,7 +77,7 @@ pipeline {
     stages {
         stage('Print the Values') {
             steps {
-                echo "Environment: ${params.ENVIRONMENT}"
+                echo "Environment: ${params.HIDDEN_PARAM}"
                 echo "Cluster Name: ${params.CLUSTER_NAME}"
                 echo "Application Name: ${params.APPLICATION}"
                 //sh "exit 1"
