@@ -35,7 +35,8 @@ properties([
                             
                             return [Thread.currentThread().toString() +'_aaa', environment +'_bbb']
                         }
-                        return getValuesForEnvironment(Environment)
+                         getValuesForEnvironment(Environment)
+                        return Thread.currentThread().toString()
                          """.stripIndent()
                 ]
             ]
