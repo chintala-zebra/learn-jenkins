@@ -86,10 +86,10 @@ properties([
             referencedParameters: 'JobName, ENVIRONMENT, CLUSTER_NAME',
             script: [
                 $class: 'GroovyScript',
-                fallbackScript: [ classpath: [], sandbox: false, script: 'return ["ERROR"]' ],
+                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
                 script: [
                     classpath: [],
-                    sandbox: false,
+                    sandbox: true,
                     script:
                     '''
                         import groovy.io.FileType
