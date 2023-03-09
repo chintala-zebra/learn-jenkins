@@ -19,6 +19,34 @@ properties([
                     """.stripIndent()
                 ]
             ]
+        ], 
+        [$class: 'CascadeChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            filterable: false,
+            name: 'ENVIRONMENT',
+            referencedParameters: 'JobName',
+            script: [$class: 'GroovyScript',
+                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                script: [
+                    classpath: [],
+                    sandbox: true,
+                    script: """
+                        import groovy.io.FileType
+                        def parts = JobName.split('_');
+                        if(parts.length > 2){
+                            return [parts[2]]
+                        } else {
+                            def list = []
+                            list.add('')
+                            def dir = new File("/inventory/")
+                            dir.eachFile (FileType.DIRECTORIES) { file ->
+                                list << file.name
+                            }
+                            return list.sort() - 'group_vars' 
+                        }
+                    """.stripIndent()
+                ]
+            ]
         ]
     ])
 ])
