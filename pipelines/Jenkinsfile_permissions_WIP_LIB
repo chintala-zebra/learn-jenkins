@@ -121,7 +121,7 @@ pipeline {
     stages {
         stage('Print the Values') {
             steps {
-                echo "ENVIRONMENT: ${params.HIDDEN_PARAM}"
+                echo "ENVIRONMENT: ${params.ENVIRONMENT}"
                 echo "Cluster Name: ${params.CLUSTER_NAME}"
                 echo "Application Name: ${params.APPLICATION}"
                 //sh "exit 1"
