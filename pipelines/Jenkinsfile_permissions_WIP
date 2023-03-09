@@ -84,7 +84,10 @@ pipeline {
     stages {
         stage('Print the Values') {
             steps {
-                echo "ENVIRONMENT: ${params.JobName}"
+                echo "Job Name: ${params.JobName}"
+                echo "ENVIRONMENT: ${params.ENVIRONMENT}"
+                echo "Cluster Name: ${params.Cluster}"
+                //sh "exit 1"
             }
         }
     }
