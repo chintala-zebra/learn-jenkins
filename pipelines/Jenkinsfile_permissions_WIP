@@ -40,7 +40,7 @@ properties([
                     script: """
                         def getValuesForEnvironment(String environment) { 
                             
-                            return [JOB_NAME +'_aaa', environment+'_bbb']
+                            return [Thread.currentThread().toString() +'_aaa', JOB_NAME+'_bbb']
                         }
                         return getValuesForEnvironment(Environment)
                          """.stripIndent()
