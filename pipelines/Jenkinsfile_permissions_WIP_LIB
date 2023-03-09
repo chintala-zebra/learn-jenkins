@@ -124,6 +124,7 @@ pipeline {
                 echo "ENVIRONMENT: ${params.ENVIRONMENT}"
                 echo "Cluster Name: ${params.CLUSTER_NAME}"
                 echo "Application Name: ${params.APPLICATION}"
+                echo "JobName:  ${params.JobName.split('_')}"
                 //sh "exit 1"
             }
         }
