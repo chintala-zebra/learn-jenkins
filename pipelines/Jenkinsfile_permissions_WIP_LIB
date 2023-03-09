@@ -97,16 +97,19 @@ properties([
                         import groovy.io.FileType
                         if (CLUSTER_NAME.isEmpty() || CLUSTER_NAME==""){
                             return ''
-                        }
-                        else
-                        {                        
-                            def list = []
-                            list.add('')
-                            def dir = new File("/inventory/${ENVIRONMENT}/${CLUSTER_NAME}")
-                            dir.eachFile (FileType.FILES) { file ->
-                                list << file.name.replaceAll('.yml','');
+                        } else {   
+                            def parts = JobName.split('_');
+                            if(parts.length > 4){
+                                return [parts[4]]
+                            } else {
+                                def list = []
+                                list.add('')
+                                def dir = new File("/inventory/${ENVIRONMENT}/${CLUSTER_NAME}")
+                                dir.eachFile (FileType.FILES) { file ->
+                                    list << file.name.replaceAll('.yml','');
+                                }
+                                return list
                             }
-                            return list
                         }
                     '''
                 ]
