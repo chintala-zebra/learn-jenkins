@@ -31,8 +31,19 @@ properties([
                     classpath: [],
                     sandbox: true,
                     script: """
+                        import groovy.io.FileType
                         def parts = JobName.split('_');
-                        return [parts[2]]
+                        if(parts.length > 2){
+                            return [parts[2]]
+                        } else {
+                            def list = []
+                            list.add('')
+                            def dir = new File("/inventory/")
+                            dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
+                                list << file.name
+                            }
+                            return list.sort() - 'group_vars' 
+                        }
                     """.stripIndent()
                 ]
             ]
