@@ -6,11 +6,7 @@ properties([
             filterable: false,
             name: 'Environment',
             script: [$class: 'GroovyScript',
-                fallbackScript: [
-                    classpath: [],
-                    sandbox: true,
-                    script: 'return ["ERROR"]'
-                ],
+                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
                 script: [
                     classpath: [],
                     sandbox: true,
@@ -30,18 +26,14 @@ properties([
             name: 'Cluster',
             referencedParameters: 'Environment',
             script: [$class: 'GroovyScript',
-                fallbackScript: [
-                    classpath: [],
-                    sandbox: true,
-                    script: 'return ["ERROR"]'
-                ],
+                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
                 script: [
                     classpath: [],
                     sandbox: true,
                     script: """
                         def getValuesForEnvironment(String environment) { 
                             
-                            return [Thread.currentThread().toString() +'_aaa', Thread.currentThread().getName() +'_bbb']
+                            return [Thread.currentThread().toString() +'_aaa', environment +'_bbb']
                         }
                         return getValuesForEnvironment(Environment)
                          """.stripIndent()
