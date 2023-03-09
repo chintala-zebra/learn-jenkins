@@ -83,7 +83,7 @@ properties([
             $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             description: '',
-            referencedParameters: 'JobName, ENVIRONMENT, CLUSTER_NAME',
+            referencedParameters: 'JobName,ENVIRONMENT,CLUSTER_NAME',
             script: [
                 $class: 'GroovyScript',
                 fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
