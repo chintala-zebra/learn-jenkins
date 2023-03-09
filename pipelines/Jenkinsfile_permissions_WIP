@@ -19,62 +19,6 @@ properties([
                     """.stripIndent()
                 ]
             ]
-        ], 
-        [$class: 'CascadeChoiceParameter',
-            choiceType: 'PT_SINGLE_SELECT',
-            filterable: false,
-            name: 'ENVIRONMENT',
-            referencedParameters: 'JobName',
-            script: [$class: 'GroovyScript',
-                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
-                script: [
-                    classpath: [],
-                    sandbox: true,
-                    script: """
-                        import groovy.io.FileType
-                        def parts = JobName.split('_');
-                        if(parts.length > 2){
-                            return [parts[2]]
-                        } else {
-                            def list = []
-                            list.add('')
-                            def dir = new File("/inventory/")
-                            dir.eachFile (FileType.DIRECTORIES) { file ->
-                                list << file.name
-                            }
-                            return list.sort() - 'group_vars' 
-                        }
-                    """.stripIndent()
-                ]
-            ]
-        ],
-        [$class: 'CascadeChoiceParameter',
-            choiceType: 'PT_SINGLE_SELECT',
-            name: 'Cluster',
-            referencedParameters: 'ENVIRONMENT',
-            script: [$class: 'GroovyScript',
-                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
-                script: [
-                    classpath: [],
-                    sandbox: true,
-                    script: """
-                        import groovy.io.FileType
-                        if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
-                            return ''
-                        }
-                        else
-                        {                        
-                             def list = []
-                            list.add('')
-                            def dir = new File("/inventory/${ENVIRONMENT}")
-                            dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
-                                list << file.name
-                            }
-                            return list.sort() - 'group_vars' 
-                        }
-                         """.stripIndent()
-                ]
-            ]
         ]
     ])
 ])
@@ -84,10 +28,7 @@ pipeline {
     stages {
         stage('Print the Values') {
             steps {
-                echo "ENVIRONMENT: ${params.HIDDEN_PARAM}"
-                echo "Cluster Name: ${params.CLUSTER_NAME}"
-                echo "Application Name: ${params.APPLICATION}"
-                //sh "exit 1"
+                echo "ENVIRONMENT: ${params.JobName}"
             }
         }
     }
