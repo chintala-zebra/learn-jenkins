@@ -20,7 +20,7 @@ properties([
                 ]
             ]
         ], 
-        [$class: 'ChoiceParameter',
+        [$class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             filterable: false,
             name: 'Environment',
