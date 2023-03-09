@@ -39,7 +39,8 @@ properties([
                     sandbox: true,
                     script: """
                         def getValuesForEnvironment(String environment) { 
-                            return [environment+'_aaa', environment+'_bbb']
+                            
+                            return [Thread.currentThread().toString() +'_aaa', environment+'_bbb']
                         }
                         return getValuesForEnvironment(Environment)
                          """.stripIndent()
