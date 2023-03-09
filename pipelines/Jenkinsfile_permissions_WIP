@@ -38,10 +38,10 @@ properties([
                     classpath: [],
                     sandbox: true,
                     script: """
-                        def getGFEPartners(String environment) { 
+                        def getValuesForEnvironment(String environment) { 
                             return [environment+'_aaa', environment+'_bbb']
                         }
-                        return getGFEPartners(Environment)
+                        return getValuesForEnvironment(Environment)
                          """.stripIndent()
                 ]
             ]
