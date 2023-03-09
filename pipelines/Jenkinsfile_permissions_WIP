@@ -58,7 +58,20 @@ properties([
                     classpath: [],
                     sandbox: true,
                     script: """
-                        return [Thread.currentThread().toString()]
+                        import groovy.io.FileType
+                        if (Environment.isEmpty() || Environment==""){
+                            return ''
+                        }
+                        else
+                        {                        
+                            def list = []
+                            list.add('')
+                            def dir = new File("/inventory/${Environment}")
+                            dir.eachFile (FileType.DIRECTORIES) { file ->
+                                 list << file.name
+                            }
+                            return list.sort() - 'group_vars' 
+                        }
                          """.stripIndent()
                 ]
             ]
