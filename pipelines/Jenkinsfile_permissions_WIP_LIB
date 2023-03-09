@@ -60,9 +60,7 @@ properties([
                     script: """
                         if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
                             return ''
-                        }
-                        else
-                        {
+                        } else {
                             def parts = JobName.split('_');
                             if(parts.length > 3){
                                 return [parts[3]]
