@@ -58,6 +58,7 @@ properties([
                     classpath: [],
                     sandbox: true,
                     script: """
+                        import groovy.io.FileType
                         if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
                             return ''
                         } else {
