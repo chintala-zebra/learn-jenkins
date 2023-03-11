@@ -1,0 +1,13 @@
+pipeline {
+    agent any
+    options {
+        ansiColor('xterm')
+    }
+    stages {
+        stage('Checkout from GitHub') {
+            steps {
+                sh 'env|sort'
+            }
+        }
+    }
+}
