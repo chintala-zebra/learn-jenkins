@@ -4,7 +4,7 @@ pipeline {
         ansiColor('xterm')
     }
     stages {
-        stage('Checkout from GitHub') {
+        stage('env vars') {
             steps {
                 sh 'env|sort'
             }
