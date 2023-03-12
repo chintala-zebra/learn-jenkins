@@ -31,7 +31,7 @@ pipeline {
         stage('Print the Values') {
             steps {
                 script {
-                    addShortText(border: 0, text: "Environment=" + ENV, background: "azure", color: "black")
+                    addShortText(border: 0, text: "Environment:" + ENV, background: "azure", color: "black")
                 }
                 echo "Environment: ${params.ENV}"
                 echo "Choice: ${params.Single}"
