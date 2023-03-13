@@ -5,10 +5,10 @@ properties([
             filterable: false,
             name: 'JobName',
             script: [$class: 'GroovyScript',
-                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                fallbackScript: [ classpath: [], sandbox: false, script: 'return ["ERROR"]' ],
                 script: [
                     classpath: [],
-                    sandbox: true,
+                    sandbox: false,
                     script: """
                         def build = Thread.currentThread().getName()
                         def regexp= ".+?/job/([^/]+)/.*"
@@ -26,10 +26,10 @@ properties([
             name: 'ENV_TYPE',
             referencedParameters: 'JobName',
             script: [$class: 'GroovyScript',
-                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                fallbackScript: [ classpath: [], sandbox: false, script: 'return ["ERROR"]' ],
                 script: [
                     classpath: [],
-                    sandbox: true,
+                    sandbox: false,
                     script: """
                         import groovy.io.FileType
                         def parts = JobName.split('_');
@@ -53,10 +53,10 @@ properties([
             name: 'CLUSTER_NAME',
             referencedParameters: 'JobName,ENV_TYPE',
             script: [$class: 'GroovyScript',
-                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                fallbackScript: [ classpath: [], sandbox: false, script: 'return ["ERROR"]' ],
                 script: [
                     classpath: [],
-                    sandbox: true,
+                    sandbox: false,
                     script: """
                         import groovy.io.FileType
                         if (ENV_TYPE.isEmpty() || ENV_TYPE==""){
@@ -87,10 +87,10 @@ properties([
             referencedParameters: 'JobName,ENV_TYPE,CLUSTER_NAME',
             script: [
                 $class: 'GroovyScript',
-                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                fallbackScript: [ classpath: [], sandbox: false, script: 'return ["ERROR"]' ],
                 script: [
                     classpath: [],
-                    sandbox: true,
+                    sandbox: false,
                     script:
                     '''
                         import groovy.io.FileType
