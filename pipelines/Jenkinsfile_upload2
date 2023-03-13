@@ -1,4 +1,3 @@
-@Library('middleware-library')_
 pipeline {
     agent { 
         node {
@@ -31,11 +30,15 @@ pipeline {
         stage('Show Conent') {
             steps {
                 withFileParameter('file') {
-                    script {
-                        log.info('The file content that you are going to copy is') 
-                        log.warning(file)
-                        log.info('=============================================================')
-                    }
+                    sh """
+                        set +x
+                        echo "\033[31m The file content that you are going to copy is : \033[0m "
+                        echo "============================================================="
+                        echo "\033[34m"
+                        cat $file
+                        echo "\033[0m"
+                        echo "============================================================="
+                    """
                 }
             }
         }
@@ -52,10 +55,8 @@ pipeline {
                     sh """
                         set +x
                         scp -o 'StrictHostKeyChecking no' -i the-key $file $host_name:$target_file_path
+                        echo "\033[32m Copy of file to Host : $host_name @ Path : $target_file_path is successful! \033[0m"
                     """
-                }
-                script{
-                    log.info('Copy of file to Host : $host_name @ Path : $target_file_path is successful!')
                 }
             }
         }
