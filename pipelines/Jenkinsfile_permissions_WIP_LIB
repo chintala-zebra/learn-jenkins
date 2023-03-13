@@ -20,6 +20,7 @@ properties([
                 ]
             ]
         ], 
+        booleanParam(name: 'NOTIFY_MIDDLEWARE', defaultValue: true, description: 'Do you want to publish results to Middleware Channel?'),
         [$class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             filterable: false,
