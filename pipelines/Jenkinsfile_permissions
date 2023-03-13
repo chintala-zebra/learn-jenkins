@@ -1,6 +1,5 @@
 properties([
     parameters([
-        booleanParam(name: 'NOTIFY_MIDDLEWARE', defaultValue: true, description: 'Do you want to publish results to Middleware Channel?'),
         [$class: 'ChoiceParameter',
             name: 'JobName',
             choiceType: 'PT_SINGLE_SELECT',
@@ -19,6 +18,7 @@ properties([
                 ]
             ]
         ], 
+        booleanParam(name: 'NOTIFY_MIDDLEWARE', defaultValue: true, description: 'Do you want to publish results to Middleware Channel?'),
         [$class: 'CascadeChoiceParameter',
             name: 'ENVIRONMENT',
             choiceType: 'PT_SINGLE_SELECT',
