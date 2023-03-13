@@ -9,14 +9,14 @@ properties([
                 script: [
                     classpath: [],
                     sandbox: true,
-                    script: """
+                    script: '''
                         def build = Thread.currentThread().getName()
                         def regexp= ".+?/job/([^/]+)/.*"
                         def match = build  =~ regexp
                         def jobName = match[0][1]
                         def parts = jobName.split('_');
                         return [jobName]
-                    """.stripIndent()
+                    '''.stripIndent()
                 ]
             ]
         ], 
@@ -31,7 +31,7 @@ properties([
                 script: [
                     classpath: [],
                     sandbox: true,
-                    script: """
+                    script: '''
                         import groovy.io.FileType
                         def parts = JobName.split('_');
                         if(parts.length > 2){
@@ -45,7 +45,7 @@ properties([
                             }
                             return list.sort() - 'group_vars' 
                         }
-                    """.stripIndent()
+                    '''.stripIndent()
                 ]
             ]
         ],
