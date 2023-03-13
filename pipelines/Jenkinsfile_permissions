@@ -44,6 +44,35 @@ properties([
                     """.stripIndent()
                 ]
             ]
+        ],
+        [$class: 'CascadeChoiceParameter',
+            name: 'CLUSTER_NAME',
+            choiceType: 'PT_SINGLE_SELECT',
+            referencedParameters: 'JobName,ENVIRONMENT',
+            script: [$class: 'GroovyScript',
+                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                script: [ classpath: [], sandbox: true,
+                    script: """
+                        import groovy.io.FileType
+                        if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
+                            return ''
+                        } else {
+                            def parts = JobName.split('_');
+                            if(parts.length > 3){
+                                return [parts[3]]
+                            }else{
+                                def list = []
+                                list.add('')
+                                def dir = new File("/inventory/${ENVIRONMENT}")
+                                dir.eachFile (FileType.DIRECTORIES) { file ->
+                                    list << file.name
+                                }
+                                return list.sort() - 'group_vars' 
+                            }
+                        }
+                         """.stripIndent()
+                ]
+            ]
         ]
     ])
 ])
