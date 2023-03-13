@@ -53,6 +53,8 @@ pipeline {
                         set +x
                         scp -o 'StrictHostKeyChecking no' -i the-key $file $host_name:$target_file_path
                     """
+                }
+                script{
                     log.info('Copy of file to Host : $host_name @ Path : $target_file_path is successful!')
                 }
             }
