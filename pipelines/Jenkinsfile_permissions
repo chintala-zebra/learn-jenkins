@@ -1,104 +1,111 @@
 properties([
     parameters([
         booleanParam(name: 'NOTIFY_MIDDLEWARE', defaultValue: true, description: 'Do you want to publish results to Middleware Channel?'),
-        [
-            name: 'ENVIRONMENT',
-            $class: 'ChoiceParameter',
+        [$class: 'ChoiceParameter',
+            name: 'JobName',
             choiceType: 'PT_SINGLE_SELECT',
-            script: [
-                $class: 'GroovyScript',
-                    sandbox: 'true',
-                    classpath: [],
-                script: [
-                    script: '''
-                    def build = Thread.currentThread().toString()
-                    def regexp= ".+?/job/([^/]+)/.*"
-                    def match = build  =~ regexp
-                    def jobName = match[0][1]
-                    def parts = jobName.split('_');
-                    return [parts[2]]
-                    '''
+            filterable: false,
+            script: [$class: 'GroovyScript',
+                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                script: [ classpath: [], sandbox: true, 
+                    script: """
+                        def build = Thread.currentThread().getName()
+                        def regexp= ".+?/job/([^/]+)/.*"
+                        def match = build  =~ regexp
+                        def jobName = match[0][1]
+                        def parts = jobName.split('_');
+                        return [jobName]
+                    """.stripIndent()
                 ]
             ]
-        ],
-        [
-            name: 'CLUSTER_NAME',
-            $class: 'CascadeChoiceParameter',
+        ], 
+        [$class: 'CascadeChoiceParameter',
+            name: 'ENVIRONMENT',
             choiceType: 'PT_SINGLE_SELECT',
-            referencedParameters: 'ENVIRONMENT',
-            script: 
-            [
-                $class: 'GroovyScript',
-                fallbackScript: [
-                    classpath: [],
-                    sandbox: false,
-                    script: 'return [\'ERROR\']'
-                ],
-                script: [
-                    classpath: [],
-                    sandbox: false,
-                    script:  
-                    '''
+            filterable: false,
+            referencedParameters: 'JobName',
+            script: [$class: 'GroovyScript',
+                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                script: [ classpath: [], sandbox: true,
+                    script: """
                         import groovy.io.FileType
-                        if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
-                            def build = Thread.currentThread().toString()
-                            def regexp= ".+?/job/([^/]+)/.*"
-                            def match = build  =~ regexp
-                            def jobName = match[0][1]
-                            def parts = jobName.split('_');
+                        def parts = JobName.split('_');
+                        if(parts.length > 2){
                             return [parts[2]]
-                        }
-                        else
-                        {
+                        } else {
                             def list = []
                             list.add('')
-                            def dir = new File("/inventory/${ENVIRONMENT}/")
-                            dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
+                            def dir = new File("/inventory/")
+                            dir.eachFile (FileType.DIRECTORIES) { file ->
                                 list << file.name
                             }
                             return list.sort() - 'group_vars' 
                         }
-                    '''
+                    """.stripIndent()
                 ]
             ]
         ],
-        [
+        [$class: 'CascadeChoiceParameter',
+            name: 'CLUSTER_NAME',
+            choiceType: 'PT_SINGLE_SELECT',
+            referencedParameters: 'JobName,ENVIRONMENT',
+            script: [$class: 'GroovyScript',
+                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                script: [ classpath: [], sandbox: true,
+                    script: """
+                        import groovy.io.FileType
+                        if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
+                            return ''
+                        } else {
+                            def parts = JobName.split('_');
+                            if(parts.length > 3){
+                                return [parts[3]]
+                            }else{
+                                def list = []
+                                list.add('')
+                                def dir = new File("/inventory/${ENVIRONMENT}")
+                                dir.eachFile (FileType.DIRECTORIES) { file ->
+                                    list << file.name
+                                }
+                                return list.sort() - 'group_vars' 
+                            }
+                        }
+                         """.stripIndent()
+                ]
+            ]
+        ],
+        [$class: 'CascadeChoiceParameter',
             name: 'APPLICATION',
-            $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             description: '',
-            referencedParameters: 'ENVIRONMENT, CLUSTER_NAME',
+            referencedParameters: 'JobName,ENVIRONMENT,CLUSTER_NAME',
             script: [
                 $class: 'GroovyScript',
-                fallbackScript: [
-                    classpath: [],
-                    sandbox: false,
-                    script: 'return [\'ERROR\']'
-                ],
-                script: [
-                    classpath: [],
-                    sandbox: false,
-                    script:  
+                fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                script: [ classpath: [], sandbox: true,
+                    script:
                     '''
                         import groovy.io.FileType
                         if (CLUSTER_NAME.isEmpty() || CLUSTER_NAME==""){
                             return ''
-                        }
-                        else
-                        {                        
-                            def list = []
-                            list.add('')
-                            def dir = new File("/inventory/${ENVIRONMENT}/${CLUSTER_NAME}")
-                            dir.eachFile (FileType.FILES) { file ->
-                                list << file.name.replaceAll('.yml','');
+                        } else {   
+                            def parts = JobName.split('_');
+                            if(parts.length > 4){
+                                return [parts[4]]
+                            } else {
+                                def list = []
+                                list.add('')
+                                def dir = new File("/inventory/${ENVIRONMENT}/${CLUSTER_NAME}")
+                                dir.eachFile (FileType.FILES) { file ->
+                                    list << file.name.replaceAll('.yml','');
+                                }
+                                return list
                             }
-                            return list
                         }
                     '''
                 ]
             ]
         ]
-        
     ])
 ])
 
@@ -108,8 +115,8 @@ pipeline {
         stage('Print the Values') {
             steps {
                 echo "Environment: ${params.ENVIRONMENT}"
-                echo "Cluster Name: ${params.CLUSTER_NAME}"
-                echo "Application Name: ${params.APPLICATION}"
+                echo "Cluster: ${params.CLUSTER_NAME}"
+                echo "Application: ${params.APPLICATION}"
                 //sh "exit 1"
             }
         }
@@ -141,6 +148,5 @@ pipeline {
         cleanup {
             cleanWs()
         }
-
     }
 }
