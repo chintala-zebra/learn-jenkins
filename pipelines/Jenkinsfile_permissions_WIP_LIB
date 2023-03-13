@@ -58,7 +58,7 @@ properties([
                 script: [
                     classpath: [],
                     sandbox: true,
-                    script: """
+                    script: '''
                         import groovy.io.FileType
                         if (ENV_TYPE.isEmpty() || ENV_TYPE==""){
                             return ''
@@ -76,7 +76,7 @@ properties([
                                 return list.sort() - 'group_vars' 
                             }
                         }
-                         """.stripIndent()
+                         '''.stripIndent()
                 ]
             ]
         ],
