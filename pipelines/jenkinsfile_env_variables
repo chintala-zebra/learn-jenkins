@@ -1,0 +1,13 @@
+pipeline {
+    agent any
+    options {
+        ansiColor('xterm')
+    }
+    stages {
+        stage('env vars') {
+            steps {
+                sh 'env|sort'
+            }
+        }
+    }
+}
