@@ -23,7 +23,7 @@ properties([
         [$class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             filterable: false,
-            name: 'ENVIRONMENT',
+            name: 'GCP-ENVIRONMENT',
             referencedParameters: 'JobName',
             script: [$class: 'GroovyScript',
                 fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
@@ -51,7 +51,7 @@ properties([
         [$class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             name: 'CLUSTER_NAME',
-            referencedParameters: 'JobName,ENVIRONMENT',
+            referencedParameters: 'JobName,GCP-ENVIRONMENT',
             script: [$class: 'GroovyScript',
                 fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
                 script: [
@@ -59,7 +59,7 @@ properties([
                     sandbox: true,
                     script: """
                         import groovy.io.FileType
-                        if (ENVIRONMENT.isEmpty() || ENVIRONMENT==""){
+                        if (GCP-ENVIRONMENT.isEmpty() || GCP-ENVIRONMENT==""){
                             return ''
                         } else {
                             def parts = JobName.split('_');
@@ -68,7 +68,7 @@ properties([
                             }else{
                                 def list = []
                                 list.add('')
-                                def dir = new File("/inventory/${ENVIRONMENT}")
+                                def dir = new File("/inventory/${GCP-ENVIRONMENT}")
                                 dir.eachFile (FileType.DIRECTORIES) { file ->
                                     list << file.name
                                 }
@@ -84,7 +84,7 @@ properties([
             $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             description: '',
-            referencedParameters: 'JobName,ENVIRONMENT,CLUSTER_NAME',
+            referencedParameters: 'JobName,GCP-ENVIRONMENT,CLUSTER_NAME',
             script: [
                 $class: 'GroovyScript',
                 fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
@@ -103,7 +103,7 @@ properties([
                             } else {
                                 def list = []
                                 list.add('')
-                                def dir = new File("/inventory/${ENVIRONMENT}/${CLUSTER_NAME}")
+                                def dir = new File("/inventory/${GCP-ENVIRONMENT}/${CLUSTER_NAME}")
                                 dir.eachFile (FileType.FILES) { file ->
                                     list << file.name.replaceAll('.yml','');
                                 }
@@ -122,7 +122,7 @@ pipeline {
     stages {
         stage('Print the Values') {
             steps {
-                echo "ENVIRONMENT: ${params.ENVIRONMENT}"
+                echo "Environment: ${params.GCP-ENVIRONMENT}"
                 echo "Cluster Name: ${params.CLUSTER_NAME}"
                 echo "Application Name: ${params.APPLICATION}"
                 echo "JobName:  ${params.JobName.split('_')}"
