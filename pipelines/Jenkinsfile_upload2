@@ -29,7 +29,8 @@ pipeline {
                             echo "\033[34m"
                             filesize='wc -c <"$file")'
                             if [filesize < 2000]; then {
-                            cat $file
+                                echo "filesize $filesize"
+                                cat $file
                             }
                             fi
                             echo "\033[0m"
