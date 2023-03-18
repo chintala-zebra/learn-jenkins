@@ -27,9 +27,9 @@ pipeline {
                             echo "\033[31m The file content that you are going to copy is : \033[0m "
                             echo "============================================================="
                             echo "\033[34m"
-                            filesize='wc -c <"$file")'
+                            def filesize='wc -c <"$file")'
                             if [$filesize < 2000]; then {
-                                echo "filesize =" $filesize
+                                echo "filesize = $filesize" 
                                 cat $file
                             }
                             fi
