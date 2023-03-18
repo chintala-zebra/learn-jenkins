@@ -20,17 +20,12 @@ pipeline {
             steps {
                 withFileParameter('file') {
                     sh """
-                        if [ "$target_file_path" == null or "$target_file_path" == "" ]; then {
-                            Echo "No file"
-                        } else {
                             echo "\033[31m The file content that you are going to copy is : \033[0m "
                             echo "============================================================="
                             echo "\033[34m"
                             cat $file
                             echo "\033[0m"
                             echo "============================================================="
-                        }
-                        fi
                    """
                 }
             }
@@ -46,9 +41,6 @@ pipeline {
             steps {
                 withFileParameter('file') {
                     sh '''
-                        if [ "$target_file_path" == null or "$target_file_path" == "" ]; then {
-                            Echo "No file"
-                        } else {
                             set +x
                             echo $ANSIBLE_VALUT > .mysecret
                             export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
@@ -56,8 +48,6 @@ pipeline {
                             echo "removed the key" > .mysecret
                             scp -o 'StrictHostKeyChecking no' -i the-key $file $host_name:$target_file_path
                             echo "\033[32m Copy of file to Host : $host_name @ Path : $target_file_path is successful! \033[0m"
-                        }
-                        fi
                     '''
                 }
             }
