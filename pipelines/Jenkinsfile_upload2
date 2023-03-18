@@ -9,7 +9,7 @@ pipeline {
     }
     parameters {
         base64File 'file'
-        string(name: 'target_file_path', description: 'Path to where the file needs copied - <b> Must Include the file name </b> <br> Ex: /mount/test_folder/abcd.xml')
+        string(name: 'target_file_path', description: 'Path to where the file needs copied - <p font-weight: bold color=red> Must Include the file name </p> <br> Ex: /mount/test_folder/abcd.xml')
         string(name: 'host_name', description: 'Host to which the file Needs Copied')
     }
     environment {
