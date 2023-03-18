@@ -20,7 +20,7 @@ pipeline {
             steps {
                 withFileParameter('file') {
                     sh '''
-                        if [ $target_file_path == null or $target_file_path == "" ]; then {
+                        if [ "$target_file_path" == null or "$target_file_path" == "" ]; then {
                             Echo "No file"
                         } else {
                             echo "\033[31m The file content that you are going to copy is : \033[0m "
@@ -46,7 +46,7 @@ pipeline {
             steps {
                 withFileParameter('file') {
                     sh '''
-                        if [ $target_file_path == null or $target_file_path == "" ]; then {
+                        if [ "$target_file_path" == null or "$target_file_path" == "" ]; then {
                             Echo "No file"
                         } else {
                             set +x
