@@ -19,7 +19,7 @@ pipeline {
         stage('Show Conent') {
             steps {
                 withFileParameter('file') {
-                    sh """
+                    sh '''
                         if [ -f "$file" ] then {
                             set +x
                             echo "\033[31m The file content that you are going to copy is : \033[0m "
@@ -31,7 +31,7 @@ pipeline {
                         } else {
                             echo "No file was passed"
                         }
-                    """
+                   '''
                 }
             }
         }
@@ -45,7 +45,7 @@ pipeline {
         stage('copy file') {
             steps {
                 withFileParameter('file') {
-                    sh """
+                    sh '''
                         if [ -f "$file" ] then {
                         set +x
                             echo $ANSIBLE_VALUT > .mysecret
@@ -57,7 +57,7 @@ pipeline {
                         } else {
                             echo "No file was passed"
                         }
-                    """
+                    '''
                 }
             }
         }
