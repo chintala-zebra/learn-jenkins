@@ -21,7 +21,6 @@ pipeline {
                 withFileParameter('file') {
                     sh '''
                         if [ -f "$file" ]; then {
-                            set +x
                             echo "\033[31m The file content that you are going to copy is : \033[0m "
                             echo "============================================================="
                             echo "\033[34m"
@@ -44,8 +43,8 @@ pipeline {
             steps {
                 withFileParameter('file') {
                     sh '''
-                        set +x
                         if [ -f "$file" ]; then {
+                            set +x
                             echo $ANSIBLE_VALUT > .mysecret
                             export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
                             ansible-vault decrypt the-key
