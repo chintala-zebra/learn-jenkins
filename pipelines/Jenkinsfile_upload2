@@ -24,7 +24,7 @@ pipeline {
             steps {
                 
                 withFileParameter('file') {
-                    sh """
+                    sh '''
                             echo "\033[31m The file content that you are going to copy is : \033[0m "
                             echo "============================================================="
                             echo "\033[34m"
@@ -36,7 +36,7 @@ pipeline {
                             
                             echo "\033[0m"
                             echo "============================================================="
-                   """
+                   '''
                 }
             }
         }
