@@ -1,13 +1,13 @@
 pipeline {
   agent any
   parameters {
-    base64File 'THEFILE'
+    base64File 'file'
   }
   stages {
     stage('Example') {
       steps {
         script{
-         sh "set +x; echo '$THEFILE' | base64 -d > ${WORKSPACE}/uploaded_file.txt"
+         sh "set +x; echo '$file' | base64 -d > ${WORKSPACE}/uploaded_file.txt"
          cat '${WORKSPACE}/uploaded_file.txt'
         }
       }
