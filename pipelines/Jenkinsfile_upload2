@@ -22,9 +22,7 @@ pipeline {
     stages {
         stage('Show Conent') {
             steps {
-                script{
-
-                }
+                
                 withFileParameter('file') {
                     sh """
                             echo "\033[31m The file content that you are going to copy is : \033[0m "
