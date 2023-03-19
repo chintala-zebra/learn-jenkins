@@ -6,14 +6,9 @@ pipeline {
   stages {
     stage('Example') {
       steps {
-        withFileParameter('THEFILE') {
-          sh """
-          echo $THEFILE
-          echo $target_file
-          cp $THEFILE $target_file
-          ls
-          cat $target_file
-          """
+        script{
+         sh "set +x; echo '$THEFILE' | base64 -d > ${WORKSPACE}/uploaded_file.txt"
+         cat '${WORKSPACE}/uploaded_file.txt'
         }
       }
     }
