@@ -22,13 +22,15 @@ pipeline {
     stages {
         stage('Show Conent') {
             steps {
+                script{
+
+                }
                 withFileParameter('file') {
                     sh """
                             echo "\033[31m The file content that you are going to copy is : \033[0m "
                             echo "============================================================="
                             echo "\033[34m"
-                            fileName=$file
-                            echo $fileName
+                            echo `du -k "$file" | cut -f1`
                             cat $file
                             
                             echo "\033[0m"
