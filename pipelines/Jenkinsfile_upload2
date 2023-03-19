@@ -29,7 +29,7 @@ pipeline {
                             echo "============================================================="
                             echo "\033[34m"
                             filesize=`du -k "$file" | cut -f1`
-                            if [filesize < 20]; then
+                            if [[ filesize < 20 ]]; then
                                 cat $file
                             else
                                 echo "file is too large"
