@@ -28,12 +28,11 @@ pipeline {
                             echo "\033[31m The file content that you are going to copy is : \033[0m "
                             echo "============================================================="
                             echo "\033[34m"
-                            if [[ `du -k "$file" | cut -f1` > 20 ]]; then
+                            if (`du -k "$file" | cut -f1` > 20 ){
                                 cat $file
-                            else
+                            }else {
                                 echo "file is too large"
-                            fi
-                            
+                            }
                             echo "\033[0m"
                             echo "============================================================="
                    '''
