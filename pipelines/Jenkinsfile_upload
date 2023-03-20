@@ -1,3 +1,5 @@
+def myscripts
+
 pipeline {
     agent any
     parameters {
@@ -10,19 +12,17 @@ pipeline {
         string(name: 'host_name', description: 'Host to which the file Needs Copied')
     }
     stages {
+        stage('Init') {  
+            steps {
+                script{
+                    myscripts = load "pipelines/upload.groovy"
+                }
+            }
+        }
          stage('Show Conent') {
             steps {
                 script{
-                    log.info("The file content that you are going to copy is")
-                    log.info("=============================================================")
-                
-                    sh '''
-                        set +x
-                        echo $file | base64 -d > file1"
-                        cat file1
-                    '''
-                
-                    log.info("=============================================================")
+                    myscripts.showContent()
                 }
             }
         }
