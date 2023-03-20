@@ -1,0 +1,34 @@
+pipeline {
+agent { 
+        node {
+            label 'ansible'
+        }
+    }
+    stages {
+        stage('Init') {  
+            steps {
+                echo "Init code goes here..."
+            }
+        }
+        stage('Plan') {  
+            steps {
+                echo "Planning code goes here..."
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Testing code goes here..."
+            }
+        }
+        stage('Deploy') {  
+            steps {
+                echo "Deploy code goes here..."
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
