@@ -1,12 +1,7 @@
 def showContent() {
     log.info("The file content that you are going to copy is")
     log.info("=============================================================")
-    if [[ `du -k "$file" | cut -f1` -lt 20 ]]; then
-                                cat $file
-                            else
-                                echo "file is too large"
-                            fi
-
+    log.info(${params.file})
     log.info("=============================================================")
 }
 
