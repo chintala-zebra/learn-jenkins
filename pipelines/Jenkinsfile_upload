@@ -1,7 +1,12 @@
-def myscripts
-
 pipeline {
-    agent any
+    agent { 
+        node {
+            label 'ansible'
+        }
+    }
+    options {
+        ansiColor('xterm')
+    }
     parameters {
         base64File 'file'
         string( name: 'target_file_path', 
@@ -10,6 +15,9 @@ pipeline {
                 <br> Ex: /mount/test_folder/abcd.xml'
                 """)
         string(name: 'host_name', description: 'Host to which the file Needs Copied')
+    }
+    environment {
+        ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
     }
     stages {
         stage('Init') {  
@@ -35,22 +43,25 @@ pipeline {
         }
         stage('copy file') {
             steps {
-                script{
+                withFileParameter('file') {
                     sh '''
-                        set +x
-                        echo $ANSIBLE_VALUT > .mysecret
-                        export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
-                        ansible-vault decrypt the-key
-                        echo "removed the key" > .mysecret
-                        scp -o 'StrictHostKeyChecking no' -i the-key $file $host_name:$target_file_path
-                        echo "\033[32m Copy of file to Host : $host_name @ Path : $target_file_path is successful! \033[0m"
+                            set +x
+                            echo $ANSIBLE_VALUT > .mysecret
+                            export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
+                            ansible-vault decrypt the-key
+                            echo "removed the key" > .mysecret
+                            scp -o 'StrictHostKeyChecking no' -i the-key $file $host_name:$target_file_path
+                            echo "\033[32m Copy of file to Host : $host_name @ Path : $target_file_path is successful! \033[0m"
                     '''
-                }
-                script{
-                    log.info("Copy of file to Host : ${host_name} @ Path : ${target_file_path} is successful!")
                 }
             }
         }
     }
 
+    post {
+        always {
+            cleanWs()
+        }
+    }
 }
+
