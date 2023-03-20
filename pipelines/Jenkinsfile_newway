@@ -10,7 +10,7 @@ agent {
         stage('Init') {  
             steps {
                 script{
-                    myscripts = load "newway.groovy"
+                    myscripts = load "pipelines/newway.groovy"
                 }
             }
         }
