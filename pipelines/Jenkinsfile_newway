@@ -1,3 +1,5 @@
+def myscripts
+
 pipeline {
 agent { 
         node {
@@ -7,22 +9,28 @@ agent {
     stages {
         stage('Init') {  
             steps {
-                echo "Init code goes here..."
+                myscripts = load "newway.groovy"
             }
         }
         stage('Plan') {  
             steps {
-                echo "Planning code goes here..."
+               script {
+                    myscripts.planApp()
+               }
             }
         }
         stage('Test') {
             steps {
-                echo "Testing code goes here..."
+               script {
+                    myscripts.testApp()
+               }
             }
         }
         stage('Deploy') {  
             steps {
-                echo "Deploy code goes here..."
+               script {
+                    myscripts.deployApp()
+               }
             }
         }
     }
