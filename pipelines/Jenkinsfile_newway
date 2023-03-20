@@ -9,7 +9,9 @@ agent {
     stages {
         stage('Init') {  
             steps {
-                myscripts = load "newway.groovy"
+                script{
+                    myscripts = load "newway.groovy"
+                }
             }
         }
         stage('Plan') {  
