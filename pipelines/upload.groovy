@@ -7,7 +7,7 @@ def showContent() {
 
 
 def copyFile() {
-    echo ${env.ANSIBLE_VALUT} > .mysecret
+    echo ${env.ANSIBLE_VALUT} 
 }
 
 return this
