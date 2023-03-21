@@ -115,7 +115,7 @@ def setupParams(){
                                 if(parts.length > 4){
                                     return [parts[4]]
                                 } else {
-                                    return getFoldersUnder(Env/Cluster)
+                                    return getFoldersUnder("${Env}/${Cluster}")
                                 } 
                             '''
                             
