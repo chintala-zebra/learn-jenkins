@@ -1,5 +1,4 @@
 def myscripts
-def middlewarescripts
 pipeline {
     agent { 
         node {
@@ -9,9 +8,6 @@ pipeline {
     options {
         ansiColor('xterm')
     }
-    parameters {
-        base64File 'file1'
-    }
     environment {
         ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
     }
@@ -20,7 +16,6 @@ pipeline {
             steps {
                 script{
                     myscripts = load "pipelines/upload.groovy"
-                    middlewarescripts = load "pipelines/newway.groovy"
                 }
             }
         }
