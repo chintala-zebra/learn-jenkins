@@ -17,6 +17,7 @@ pipeline {
             steps {
                 script{
                     myscripts = load "pipelines/upload.groovy"
+                    middlewarescripts = load "pipelines/newway.groovy"
                 }
             }
         }
