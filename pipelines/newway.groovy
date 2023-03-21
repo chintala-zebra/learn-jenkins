@@ -53,16 +53,8 @@ def setupParams(){
                             classpath: [], 
                             sandbox: true, 
                             script: '''
-                            return getFoldersUnder(Env);
-                            // if (Env.equals("GCP-Sandbox")){
-                            //     return["ami-sd2345sd", "ami-asdf245sdf", "ami-asdf3245sd"]
-                            // }
-                            // else if(Env.equals("GCP-Preprod")){
-                            //     return["ami-sd34sdf", "ami-sdf345sdc", "ami-sdf34sdf"]
-                            // }
-                            // else if(Env.equals("GCP-Production")){
-                            //     return["ami-sdf34sdf", "ami-sdf34ds", "ami-sdf3sf3"]
-                            // }
+                            return getFoldersUnder(Env)
+                            
                             '''
                         ]
                 ]
