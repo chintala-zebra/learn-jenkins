@@ -19,7 +19,7 @@ def setupParams(){
                         classpath: [], 
                         sandbox: false, 
                         script: 
-                            "return['dev','stage','prod']"
+                            "return['GCP-Sandbox','GCP-Preprod','GCP-Production']"
                     ]
                 ]
             ]
