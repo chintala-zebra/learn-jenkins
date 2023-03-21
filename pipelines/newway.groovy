@@ -39,7 +39,6 @@ def setupParams(){
                             import groovy.io.FileType                            
                             def getAllFolders() {
                                 def list = []
-                                list.add('')
                                 def dir = new File("/inventory/")
                                 dir.eachFile (FileType.DIRECTORIES) { file ->
                                     list << file.name
@@ -60,8 +59,8 @@ def setupParams(){
             ,[$class: 'CascadeChoiceParameter', 
                 choiceType: 'PT_SINGLE_SELECT', 
                 description: 'Select the AMI from the Dropdown List',
-                name: 'AMI List', 
-                referencedParameters: 'Env', 
+                name: 'Cluster', 
+                referencedParameters: 'JobName,Env', 
                 script: 
                     [$class: 'GroovyScript', 
                     
@@ -79,7 +78,12 @@ def setupParams(){
                                     }
                                     return list.sort() - 'group_vars' 
                                 }
-                                return getFoldersUnder(Env)
+                                def parts = JobName.split('_');
+                                if(parts.length > 3){
+                                    return [parts[3]]
+                                } else {
+                                    return getFoldersUnder(Env)
+                                } 
                             '''
                             
                         ]
