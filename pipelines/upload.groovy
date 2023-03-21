@@ -30,8 +30,8 @@ def copyFile() {
             ansible-vault decrypt the-key
             echo "removed the key" > .mysecret
             scp -o 'StrictHostKeyChecking no' -i the-key ${WORKSPACE}/fileName $host_name:$target_file_path
-            echo "\033[32m Copy of file to Host : $host_name @ Path : $target_file_path is successful! \033[0m"
     '''
+    log.info ("Copy of file to Host : ${params.host_name} @ Path : ${params.target_file_path} is successful!")
 }
 
 return this
