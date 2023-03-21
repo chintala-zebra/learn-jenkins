@@ -41,7 +41,7 @@ def setupParams(){
                                 def list = []
                                 list.add('')
                                 def dir = new File("/inventory/")
-                                dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
+                                dir.eachFile (FileType.DIRECTORIES) { file ->
                                     list << file.name
                                 }
                                 return list.sort() - 'group_vars' 
@@ -74,7 +74,7 @@ def setupParams(){
                                     def list = []
                                     list.add('')
                                     def dir = new File("/inventory/${folderName}/")
-                                    dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
+                                    dir.eachFile (FileType.DIRECTORIES) { file ->
                                         list << file.name
                                     }
                                     return list.sort() - 'group_vars' 
