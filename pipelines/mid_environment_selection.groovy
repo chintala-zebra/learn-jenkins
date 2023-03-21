@@ -1,7 +1,10 @@
 import groovy.io.FileType
 
+def setupEnvParams(){
 
-def setupParams(){
+}
+
+def setupHostParams(){
     properties([
         parameters([
             [$class: 'ChoiceParameter',
