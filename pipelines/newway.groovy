@@ -4,7 +4,27 @@ import groovy.io.FileType
 def setupParams(){
     properties([
         parameters([
-            [$class: 'ChoiceParameter', 
+            [$class: 'ChoiceParameter',
+                choiceType: 'PT_SINGLE_SELECT',
+                filterable: false,
+                name: 'JobName',
+                script: [$class: 'GroovyScript',
+                    fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                    script: [
+                        classpath: [],
+                        sandbox: true,
+                        script: '''
+                            def build = Thread.currentThread().getName()
+                            def regexp= ".+?/job/([^/]+)/.*"
+                            def match = build  =~ regexp
+                            def jobName = match[0][1]
+                            def parts = jobName.split('_');
+                            return [jobName]
+                        '''.stripIndent()
+                    ]
+                ]
+            ]
+            ,[$class: 'ChoiceParameter', 
                 choiceType: 'PT_SINGLE_SELECT', 
                 description: 'Select the Environemnt from the Dropdown List', 
                 filterLength: 1, 
@@ -12,12 +32,7 @@ def setupParams(){
                 name: 'Env', 
                 script: [
                     $class: 'GroovyScript', 
-                    fallbackScript: [
-                        classpath: [], 
-                        sandbox: true, 
-                        script: 
-                            "return['ERROR']"
-                    ], 
+                    fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
                     script: [
                         classpath: [], 
                         sandbox: true, 
