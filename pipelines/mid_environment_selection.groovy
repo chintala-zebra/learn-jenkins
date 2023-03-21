@@ -121,6 +121,39 @@ def setupParams(){
                             
                         ]
                 ]
+            ],
+
+            [
+                $class: 'CascadeChoiceParameter',
+                choiceType: 'PT_SINGLE_SELECT',
+                description: '',
+                referencedParameters: 'JobName,Env,Cluster,Application',
+                name: 'SERVER',
+                script: [
+                    $class: 'GroovyScript',
+                    fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                    script: [
+                        classpath: [],
+                        sandbox: true,
+                        script:  
+                        '''
+                            def command = ['/bin/sh',  '-c',  "cat /inventory/${Env}/${Cluster}/${Application}|grep z182|sed 's/^ *//g;s/://g'|sort -u "]
+                            def proc = command.execute()
+                            proc.waitFor()              
+                            def output = proc.in.text
+                            def exitcode= proc.exitValue()
+                            def error = proc.err.text
+                            if (error) {
+                                return "ERROR"
+                            }
+                            else
+                            {
+                            return output.tokenize()
+                            }
+                            
+                        '''
+                    ]
+                ]
             ]
         ])
     ])
