@@ -1,10 +1,6 @@
 import groovy.io.FileType
 
 def setupEnvParams(){
-
-}
-
-def setupHostParams(){
     properties([
         parameters([
             [$class: 'ChoiceParameter',
@@ -159,6 +155,58 @@ def setupHostParams(){
             ]
         ])
     ])
+}
+
+def setupHostParams(){
+    setupEnvParams()
+
+    existing = currentBuild.rawBuild.parent.properties
+    .findAll { it.value instanceof hudson.model.ParametersDefinitionProperty }
+    .collectMany { it.value.parameterDefinitions }
+
+    // Create new params and merge them with existing ones
+    jobParams = existing + [
+        [
+                $class: 'CascadeChoiceParameter',
+                choiceType: 'PT_SINGLE_SELECT',
+                description: '',
+                referencedParameters: 'JobName,Env,Cluster,Application',
+                name: 'SERVER',
+                script: [
+                    $class: 'GroovyScript',
+                    fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                    script: [
+                        classpath: [],
+                        sandbox: true,
+                        script:  
+                        '''
+                            def command = ['/bin/sh',  '-c',  "cat /inventory/${Env}/${Cluster}/${Application}|grep z182|sed 's/^ *//g;s/://g'|sort -u "]
+                            def proc = command.execute()
+                            proc.waitFor()              
+                            def output = proc.in.text
+                            def exitcode= proc.exitValue()
+                            def error = proc.err.text
+                            if (error) {
+                                return "ERROR"
+                            }
+                            else
+                            {
+                            return output.tokenize()
+                            }
+                            
+                        '''
+                    ]
+                ]
+            ]
+    ] 
+    // Create properties
+    properties([
+        parameters(jobParams)
+    ])
+
+            
+        
+    
 }
 
 
