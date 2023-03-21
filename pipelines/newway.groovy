@@ -49,9 +49,10 @@ def setupParams(){
                             classpath: [], 
                             sandbox: true, 
                             script: '''
-                            return listFolders.call(Env)
+                            
                             
                             '''
+                            return listFolders.call(Env)
                         ]
                 ]
             ]
