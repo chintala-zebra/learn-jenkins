@@ -26,7 +26,7 @@ def setupEnvParams(){
             ,[$class: 'CascadeChoiceParameter', 
                 choiceType: 'PT_SINGLE_SELECT', 
                 description: 'Select the Environemnt from the Dropdown List', 
-                name: 'Env', 
+                name: 'ENV_TYPE', 
                 referencedParameters: 'JobName', 
                 script: [
                     $class: 'GroovyScript', 
@@ -57,9 +57,9 @@ def setupEnvParams(){
             ]
             ,[$class: 'CascadeChoiceParameter', 
                 choiceType: 'PT_SINGLE_SELECT', 
-                description: 'Cluster',
-                name: 'Cluster', 
-                referencedParameters: 'JobName,Env', 
+                description: 'CLUSTER_NAME',
+                name: 'CLUSTER_NAME', 
+                referencedParameters: 'JobName,ENV_TYPE', 
                 script: 
                     [$class: 'GroovyScript', 
                     fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
@@ -81,7 +81,7 @@ def setupEnvParams(){
                                 if(parts.length > 3){
                                     return [parts[3]]
                                 } else {
-                                    return getFoldersUnder(Env)
+                                    return getFoldersUnder(ENV_TYPE)
                                 } 
                             '''
                             
@@ -92,7 +92,7 @@ def setupEnvParams(){
                 choiceType: 'PT_SINGLE_SELECT', 
                 description: 'Application',
                 name: 'Application', 
-                referencedParameters: 'JobName,Env,Cluster', 
+                referencedParameters: 'JobName,ENV_TYPE,CLUSTER_NAME', 
                 script: 
                     [$class: 'GroovyScript', 
                     fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
@@ -114,7 +114,7 @@ def setupEnvParams(){
                                 if(parts.length > 4){
                                     return [parts[4]]
                                 } else {
-                                    return getFoldersUnder("${Env}/${Cluster}")
+                                    return getFoldersUnder("${ENV_TYPE}/${CLUSTER_NAME}")
                                 } 
                             '''
                             
@@ -138,7 +138,7 @@ def setupHostParams(){
                 $class: 'CascadeChoiceParameter',
                 choiceType: 'PT_SINGLE_SELECT',
                 description: '',
-                referencedParameters: 'JobName,Env,Cluster,Application',
+                referencedParameters: 'JobName,ENV_TYPE,CLUSTER_NAME,Application',
                 name: 'SERVER',
                 script: [
                     $class: 'GroovyScript',
@@ -148,7 +148,7 @@ def setupHostParams(){
                         sandbox: true,
                         script:  
                         '''
-                            def command = ['/bin/sh',  '-c',  "cat /inventory/${Env}/${Cluster}/${Application}|grep z182|sed 's/^ *//g;s/://g'|sort -u "]
+                            def command = ['/bin/sh',  '-c',  "cat /inventory/${ENV_TYPE}/${CLUSTER_NAME}/${Application}|grep z182|sed 's/^ *//g;s/://g'|sort -u "]
                             def proc = command.execute()
                             proc.waitFor()              
                             def output = proc.in.text
