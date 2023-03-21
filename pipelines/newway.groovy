@@ -2,7 +2,7 @@ import groovy.io.FileType
 
 
 @NonCPS
-def call(String folderName) {
+def getFoldersUnder(String folderName) {
     def list = []
     list.add('')
     def dir = new File("/inventory/${folderName}/")
@@ -47,21 +47,22 @@ def setupParams(){
                     fallbackScript: [
                             classpath: [], 
                             sandbox: true, 
-                            script: "return['Could not get Environment from Env Param']"
+                            script:  "return['ERROR']"
                             ], 
                     script: [
                             classpath: [], 
                             sandbox: true, 
                             script: '''
-                            if (Env.equals("GCP-Sandbox")){
-                                return["ami-sd2345sd", "ami-asdf245sdf", "ami-asdf3245sd"]
-                            }
-                            else if(Env.equals("GCP-Preprod")){
-                                return["ami-sd34sdf", "ami-sdf345sdc", "ami-sdf34sdf"]
-                            }
-                            else if(Env.equals("GCP-Production")){
-                                return["ami-sdf34sdf", "ami-sdf34ds", "ami-sdf3sf3"]
-                            }
+                            return getFoldersUnder(Env);
+                            // if (Env.equals("GCP-Sandbox")){
+                            //     return["ami-sd2345sd", "ami-asdf245sdf", "ami-asdf3245sd"]
+                            // }
+                            // else if(Env.equals("GCP-Preprod")){
+                            //     return["ami-sd34sdf", "ami-sdf345sdc", "ami-sdf34sdf"]
+                            // }
+                            // else if(Env.equals("GCP-Production")){
+                            //     return["ami-sdf34sdf", "ami-sdf34ds", "ami-sdf3sf3"]
+                            // }
                             '''
                         ]
                 ]
