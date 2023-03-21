@@ -39,7 +39,7 @@ def setupParams(){
                             import groovy.io.FileType                            
                             def getAllFolders() {
                                 def list = []
-                                def dir = new File("/inventory/")
+                                def dir = new File("/application/ansible/inventory/")
                                 dir.eachFile (FileType.DIRECTORIES) { file ->
                                     list << file.name
                                 }
@@ -72,7 +72,7 @@ def setupParams(){
                                 def getFoldersUnder(String folderName) {
                                     def list = []
                                     list.add('')
-                                    def dir = new File("/inventory/${folderName}/")
+                                    def dir = new File("/application/ansible/inventory/${folderName}/")
                                     dir.eachFile (FileType.DIRECTORIES) { file ->
                                         list << file.name
                                     }

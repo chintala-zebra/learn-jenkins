@@ -35,7 +35,7 @@ properties([
                         } else {
                             def list = []
                             list.add('')
-                            def dir = new File("/inventory/")
+                            def dir = new File("/application/ansible/inventory/")
                             dir.eachFile (FileType.DIRECTORIES) { file ->
                                 list << file.name
                             }
@@ -63,7 +63,7 @@ properties([
                             }else{
                                 def list = []
                                 list.add('')
-                                def dir = new File("/inventory/${ENVIRONMENT}")
+                                def dir = new File("/application/ansible/inventory/${ENVIRONMENT}")
                                 dir.eachFile (FileType.DIRECTORIES) { file ->
                                     list << file.name
                                 }
@@ -95,7 +95,7 @@ properties([
                             } else {
                                 def list = []
                                 list.add('')
-                                def dir = new File("/inventory/${ENVIRONMENT}/${CLUSTER_NAME}")
+                                def dir = new File("/application/ansible/inventory/${ENVIRONMENT}/${CLUSTER_NAME}")
                                 dir.eachFile (FileType.FILES) { file ->
                                     list << file.name.replaceAll('.yml','');
                                 }
