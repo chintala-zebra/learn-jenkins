@@ -24,11 +24,9 @@ def setupParams(){
                     ]
                 ]
             ]
-            ,[$class: 'ChoiceParameter', 
+            ,[$class: 'CascadeChoiceParameter', 
                 choiceType: 'PT_SINGLE_SELECT', 
                 description: 'Select the Environemnt from the Dropdown List', 
-                filterLength: 1, 
-                filterable: false, 
                 name: 'Env', 
                 referencedParameters: 'JobName', 
                 script: [
