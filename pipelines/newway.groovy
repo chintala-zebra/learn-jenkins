@@ -30,14 +30,32 @@ def setupParams(){
                 filterLength: 1, 
                 filterable: false, 
                 name: 'Env', 
+                referencedParameters: 'JobName', 
                 script: [
                     $class: 'GroovyScript', 
                     fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
                     script: [
                         classpath: [], 
                         sandbox: true, 
-                        script: 
-                            "return['GCP-Sandbox','GCP-Preprod','GCP-Production']"
+                        script: '''
+                            import groovy.io.FileType                            
+                            def getAllFolders() {
+                                def list = []
+                                list.add('')
+                                def dir = new File("/inventory/")
+                                dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
+                                    list << file.name
+                                }
+                                return list.sort() - 'group_vars' 
+                            }
+                            def parts = JobName.split('_');
+                            if(parts.length > 2){
+                                return [parts[2]]
+                            } else {
+                                return getAllFolders()
+                            }
+                        '''
+                            
                     ]
                 ]
             ]
