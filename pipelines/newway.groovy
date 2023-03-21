@@ -2,6 +2,7 @@ import groovy.io.FileType
 
 
 def setupParams(){
+    properties([
         parameters([
             [$class: 'ChoiceParameter',
                 choiceType: 'PT_SINGLE_SELECT',
@@ -89,7 +90,7 @@ def setupParams(){
                 ]
             ]
         ])
-    
+    ])
 }
 def planApp() {
      echo "Planning code goes here..."

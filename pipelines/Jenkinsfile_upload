@@ -9,6 +9,9 @@ pipeline {
     options {
         ansiColor('xterm')
     }
+    parameters {
+        base64File 'file1'
+    }
     environment {
         ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
     }
