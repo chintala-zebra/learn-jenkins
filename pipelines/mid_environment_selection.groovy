@@ -38,7 +38,7 @@ def setupEnvParams(){
                             import groovy.io.FileType                            
                             def getAllFolders() {
                                 def list = []
-                                def dir = new File("/inventory/")
+                                def dir = new File("/application/ansible/inventory/")
                                 dir.eachFile (FileType.DIRECTORIES) { file ->
                                     list << file.name
                                 }
@@ -71,7 +71,7 @@ def setupEnvParams(){
                                 def getFoldersUnder(String folderName) {
                                     def list = []
                                     list.add('')
-                                    def dir = new File("/inventory/${folderName}/")
+                                    def dir = new File("/application/ansible/inventory/${folderName}/")
                                     dir.eachFile (FileType.DIRECTORIES) { file ->
                                         list << file.name
                                     }
@@ -104,7 +104,7 @@ def setupEnvParams(){
                                 def getFoldersUnder(String folderName) {
                                     def list = []
                                     list.add('')
-                                    def dir = new File("/inventory/${folderName}/")
+                                    def dir = new File("/application/ansible/inventory/${folderName}/")
                                     dir.eachFile (FileType.FILES) { file ->
                                         list << file.name.replaceAll('.yml','');
                                     }
@@ -148,7 +148,7 @@ def setupHostParams(){
                         sandbox: true,
                         script:  
                         '''
-                            def command = ['/bin/sh',  '-c',  "cat /inventory/${ENV_TYPE}/${CLUSTER_NAME}/${Application}|grep z182|sed 's/^ *//g;s/://g'|sort -u "]
+                            def command = ['/bin/sh',  '-c',  "cat /application/ansible/inventory/${ENV_TYPE}/${CLUSTER_NAME}/${Application}|grep z182|sed 's/^ *//g;s/://g'|sort -u "]
                             def proc = command.execute()
                             proc.waitFor()              
                             def output = proc.in.text
