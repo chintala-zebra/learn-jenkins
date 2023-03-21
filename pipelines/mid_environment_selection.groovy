@@ -121,9 +121,8 @@ def setupParams(){
                             
                         ]
                 ]
-            ],
-
-            [
+            ]
+            ,[
                 $class: 'CascadeChoiceParameter',
                 choiceType: 'PT_SINGLE_SELECT',
                 description: '',
