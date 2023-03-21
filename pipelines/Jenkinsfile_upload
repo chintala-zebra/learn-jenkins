@@ -31,19 +31,6 @@ pipeline {
             steps {
                 script{
                     myscripts.showContent()
-                }
-            }
-        }
-        stage('Approval') {
-            steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    input "Do you approve the copy of file to $host_name @ path $target_file_path?"
-                }
-            }
-        }
-        stage('copy file') {
-            steps {
-                script{
                     myscripts.copyFile()
                 }
             }
