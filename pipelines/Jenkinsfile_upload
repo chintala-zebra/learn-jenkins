@@ -24,7 +24,7 @@ pipeline {
         stage('Setup Params') {  
             steps {
                script {
-                    middlewarescripts.setupParams()
+                    middlewarescripts.setupHostParams()
                     myscripts.setupParams()
                }
             }
