@@ -1,3 +1,5 @@
+def myscripts
+def middlewarescripts
 pipeline {
     agent { 
         node {
@@ -15,6 +17,7 @@ pipeline {
             steps {
                 script{
                     myscripts = load "pipelines/upload.groovy"
+                    middlewarescripts = load "pipelines/newway.groovy"
                 }
             }
         }
@@ -22,6 +25,7 @@ pipeline {
             steps {
                script {
                     myscripts.setupParams()
+                    middlewarescripts.setupParams()
                }
             }
         }
