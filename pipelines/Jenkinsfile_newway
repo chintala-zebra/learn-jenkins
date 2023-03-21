@@ -14,7 +14,7 @@ agent {
                 }
             }
         }
-        state('Setup Params') {  
+        stage('Setup Params') {  
             steps {
                script {
                     myscripts.setupParams()
