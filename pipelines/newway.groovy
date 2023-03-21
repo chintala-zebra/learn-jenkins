@@ -44,11 +44,7 @@ def setupParams(){
                 referencedParameters: 'Env', 
                 script: 
                     [$class: 'GroovyScript', 
-                    fallbackScript: [
-                            classpath: [], 
-                            sandbox: true, 
-                            script:  "return['ERROR']"
-                            ], 
+                    
                     script: [
                             classpath: [], 
                             sandbox: true, 
