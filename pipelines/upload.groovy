@@ -50,9 +50,9 @@ def copyFile() {
             export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
             ansible-vault decrypt the-key
             echo "removed the key" > .mysecret
-            scp -o 'StrictHostKeyChecking no' -i the-key ${WORKSPACE}/fileName $host_name:$target_file_path
+            scp -o 'StrictHostKeyChecking no' -i the-key ${WORKSPACE}/fileName $SERVER:$target_file_path
     '''
-    log.info ("Copy of file to Host : ${params.host_name} @ Path : ${params.target_file_path} is successful!")
+    log.info ("Copy of file to Host : ${params.SERVER} @ Path : ${params.target_file_path} is successful!")
 }
 
 return this
