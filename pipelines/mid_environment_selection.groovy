@@ -58,12 +58,12 @@ def setupParams(){
             ]
             ,[$class: 'CascadeChoiceParameter', 
                 choiceType: 'PT_SINGLE_SELECT', 
-                description: 'Select the AMI from the Dropdown List',
+                description: 'Cluster',
                 name: 'Cluster', 
                 referencedParameters: 'JobName,Env', 
                 script: 
                     [$class: 'GroovyScript', 
-                    
+                    fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
                     script: [
                             classpath: [], 
                             sandbox: true, 
@@ -83,6 +83,39 @@ def setupParams(){
                                     return [parts[3]]
                                 } else {
                                     return getFoldersUnder(Env)
+                                } 
+                            '''
+                            
+                        ]
+                ]
+            ]
+            ,[$class: 'CascadeChoiceParameter', 
+                choiceType: 'PT_SINGLE_SELECT', 
+                description: 'Application',
+                name: 'Application', 
+                referencedParameters: 'JobName,Env,Cluster', 
+                script: 
+                    [$class: 'GroovyScript', 
+                    fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                    script: [
+                            classpath: [], 
+                            sandbox: true, 
+                            script: ''' 
+                                import groovy.io.FileType                            
+                                def getFoldersUnder(String folderName) {
+                                    def list = []
+                                    list.add('')
+                                    def dir = new File("/inventory/${folderName}/")
+                                    dir.eachFile (FileType.FILES) { file ->
+                                        list << file.name.replaceAll('.yml','');
+                                    }
+                                    return list  - null - ''
+                                }
+                                def parts = JobName.split('_');
+                                if(parts.length > 4){
+                                    return [parts[4]]
+                                } else {
+                                    return getFoldersUnder(Env/Cluster)
                                 } 
                             '''
                             
