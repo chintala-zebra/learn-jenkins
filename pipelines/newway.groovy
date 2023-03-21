@@ -1,17 +1,6 @@
 import groovy.io.FileType
 
 
-@NonCPS
-def getFoldersUnder(String folderName) {
-    def list = []
-    list.add('')
-    def dir = new File("/inventory/${folderName}/")
-    dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
-        list << file.name
-    }
-    return list.sort() - 'group_vars' 
-}
-
 def setupParams(){
     properties([
         parameters([
@@ -48,9 +37,20 @@ def setupParams(){
                     script: [
                             classpath: [], 
                             sandbox: true, 
-                            script {
-                                return listFolders.call(Env)
-                            }
+                            script: ''' 
+                                import groovy.io.FileType                            
+                                def getFoldersUnder(String folderName) {
+                                    def list = []
+                                    list.add('')
+                                    def dir = new File("/inventory/${folderName}/")
+                                    dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
+                                        list << file.name
+                                    }
+                                    return list.sort() - 'group_vars' 
+                                }
+                                return getFoldersUnder(Env)
+                            '''
+                            
                         ]
                 ]
             ]
