@@ -3,12 +3,12 @@ import java.io.File
 def setupParams(){
     properties([
         parameters([
-            base64File 'file'
+            base64File (name: 'file', description: "File to Upload"),
             string( name: 'target_file_path', 
                     description: """
                     Path to where the file needs copied - <b> Must Include the file name </b>
                     <br> Ex: /mount/test_folder/abcd.xml'
-                    """)
+                    """),
             string(name: 'host_name', description: 'Host to which the file Needs Copied')
         ])
     ])
