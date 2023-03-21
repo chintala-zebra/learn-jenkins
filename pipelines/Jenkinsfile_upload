@@ -16,8 +16,8 @@ pipeline {
         stage('Init') {  
             steps {
                 script{
+                    middlewarescripts = load "mid_environment_selection"
                     myscripts = load "pipelines/upload.groovy"
-                    middlewarescripts = load "pipelines/newway.groovy"
                 }
             }
         }

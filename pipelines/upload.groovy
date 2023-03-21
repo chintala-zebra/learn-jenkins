@@ -6,26 +6,18 @@ def setupParams(){
     .collectMany { it.value.parameterDefinitions }
 
     // Create new params and merge them with existing ones
-    jobParams = [
-    booleanParam(name: 'boolean_param', defaultValue: false)
-    /* other params */
-    ] + existing
+    jobParams = existing + [
+        base64File (name: 'file', description: "File to Upload"),
+        string( name: 'target_file_path', 
+                     description: """
+                     Path to where the file needs copied - <b> Must Include the file name </b>
+                     <br> Ex: /mount/test_folder/abcd.xml'
+                     """)
+    ] 
     // Create properties
     properties([
         parameters(jobParams)
     ])
-
-    // properties([
-    //     parameters([
-    //         base64File (name: 'file', description: "File to Upload"),
-    //         string( name: 'target_file_path', 
-    //                 description: """
-    //                 Path to where the file needs copied - <b> Must Include the file name </b>
-    //                 <br> Ex: /mount/test_folder/abcd.xml'
-    //                 """),
-    //         string(name: 'host_name', description: 'Host to which the file Needs Copied')
-    //     ])
-    // ])
 }
 
 
