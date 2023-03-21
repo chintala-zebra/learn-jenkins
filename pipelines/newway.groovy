@@ -11,13 +11,13 @@ def setupParams(){
                     $class: 'GroovyScript', 
                     fallbackScript: [
                         classpath: [], 
-                        sandbox: false, 
+                        sandbox: true, 
                         script: 
-                            "return['Could not get The environemnts']"
+                            "return['ERROR']"
                     ], 
                     script: [
                         classpath: [], 
-                        sandbox: false, 
+                        sandbox: true, 
                         script: 
                             "return['GCP-Sandbox','GCP-Preprod','GCP-Production']"
                     ]
