@@ -1,4 +1,5 @@
 def myscripts
+def middlewarescripts
 pipeline {
     agent { 
         node {
@@ -22,8 +23,8 @@ pipeline {
         stage('Setup Params') {  
             steps {
                script {
-                    myscripts.setupParams()
                     middlewarescripts.setupParams()
+                    myscripts.setupParams()
                }
             }
         }
