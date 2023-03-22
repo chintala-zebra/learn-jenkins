@@ -67,7 +67,7 @@ def setupParameterDisplay() {
     addShortText(border: 0, text: "JOB_NAME:" + JOB_NAME, background: "beige", color: "black")
 }
 
-def executeMainteance() {
+def executeJob() {
     log.info("Execuring Maintenance on ${params.ENV_TYPE} - ${params.CLUSTER_NAME} - ${params.Application} - ${params.JOB_NAME}")
 }
 

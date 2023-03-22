@@ -33,10 +33,10 @@ pipeline {
                 }
             }
         }
-        stage('Execute Mainteance') {
+        stage('Execute Job') {
             steps {
                 script{
-                    myscripts.executeMainteance()
+                    myscripts.executeJob()
                 }
             }
         }
