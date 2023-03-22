@@ -59,7 +59,7 @@ def validateParams(){
 }
 
 def setupParameterDisplay() {
-    addShortText(border: 0, text: "ENVIRONMENT:" + ENV_TYPE + "-" + CLUSTER_NAME, background: "azure", color: "black")
+    addShortText(border: 0, text: "ENVIRONMENT:" + CLUSTER_NAME + "_" + ENV_TYPE, background: "azure", color: "black")
     addShortText(border: 0, text: "Application:" + Application, background: "azure", color: "black")
     addShortText(border: 0, text: "JOB_NAME:" + JOB_NAME, background: "beige", color: "black")
 }
