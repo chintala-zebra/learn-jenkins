@@ -41,7 +41,8 @@ pipeline {
                  not { branch 'main' } 
             }
             steps {
-                echo ${target_file_path}
+                echo "1 ${target_file_path}"
+                echo "2 ${params.target_file_path}"
                 script{
                     myscripts.copyFile()
                 }
