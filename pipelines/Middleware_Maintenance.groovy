@@ -57,12 +57,15 @@ def validateParams(){
     }
 }
 
-def executeMainteance() {
+def setupParamDisplay{
     addShortText(border: 0, text: "ENVIRONMENT=" + ENV_TYPE, background: "azure", color: "black")
     addShortText(border: 0, text: "CLUSTER_NAME=" + CLUSTER_NAME, background: "beige", color: "black")
     addShortText(border: 0, text: "Application=" + Application, background: "azure", color: "black")
     addShortText(border: 0, text: "JOB_NAME=" + JOB_NAME, background: "beige", color: "black")
-    
+}
+
+def executeMainteance() {
+    setupParamDisplay()
     log.info("Execuring Maintenance on ${params.ENV_TYPE} - ${params.CLUSTER_NAME} - ${params.Application} - ${params.JOB_NAME}")
 }
 
