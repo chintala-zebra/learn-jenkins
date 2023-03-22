@@ -171,11 +171,13 @@ def addInventoryParamsUptoHost(){
     properties([
         parameters(jobParams)
     ])
-
-            
-        
-    
 }
 
+
+def performPostActions(){
+    always {
+            cleanWs()
+        }
+}
 
 return this

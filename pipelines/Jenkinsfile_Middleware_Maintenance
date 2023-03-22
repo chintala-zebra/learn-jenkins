@@ -43,9 +43,7 @@ pipeline {
     }
 
     post {
-        always {
-            cleanWs()
-        }
+        env_params.performPostActions()
     }
 }
 
