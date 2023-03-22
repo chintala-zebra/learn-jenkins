@@ -21,6 +21,11 @@ def setupParams(){
 
 def validateParams(){
     if(params.target_file_path == "" || params.file == "" || params.SERVER == ""){
+        USERNAME = input message: 'Please enter the username',
+                             parameters: [string(defaultValue: '',
+                                          description: '',
+                                          name: 'Username')]
+        echo USERNAME
         currentBuild.result = 'FAILURE'
         error "Required Parameters are empty so, skipping execution."
     } else {
