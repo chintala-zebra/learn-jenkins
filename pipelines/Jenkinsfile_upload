@@ -38,7 +38,7 @@ pipeline {
                 ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
             }
             when {
-                 not { target_file_path '' } 
+                 not { $params.target_file_path '' } 
             }
             steps {
                 echo "1 ${target_file_path}"
