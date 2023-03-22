@@ -27,7 +27,7 @@ def validateParams(){
 }
 
 def validateFilePath(){
-    if(!params.target_file_path.contains"/tmp"){
+    if(!params.target_file_path.contains("/tmp")){
         input "File path is not in allowed list. Do you still want to proceed?"
     }
 }
