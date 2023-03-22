@@ -5,7 +5,6 @@ def setupParams(){
     .findAll { it.value instanceof hudson.model.ParametersDefinitionProperty }
     .collectMany { it.value.parameterDefinitions }
 
-    // Create new params and merge them with existing ones
     jobParams = existing + [
         base64File (name: 'file', description: "File to Upload"),
         string( name: 'target_file_path', 
@@ -14,10 +13,26 @@ def setupParams(){
                      <br> Ex: /mount/test_folder/abcd.xml'
                      """)
     ] 
-    // Create properties
+
     properties([
         parameters(jobParams)
     ])
+}
+
+def areParamsValid(){
+    if(params.target_file_path == "" || params.file == "" || params.SERVER == ""){
+        log.info "Required Parameters are empty so, skipping execution."
+        currentBuild.result = 'FAILURE'
+        return false
+    } else {
+        return true
+    }
+}
+
+def base64Decode(encodedString){
+    byte[] decoded = encodedString.decodeBase64()
+    String decode = new String(decoded)
+    return decode
 }
 
 def showContent() {
@@ -38,12 +53,6 @@ def showContent() {
     }
 }
 
-def base64Decode(encodedString){
-    byte[] decoded = encodedString.decodeBase64()
-    String decode = new String(decoded)
-    return decode
-}
-
 def copyFile() {
     if(areParamsValid()){
         sh '''
@@ -56,17 +65,6 @@ def copyFile() {
         '''
         log.info ("Copy of file to Host : ${params.SERVER} @ Path : ${params.target_file_path} is successful!")
     }
-}
-
-def areParamsValid(){
-    if(params.target_file_path == "" || params.file == "" || params.SERVER == ""){
-        log.info "Required Parameters are empty so, skipping execution."
-        //currentBuild.result = 'FAILURE'
-        return false
-    } else {
-        return true
-    }
-
 }
 
 return this
