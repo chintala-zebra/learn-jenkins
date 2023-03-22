@@ -21,7 +21,7 @@ def setupParams(){
 }
 
 def showContent() {
-    if(areRequiredParamsSet()){
+    if(areParamsValid()){
         log.info "Required Parameters are empty so, skipping execution."
     } else {
         log.info("The file content that you are going to copy is")
@@ -47,7 +47,7 @@ def base64Decode(encodedString){
 }
 
 def copyFile() {
-    if(areRequiredParamsSet()){
+    if(areParamsValid()){
         log.info "Required Parameters are empty so, skipping execution."
         //currentBuild.result = 'FAILURE'
     } else {
@@ -63,7 +63,7 @@ def copyFile() {
     }
 }
 
-def areRequiredParamsSet(){
+def areParamsValid(){
     if(params.target_file_path == "" || params.file == "" || params.SERVER == ""){
         return false
     } else {
