@@ -1,5 +1,5 @@
 def myscripts
-def middlewarescripts
+def env_params
 pipeline {
     agent { 
         node {
@@ -16,7 +16,7 @@ pipeline {
         stage('Init') {  
             steps {
                 script{
-                    middlewarescripts = load "pipelines/mid_environment_selection.groovy"
+                    env_params = load "pipelines/libraries/env_params.groovy"
                     myscripts = load "pipelines/upload.groovy"
                 }
             }
@@ -24,7 +24,7 @@ pipeline {
         stage('Setup Params') {  
             steps {
                script {
-                    middlewarescripts.setupHostParams()
+                    env_params.addInventoryParamsUptoHost()
                     myscripts.setupParams()
                }
             }
