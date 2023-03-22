@@ -47,12 +47,12 @@ pipeline {
     post {
         failure {
             script{
-                post_actions.performAlways()
+                post_actions.processError()
             }
         }
         cleanup {
             script{
-                post_actions.performCleanup()
+                post_actions.processCleanup()
             }
         }
     }
