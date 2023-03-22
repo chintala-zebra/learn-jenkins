@@ -22,8 +22,6 @@ def setupParams(){
 
 def showContent() {
     if(areParamsValid()){
-        log.info "Required Parameters are empty so, skipping execution."
-    } else {
         log.info("The file content that you are going to copy is")
         log.info("=============================================================")
         def content = base64Decode (params.file)
@@ -37,6 +35,8 @@ def showContent() {
             fi
         '''
         log.info("=============================================================")
+    } else {
+        log.info "Required Parameters are empty so, skipping execution."
     }
 }
 
@@ -48,9 +48,6 @@ def base64Decode(encodedString){
 
 def copyFile() {
     if(areParamsValid()){
-        log.info "Required Parameters are empty so, skipping execution."
-        //currentBuild.result = 'FAILURE'
-    } else {
         sh '''
                 set +x
                 echo $ANSIBLE_VALUT > .mysecret
@@ -60,6 +57,9 @@ def copyFile() {
                 scp -o 'StrictHostKeyChecking no' -i the-key ${WORKSPACE}/fileName $SERVER:$target_file_path
         '''
         log.info ("Copy of file to Host : ${params.SERVER} @ Path : ${params.target_file_path} is successful!")
+    } else {
+        log.info "Required Parameters are empty so, skipping execution."
+        //currentBuild.result = 'FAILURE'
     }
 }
 
