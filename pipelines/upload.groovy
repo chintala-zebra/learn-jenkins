@@ -20,7 +20,6 @@ def setupParams(){
     ])
 }
 
-
 def showContent() {
     log.info("The file content that you are going to copy is")
     log.info("=============================================================")
@@ -46,6 +45,7 @@ def base64Decode(encodedString){
 def copyFile() {
     if(params.target_file_path == ""){
         log.info "Required Parameters are empty"
+        currentBuild.currentResult = 'FAILURE'
     } else {
         sh '''
                 set +x
