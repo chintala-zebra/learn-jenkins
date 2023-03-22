@@ -44,7 +44,7 @@ def base64Decode(encodedString){
 
 def copyFile() {
     if(params.target_file_path == ""){
-        log.info "Required Parameters are empty"
+        log.error "Required Parameters are empty"
         currentBuild.result = 'FAILURE'
     } else {
         sh '''
