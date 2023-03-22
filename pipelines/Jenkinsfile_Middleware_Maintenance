@@ -43,7 +43,9 @@ pipeline {
     }
 
     post {
-        env_params.performPostActions()
+        always {
+            env_params.performPostActions()
+        }
     }
 }
 

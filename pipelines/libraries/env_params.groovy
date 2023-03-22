@@ -175,9 +175,7 @@ def addInventoryParamsUptoHost(){
 
 
 def performPostActions(){
-    always {
-            cleanWs()
-        }
+    cleanWs()
 }
 
 return this
