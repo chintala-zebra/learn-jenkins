@@ -30,24 +30,13 @@ pipeline {
             steps {
                 script{
                     myscripts.validateParams()
-                    myscripts.validateFilePath()
                 }
             }
         }
-        stage('Show Conent') {
+        stage('Execute Mainteance') {
             steps {
                 script{
-                    myscripts.showContent()
-                }
-            }
-        }
-        stage('copy file') {
-            environment {
-                ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
-            }
-            steps {
-                script{
-                    myscripts.copyFile()
+                    myscripts.executeMainteance()
                 }
             }
         }
