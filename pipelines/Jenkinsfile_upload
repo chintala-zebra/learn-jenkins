@@ -9,9 +9,6 @@ pipeline {
     options {
         ansiColor('xterm')
     }
-    environment {
-        ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
-    }
     stages {
         stage('Init') {  
             steps {
@@ -37,6 +34,12 @@ pipeline {
             }
         }
         stage('copy file') {
+            environment {
+                ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
+            }
+            when {
+                 not { branch 'main' } 
+            }
             steps {
                 script{
                     myscripts.copyFile()
