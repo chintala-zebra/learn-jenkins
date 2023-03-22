@@ -1,5 +1,6 @@
 def myscripts
 def env_params
+def post_actions
 pipeline {
     agent { 
         node {
@@ -15,6 +16,7 @@ pipeline {
                 script{
                     env_params = load "pipelines/libraries/env_params.groovy"
                     myscripts = load "pipelines/Middleware_Maintenance.groovy"
+                    post_actions = load "pipelines/libraries/post_actions.groovy"
                 }
             }
         }
@@ -43,9 +45,14 @@ pipeline {
     }
 
     post {
-        always {
+        failure {
             script{
-                env_params.performPostActions()
+                post_actions.performAlways()
+            }
+        }
+        cleanup {
+            script{
+                post_actions.performCleanup()
             }
         }
     }
