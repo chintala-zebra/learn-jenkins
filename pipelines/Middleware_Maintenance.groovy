@@ -51,14 +51,14 @@ def setupParams(){
 }
 
 def validateParams(){
-    if(params.ENV_TYPE == null || params.ENV_TYPE == "" || params.CLUSTER_NAME == null || params.CLUSTER_NAME == "" || params.Application == null || params.Application == ""){
+    if(params.ENV_TYPE == "" || params.CLUSTER_NAME == "" || params.Application == "" || params.JOB_NAME == ""){
         currentBuild.result = 'FAILURE'
         error "Required Parameters are empty so, skipping execution."
     }
 }
 
 def executeMainteance() {
-    log.info("Execuring Maintenance on ${params.ENV_TYPE} - ${params.CLUSTER_NAME} - ${params.Application}")
+    log.info("Execuring Maintenance on ${params.ENV_TYPE} - ${params.CLUSTER_NAME} - ${params.Application} - ${params.JOB_NAME}")
 }
 
 return this
