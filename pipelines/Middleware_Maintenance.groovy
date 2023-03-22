@@ -29,7 +29,7 @@ def setupParams(){
                             return ''
                         }
                         else
-                        {                        
+                        {
                             def jobs = [
                                 "appHealth",
                                 "wasCheckProcess",
