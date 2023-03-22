@@ -35,8 +35,6 @@ def showContent() {
             fi
         '''
         log.info("=============================================================")
-    } else {
-        log.info "Required Parameters are empty so, skipping execution."
     }
 }
 
@@ -57,14 +55,13 @@ def copyFile() {
                 scp -o 'StrictHostKeyChecking no' -i the-key ${WORKSPACE}/fileName $SERVER:$target_file_path
         '''
         log.info ("Copy of file to Host : ${params.SERVER} @ Path : ${params.target_file_path} is successful!")
-    } else {
-        log.info "Required Parameters are empty so, skipping execution."
-        //currentBuild.result = 'FAILURE'
     }
 }
 
 def areParamsValid(){
     if(params.target_file_path == "" || params.file == "" || params.SERVER == ""){
+        log.info "Required Parameters are empty so, skipping execution."
+        //currentBuild.result = 'FAILURE'
         return false
     } else {
         return true
