@@ -37,12 +37,7 @@ pipeline {
             environment {
                 ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
             }
-            when {
-                 not { $params.target_file_path '' } 
-            }
             steps {
-                echo "1 ${target_file_path}"
-                echo "2 ${params.target_file_path}"
                 script{
                     myscripts.copyFile()
                 }
