@@ -1,8 +1,8 @@
-def performAlways(){
+def processCleanup(){
     cleanWs()
 }
 
-def performonError(){
+def processError(){
     log.info "Notifying Middleware team of Failure."
 }
 
