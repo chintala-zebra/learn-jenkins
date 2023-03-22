@@ -30,7 +30,7 @@ def validateParams(){
 
 def validateParamsOptional(){
     if(params.target_file_path == "" || params.file == "" || params.SERVER == ""){
-        input "Validation Failed. Do you want to proceed?"
+        input "Artifacts URL Validation Failed. Do you still want to proceed?"
     } else {
         log.info "All Parameters are valid."
     }
