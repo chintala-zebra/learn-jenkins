@@ -18,6 +18,7 @@ agent {
                 echo "removed the key" > .mysecret
 
                 export ANSIBLE_HOST_KEY_CHECKING=False
+                export ANSIBLE_FORCE_COLOR=true
                 ansible-playbook -i hosts/hosts.yaml ping-play.yaml
             """
             echo $ANSIBLE_VAULT_PASSWORD_FILE
