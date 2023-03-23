@@ -8,7 +8,7 @@ agent {
         ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
     }
   stages {
-    stage('Decrypt Private Key') {  
+    stage('executePlay') {  
       steps {
           sh """
                 set +x
@@ -16,16 +16,17 @@ agent {
                 export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
                 ansible-vault decrypt the-key
                 echo "removed the key" > .mysecret
+
+                export ANSIBLE_HOST_KEY_CHECKING=False
+                ansible-playbook -i hosts/hosts.yaml ping-play.yaml
             """
+            echo $ANSIBLE_VAULT_PASSWORD_FILE
       }
     }
     stage('Run Play') {  
       steps {
           sh """
               pwd
-              echo $ANSIBLE_VAULT_PASSWORD_FILE
-              export ANSIBLE_HOST_KEY_CHECKING=False
-              ansible-playbook -i hosts/hosts.yaml ping-play.yaml
             """
       }
     }
