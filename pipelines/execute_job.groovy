@@ -10,7 +10,7 @@ def setupParams(){
                      description: """
                      Please enter the job that needs executed. - <b> Must be full path to the script </b>
                      <br> Ex: /mount/jobs/executeme.sh'
-                     <br> Job will require manual approval if the script is not from /mount or /tmp
+                     <br> Note: Job will require manual approval if the script is not from <b>/mount or /tmp </b>
                      """)
     ]
     properties([
