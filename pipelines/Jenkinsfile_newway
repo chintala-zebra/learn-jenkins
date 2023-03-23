@@ -28,14 +28,14 @@ agent {
         stage('Validate') {
             steps {
                script {
-                    myscripts.validate()
+                    myscripts.validateParams()
                }
             }
         }
         stage('Execute Job') {
             steps {
                script {
-                    myscripts.testApp()
+                    myscripts.executeJob()
                }
             }
         }
