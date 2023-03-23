@@ -22,9 +22,8 @@ agent {
     stage('Run Play') {  
       steps {
           sh """
-                          set +x
-
               pwd
+              echo $ANSIBLE_VAULT_PASSWORD_FILE
               export ANSIBLE_HOST_KEY_CHECKING=False
               ansible-playbook -i hosts/hosts.yaml ping-play.yaml
             """
