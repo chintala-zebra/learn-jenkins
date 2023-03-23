@@ -45,9 +45,14 @@ pipeline {
     }
 
     post {
+        success {
+            script{
+                post_actions.processSuccess()
+            }
+        }
         failure {
             script{
-                post_actions.processError()
+                post_actions.notifyMiddleware()
             }
         }
         cleanup {
