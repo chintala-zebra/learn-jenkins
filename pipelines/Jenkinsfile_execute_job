@@ -1,0 +1,55 @@
+def myscripts
+def env_params
+pipeline {
+    agent { 
+        node {
+            label 'ansible'
+        }
+    }
+    options {
+        ansiColor('xterm')
+    }
+    stages {
+        stage('Init') {  
+            steps {
+                script{
+                    env_params = load "pipelines/libraries/env_params.groovy"
+                    myscripts = load "pipelines/upload.groovy"
+                }
+            }
+        }
+        stage('Setup Params') {  
+            steps {
+               script {
+                    env_params.addInventoryParamsUptoHost()
+                    myscripts.setupParams()
+               }
+            }
+        }
+        stage('Validate') {
+            steps {
+                script{
+                    myscripts.validateParams()
+                    myscripts.validateFilePath()
+                }
+            }
+        }
+        stage('Execute Job') {
+            environment {
+                ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
+            }
+            steps {
+                script{
+                    myscripts.executeJob()
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
+
