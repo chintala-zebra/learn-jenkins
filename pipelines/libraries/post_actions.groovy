@@ -1,8 +1,16 @@
+def processSuccess(){
+
+}
+
+def processError(){
+
+}
+
 def processCleanup(){
     cleanWs()
 }
 
-def processError(){
+def notifyMiddleware(){
     log.info "Notifying Middleware team of Failure."
 }
 
