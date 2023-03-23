@@ -54,7 +54,7 @@ def setupParams(){
 def validateParams(){
     setupParameterDisplay()
     if(params.ENV_TYPE == "" || params.CLUSTER_NAME == "" || params.Application == "" || params.JOB_NAME == ""){
-        currentBuild.result = 'FAILURE'
+        currentBuild.result = 'NOT_BUILT'
         error "Required Parameters are empty so, skipping execution."
     }
 }
