@@ -48,7 +48,7 @@ agent {
         }
         failure {
             script{
-                utilities.notifyMiddleware()
+                utilities.processError()
             }
         }
         cleanup {
