@@ -8,6 +8,9 @@ agent {
             label 'ansible'
         }
     }
+    options {
+        ansiColor('xterm')
+    }
     stages {
         stage('Init') {
             steps {
