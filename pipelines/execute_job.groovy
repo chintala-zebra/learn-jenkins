@@ -37,7 +37,7 @@ def executeJob() {
             export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
             ansible-vault decrypt the-key
             echo "removed the key" > .mysecret
-            ssh -o 'StrictHostKeyChecking no' -i the-key $SERVER:$command_to_execute
+            ssh -o 'StrictHostKeyChecking no' -i the-key $SERVER $command_to_execute
     '''
     log.info ("Job execution is successful!")
 }
