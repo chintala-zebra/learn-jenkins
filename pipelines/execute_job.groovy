@@ -32,6 +32,7 @@ def validateFilePath(){
 
 def executeJob() {
     sh '''
+            set +x
             echo $ANSIBLE_VALUT > .mysecret
             export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
             ansible-vault decrypt the-key
