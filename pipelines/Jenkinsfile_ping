@@ -4,6 +4,9 @@ agent {
             label 'ansible'
         }
     }
+    options {
+        ansiColor('xterm')
+    }
     environment {
         ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
     }
