@@ -7,7 +7,7 @@ agent {
         }
     }
     stages {
-        stage('Init') {  
+        stage('Init') {
             steps {
                 script{
                     myscripts = load "pipelines/scripts/newway.groovy"
@@ -21,31 +21,36 @@ agent {
                }
             }
         }
-        stage('Plan') {  
+        stage('Validate') {
             steps {
                script {
-                    myscripts.planApp()
+                    myscripts.validate()
                }
             }
         }
-        stage('Test') {
+        stage('Execute Job') {
             steps {
                script {
                     myscripts.testApp()
                }
             }
         }
-        stage('Deploy') {  
-            steps {
-               script {
-                    myscripts.deployApp()
-               }
-            }
-        }
     }
     post {
-        always {
-            cleanWs()
+        success {
+            script{
+                utilities.processSuccess()
+            }
+        }
+        failure {
+            script{
+                utilities.notifyMiddleware()
+            }
+        }
+        cleanup {
+            script{
+                utilities.processCleanup()
+            }
         }
     }
 }

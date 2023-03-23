@@ -10,7 +10,7 @@ pipeline {
         ansiColor('xterm')
     }
     stages {
-        stage('Init') {  
+        stage('Init') {
             steps {
                 script{
                     env_params = load "pipelines/libraries/env_params.groovy"
@@ -47,8 +47,20 @@ pipeline {
     }
 
     post {
-        always {
-            cleanWs()
+        success {
+            script{
+                utilities.processSuccess()
+            }
+        }
+        failure {
+            script{
+                utilities.notifyMiddleware()
+            }
+        }
+        cleanup {
+            script{
+                utilities.processCleanup()
+            }
         }
     }
 }
