@@ -1,36 +1,63 @@
+def utilities
+def env_params
+def myscripts
+
 pipeline {
 agent { 
         node {
             label 'ansible'
         }
     }
-    options {
-        ansiColor('xterm')
-    }
-    environment {
-        ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
-    }
     stages {
-        stage('executePlay') {  
+        stage('Init') {
             steps {
-                sh """
-                    set +x
-                    echo $ANSIBLE_VALUT > .mysecret
-                    export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
-                    ansible-vault decrypt the-key
-                    echo "removed the key" > .mysecret
-
-                    export ANSIBLE_HOST_KEY_CHECKING=False
-                    export ANSIBLE_FORCE_COLOR=true
-                    ansible-playbook -i hosts/hosts.yaml ping-play.yaml
-                """
+                script{
+                    utilities = load "pipelines/libraries/utilities.groovy"
+                    env_params = load "pipelines/libraries/env_params.groovy"
+                    myscripts = load "pipelines/scripts/ping.groovy"
+                }
+            }
+        }
+        stage('Setup Params') {  
+            steps {
+               script {
+                    myscripts.setupParams()
+               }
+            }
+        }
+        stage('Validate') {
+            steps {
+               script {
+                    myscripts.validateParams()
+               }
+            }
+        }
+        stage('Execute Job') {
+            environment {
+                ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
+            }
+            steps {
+               script {
+                    myscripts.executeJob()
+               }
             }
         }
     }
-
     post {
-        always {
-            cleanWs()
+        success {
+            script{
+                utilities.processSuccess()
+            }
+        }
+        failure {
+            script{
+                utilities.notifyMiddleware()
+            }
+        }
+        cleanup {
+            script{
+                utilities.processCleanup()
+            }
         }
     }
 }
