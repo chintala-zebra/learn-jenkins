@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script{
                     env_params = load "pipelines/libraries/env_params.groovy"
-                    myscripts = load "pipelines/upload.groovy"
+                    myscripts = load "pipelines/scripts/upload.groovy"
                 }
             }
         }
