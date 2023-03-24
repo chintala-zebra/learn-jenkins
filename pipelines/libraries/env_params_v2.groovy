@@ -52,7 +52,7 @@ def addInventoryParamsUptoApplication(String jobName){
                                 } else {
                                     def list = []
                                     list.add('')
-                                    def dir = new File("/application/ansible/inventory/${ENV_TYPE}/")
+                                    def dir = new File("/application/ansible/inventory/${params.ENV_TYPE}/")
                                     dir.eachFile (FileType.DIRECTORIES) { file ->
                                         list << file.name
                                     }
@@ -83,7 +83,7 @@ def addInventoryParamsUptoApplication(String jobName){
                                 } else {
                                     def list = []
                                     list.add('')
-                                    def dir = new File("/application/ansible/inventory/"${ENV_TYPE}/${CLUSTER_NAME}"/")
+                                    def dir = new File("/application/ansible/inventory/"${params.ENV_TYPE}/${params.CLUSTER_NAME}"/")
                                     dir.eachFile (FileType.FILES) { file ->
                                         list << file.name.replaceAll('.yml','');
                                     }
@@ -119,7 +119,7 @@ def addInventoryParamsUptoHost(String jobName){
                         classpath: [],
                         sandbox: true,
                         script:  """
-                            def command = ['/bin/sh',  '-c',  "cat /application/ansible/inventory/${ENV_TYPE}/${CLUSTER_NAME}/${Application}|grep z182|sed 's/^ *//g;s/://g'|sort -u "]
+                            def command = ['/bin/sh',  '-c',  "cat /application/ansible/inventory/${params.ENV_TYPE}/${params.CLUSTER_NAME}/${params.Application}|grep z182|sed 's/^ *//g;s/://g'|sort -u "]
                             def proc = command.execute()
                             proc.waitFor()              
                             def output = proc.in.text
