@@ -5,14 +5,12 @@ def myscripts
 pipeline {
     options {
         buildDiscarder(logRotator(daysToKeepStr: '30'))
+        ansiColor('xterm')
     }
 agent { 
         node {
             label 'ansible'
         }
-    }
-    options {
-        ansiColor('xterm')
     }
     stages {
         stage('Init') {
