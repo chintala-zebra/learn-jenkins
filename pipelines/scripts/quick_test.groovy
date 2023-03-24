@@ -23,9 +23,9 @@ def validateOptionalParams(){
 
 def executeJob(String jobName) {
     echo jobName
-
+    def jobName1 = jobName
     sh """
-        echo jobName
+        echo jobName1
     """
     echo "Execute Job code goes here..."
 }
