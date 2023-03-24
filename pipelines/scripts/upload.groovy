@@ -32,7 +32,7 @@ def setupParameterDisplay() {
     addShortText(border: 0, text: "File Path:" + target_file_path, background: "beige", color: "black")
 }
 
-def validateFilePath(){
+def validateOptionalParams(){
     if(!params.target_file_path.contains("/tmp")){
         input "File path is not in allowed list. Do you still want to proceed?"
     }

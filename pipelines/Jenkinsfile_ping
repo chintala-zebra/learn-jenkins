@@ -3,13 +3,14 @@ def env_params
 def myscripts
 
 pipeline {
-agent { 
+    options {
+        buildDiscarder(logRotator(daysToKeepStr: '30'))
+        ansiColor('xterm')
+    }
+    agent { 
         node {
             label 'ansible'
         }
-    }
-    options {
-        ansiColor('xterm')
     }
     stages {
         stage('Init') {

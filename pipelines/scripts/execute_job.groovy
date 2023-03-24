@@ -32,7 +32,7 @@ def setupParameterDisplay() {
 }
 
 
-def validateFilePath(){
+def validateOptionalParams(){
     if(!params.command_to_execute.contains("/mount") && !params.command_to_execute.contains("/tmp")){
         input "File path is not in allowed list. Do you still want to proceed?"
     }

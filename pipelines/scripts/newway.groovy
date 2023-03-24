@@ -17,6 +17,10 @@ def setupParameterDisplay() {
     //addShortText(border: 0, text: "ENVIRONMENT:" + ENV_TYPE, background: "beige", color: "black")
 }
 
+def validateOptionalParams(){
+    echo "Validating Optional Parameters code goes here..."
+}
+
 def executeJob() {
     echo "Execute Job code goes here..."
 }
