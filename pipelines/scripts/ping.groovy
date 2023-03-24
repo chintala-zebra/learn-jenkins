@@ -8,6 +8,10 @@ def validateParams() {
      echo "Validating Parameters code goes here..."
 }
 
+def validateOptionalParams(){
+    
+}
+
 def setupParameterDisplay() {
 
 }

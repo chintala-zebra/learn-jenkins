@@ -33,6 +33,7 @@ pipeline {
             steps {
                script {
                     myscripts.validateParams()
+                    myscripts.validateOptionalParams()
                }
             }
         }
