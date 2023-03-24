@@ -24,6 +24,10 @@ def validateParams(){
         currentBuild.result = 'NOT_BUILT'
         error "Required Parameters are empty so, skipping execution."
     }
+    if(params.command_to_execute.contains("rm ")){
+        currentBuild.result = 'NOT_BUILT'
+        error "You are trying to remove files. This is not allowed."
+    }
 }
 
 def setupParameterDisplay() {
