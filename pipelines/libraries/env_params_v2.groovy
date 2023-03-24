@@ -46,20 +46,17 @@ def addInventoryParamsUptoApplication(String jobName){
                             sandbox: true, 
                             script: """
                                 import groovy.io.FileType                            
-                                def getFoldersUnder(String folderName) {
-                                    def list = []
-                                    list.add('')
-                                    def dir = new File("/application/ansible/inventory/${folderName}/")
-                                    dir.eachFile (FileType.DIRECTORIES) { file ->
-                                        list << file.name
-                                    }
-                                    return list.sort() - 'group_vars' 
-                                }
                                 def parts = "$jobName".split('_');
                                 if(parts.length > 3){
                                     return [parts[3]]
                                 } else {
-                                    return getFoldersUnder(ENV_TYPE)
+                                    def list = []
+                                    list.add('')
+                                    def dir = new File("/application/ansible/inventory/${ENV_TYPE}/")
+                                    dir.eachFile (FileType.DIRECTORIES) { file ->
+                                        list << file.name
+                                    }
+                                    return list.sort() - 'group_vars' 
                                 } 
                             """
                         ]
@@ -79,19 +76,18 @@ def addInventoryParamsUptoApplication(String jobName){
                             script: """
                                 import groovy.io.FileType                            
                                 def getFoldersUnder(String folderName) {
-                                    def list = []
-                                    list.add('')
-                                    def dir = new File("/application/ansible/inventory/${folderName}/")
-                                    dir.eachFile (FileType.FILES) { file ->
-                                        list << file.name.replaceAll('.yml','');
-                                    }
-                                    return list  - null - ''
                                 }
                                 def parts = "$jobName".split('_');
                                 if(parts.length > 4){
                                     return [parts[4]]
                                 } else {
-                                    return getFoldersUnder("${ENV_TYPE}/${CLUSTER_NAME}")
+                                    def list = []
+                                    list.add('')
+                                    def dir = new File("/application/ansible/inventory/"${ENV_TYPE}/${CLUSTER_NAME}"/")
+                                    dir.eachFile (FileType.FILES) { file ->
+                                        list << file.name.replaceAll('.yml','');
+                                    }
+                                    return list  - null - ''
                                 } 
                             """
                         ]
