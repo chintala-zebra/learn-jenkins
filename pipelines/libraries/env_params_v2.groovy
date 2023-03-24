@@ -3,7 +3,7 @@ import groovy.io.FileType
 def addInventoryParamsUptoApplication(String names){
     properties([
         parameters([
-            hidden(name: 'hidden_param', defaultValue: '"${names}"', description: 'Hidden parameter')
+            string(name: 'hidden_param', defaultValue: '"${names}"', description: 'Hidden parameter'),
             [$class: 'ChoiceParameter',
                 choiceType: 'PT_SINGLE_SELECT',
                 filterable: false,
