@@ -41,7 +41,7 @@ pipeline {
         stage('Execute Job') {
             steps {
                script {
-                    myscripts.executeJob("$JOB_BASE_NAME")
+                    myscripts.executeJob()
                }
             }
         }
