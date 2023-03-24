@@ -1,19 +1,41 @@
 import groovy.io.FileType
 
-def addInventoryParamsUptoApplication(String jobName){
+def addInventoryParamsUptoApplication(String names){
     properties([
         parameters([
-            [$class: 'ChoiceParameter', 
+            hidden(name: 'hidden_param', defaultValue: '"${names}"', description: 'Hidden parameter')
+            [$class: 'ChoiceParameter',
+                choiceType: 'PT_SINGLE_SELECT',
+                filterable: false,
+                name: 'JobName',
+                script: [$class: 'GroovyScript',
+                    fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                    script: [
+                        classpath: [],
+                        sandbox: true,
+                        script: '''
+                            def build = Thread.currentThread().getName()
+                            def regexp= ".+?/job/([^/]+)/.*"
+                            def match = build  =~ regexp
+                            def jobName = match[0][1]
+                            def parts = jobName.split('_');
+                            return [jobName]
+                        '''.stripIndent()
+                    ]
+                ]
+            ]
+            ,[$class: 'CascadeChoiceParameter', 
                 choiceType: 'PT_SINGLE_SELECT', 
                 description: 'Select the Environemnt from the Dropdown List', 
                 name: 'ENV_TYPE', 
+                referencedParameters: 'JobName', 
                 script: [
                     $class: 'GroovyScript', 
                     fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
                     script: [
                         classpath: [], 
                         sandbox: true, 
-                        script: """
+                        script: '''
                             import groovy.io.FileType                            
                             def getAllFolders() {
                                 def list = []
@@ -23,13 +45,14 @@ def addInventoryParamsUptoApplication(String jobName){
                                 }
                                 return list.sort() - 'group_vars' 
                             }
-                            def parts = "$jobName".split('_');
+                            def parts = JobName.split('_');
                             if(parts.length > 2){
                                 return [parts[2]]
                             } else {
                                 return getAllFolders()
                             }
-                        """
+                        '''
+                            
                     ]
                 ]
             ]
@@ -37,28 +60,32 @@ def addInventoryParamsUptoApplication(String jobName){
                 choiceType: 'PT_SINGLE_SELECT', 
                 description: 'CLUSTER_NAME',
                 name: 'CLUSTER_NAME', 
-                referencedParameters: 'ENV_TYPE', 
+                referencedParameters: 'JobName,ENV_TYPE', 
                 script: 
                     [$class: 'GroovyScript', 
                     fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
                     script: [
                             classpath: [], 
                             sandbox: true, 
-                            script: """
+                            script: ''' 
                                 import groovy.io.FileType                            
-                                def parts = "$jobName".split('_');
-                                if(parts.length > 3){
-                                    return [parts[3]]
-                                } else {
+                                def getFoldersUnder(String folderName) {
                                     def list = []
                                     list.add('')
-                                    def dir = new File("/application/ansible/inventory/${params.ENV_TYPE}/")
+                                    def dir = new File("/application/ansible/inventory/${folderName}/")
                                     dir.eachFile (FileType.DIRECTORIES) { file ->
                                         list << file.name
                                     }
                                     return list.sort() - 'group_vars' 
+                                }
+                                def parts = JobName.split('_');
+                                if(parts.length > 3){
+                                    return [parts[3]]
+                                } else {
+                                    return getFoldersUnder(ENV_TYPE)
                                 } 
-                            """
+                            '''
+                            
                         ]
                 ]
             ]
@@ -66,30 +93,32 @@ def addInventoryParamsUptoApplication(String jobName){
                 choiceType: 'PT_SINGLE_SELECT', 
                 description: 'Application',
                 name: 'Application', 
-                referencedParameters: 'ENV_TYPE,CLUSTER_NAME', 
+                referencedParameters: 'JobName,ENV_TYPE,CLUSTER_NAME', 
                 script: 
                     [$class: 'GroovyScript', 
                     fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
                     script: [
                             classpath: [], 
                             sandbox: true, 
-                            script: """
+                            script: ''' 
                                 import groovy.io.FileType                            
                                 def getFoldersUnder(String folderName) {
-                                }
-                                def parts = "$jobName".split('_');
-                                if(parts.length > 4){
-                                    return [parts[4]]
-                                } else {
                                     def list = []
                                     list.add('')
-                                    def dir = new File("/application/ansible/inventory/"${params.ENV_TYPE}/${params.CLUSTER_NAME}"/")
+                                    def dir = new File("/application/ansible/inventory/${folderName}/")
                                     dir.eachFile (FileType.FILES) { file ->
                                         list << file.name.replaceAll('.yml','');
                                     }
                                     return list  - null - ''
+                                }
+                                def parts = JobName.split('_');
+                                if(parts.length > 4){
+                                    return [parts[4]]
+                                } else {
+                                    return getFoldersUnder("${ENV_TYPE}/${CLUSTER_NAME}")
                                 } 
-                            """
+                            '''
+                            
                         ]
                 ]
             ]
@@ -97,8 +126,8 @@ def addInventoryParamsUptoApplication(String jobName){
     ])
 }
 
-def addInventoryParamsUptoHost(String jobName){
-    addInventoryParamsUptoApplication(jobName)
+def addInventoryParamsUptoHost(String names){
+    addInventoryParamsUptoApplication(names)
 
     existing = currentBuild.rawBuild.parent.properties
     .findAll { it.value instanceof hudson.model.ParametersDefinitionProperty }
@@ -110,7 +139,7 @@ def addInventoryParamsUptoHost(String jobName){
                 $class: 'CascadeChoiceParameter',
                 choiceType: 'PT_SINGLE_SELECT',
                 description: '',
-                referencedParameters: 'ENV_TYPE,CLUSTER_NAME,Application',
+                referencedParameters: 'JobName,ENV_TYPE,CLUSTER_NAME,Application',
                 name: 'SERVER',
                 script: [
                     $class: 'GroovyScript',
@@ -118,8 +147,9 @@ def addInventoryParamsUptoHost(String jobName){
                     script: [
                         classpath: [],
                         sandbox: true,
-                        script:  """
-                            def command = ['/bin/sh',  '-c',  "cat /application/ansible/inventory/${params.ENV_TYPE}/${params.CLUSTER_NAME}/${params.Application}|grep z182|sed 's/^ *//g;s/://g'|sort -u "]
+                        script:  
+                        '''
+                            def command = ['/bin/sh',  '-c',  "cat /application/ansible/inventory/${ENV_TYPE}/${CLUSTER_NAME}/${Application}|grep z182|sed 's/^ *//g;s/://g'|sort -u "]
                             def proc = command.execute()
                             proc.waitFor()              
                             def output = proc.in.text
@@ -132,7 +162,8 @@ def addInventoryParamsUptoHost(String jobName){
                             {
                             return output.tokenize()
                             }
-                        """
+                            
+                        '''
                     ]
                 ]
             ]
