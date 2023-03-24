@@ -25,7 +25,7 @@ pipeline {
         stage('Setup Params') {  
             steps {
                script {
-                    myscripts.setupParams()
+                    myscripts.setupParams("$JOB_BASE_NAME")
                }
             }
         }
