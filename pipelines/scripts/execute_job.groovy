@@ -7,11 +7,11 @@ def setupParams(){
 
     jobParams = existing + [
         string( name: 'command_to_execute', 
-                     description: """
-                     Please enter the job that needs executed. - <b> Must be full path to the script </b>
-                     <br> Ex: /mount/jobs/executeme.sh'
-                     <br> Note: Job will require manual approval if the script is not from <b>/mount or /tmp </b>
-                     """)
+            description: """
+            Please enter the job that needs executed. - <b> Must be full path to the script </b>
+            <br> Ex: /mount/jobs/executeme.sh'
+            <br> Note: Job will require manual approval if the script is not from <b>/mount or /tmp </b>
+            """)
     ]
     properties([
         parameters(jobParams)
@@ -33,12 +33,12 @@ def validateFilePath(){
 
 def executeJob() {
     sh '''
-            set +x
-            echo $ANSIBLE_VALUT > .mysecret
-            export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
-            ansible-vault decrypt the-key
-            echo "removed the key" > .mysecret
-            ssh -o 'StrictHostKeyChecking no' -i the-key $SERVER "$command_to_execute"
+        set +x
+        echo $ANSIBLE_VALUT > .mysecret
+        export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
+        ansible-vault decrypt the-key
+        echo "removed the key" > .mysecret
+        ssh -o 'StrictHostKeyChecking no' -i the-key $SERVER "$command_to_execute"
     '''
     log.info ("Job execution is successful!")
 }
