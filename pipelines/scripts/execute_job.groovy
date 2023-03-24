@@ -9,7 +9,7 @@ def setupParams(){
         string( name: 'command_to_execute', 
             description: """
             Please enter the job that needs executed. - <b> Must be full path to the script </b>
-            <br> Ex: /mount/jobs/executeme.sh'
+            <br> <b>Ex: /mount/jobs/executeme.sh'</b>
             <br> Note: Job will require manual approval if the script is not from <b>/mount or /tmp </b>
             <br> Note: You can't use this to execute <b>rm</b> commands
             """)
