@@ -22,7 +22,7 @@ def setupParams(String jobName){
                                 }
                                 return list.sort() - 'group_vars' 
                             }
-                            def name = $jobName
+                            def name = "$jobName"
                             def parts = name.split('_');
                             if(parts.length > 2){
                                 return [parts[2]]
