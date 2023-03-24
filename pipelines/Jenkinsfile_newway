@@ -3,6 +3,9 @@ def env_params
 def myscripts
 
 pipeline {
+    options {
+        buildDiscarder(logRotator(daysToKeepStr: '30'))
+    }
 agent { 
         node {
             label 'ansible'
