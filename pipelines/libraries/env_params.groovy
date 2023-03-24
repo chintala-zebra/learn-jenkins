@@ -1,6 +1,6 @@
 import groovy.io.FileType
 
-def addInventoryParamsUptoApplication(String jobName){
+def addInventoryParamsUptoApplication(String JobName){
     properties([
         parameters([
             [$class: 'ChoiceParameter', 
@@ -104,8 +104,8 @@ def addInventoryParamsUptoApplication(String jobName){
     ])
 }
 
-def addInventoryParamsUptoHost(String jobName){
-    addInventoryParamsUptoApplication(jobName)
+def addInventoryParamsUptoHost(String JobName){
+    addInventoryParamsUptoApplication(JobName)
 
     existing = currentBuild.rawBuild.parent.properties
     .findAll { it.value instanceof hudson.model.ParametersDefinitionProperty }
