@@ -22,6 +22,7 @@ def validateOptionalParams(){
 }
 
 def executeJob() {
+    echo jobName
     echo "Execute Job code goes here..."
 }
 
