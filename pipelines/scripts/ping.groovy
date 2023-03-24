@@ -2,9 +2,16 @@
 def setupParams(){
 
 }
+
 def validateParams() {
+     setupParameterDisplay()
      echo "Validating Parameters code goes here..."
 }
+
+def setupParameterDisplay() {
+    //addShortText(border: 0, text: "ENVIRONMENT:" + ENV_TYPE, background: "azure", color: "black")
+}
+
 def executeJob() {
    sh """
      set +x

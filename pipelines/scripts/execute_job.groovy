@@ -19,11 +19,20 @@ def setupParams(){
 }
 
 def validateParams(){
+    setupParameterDisplay()
     if(params.command_to_execute == "" || params.SERVER == ""){
         currentBuild.result = 'NOT_BUILT'
         error "Required Parameters are empty so, skipping execution."
     }
 }
+
+def setupParameterDisplay() {
+    addShortText(border: 0, text: "ENVIRONMENT:" + ENV_TYPE, background: "azure", color: "black")
+    addShortText(border: 0, text: "CLUSTER_NAME:" + CLUSTER_NAME , background: "azure", color: "black")
+    addShortText(border: 0, text: "Application:" + Application, background: "azure", color: "black")
+    addShortText(border: 0, text: "Command:" + command_to_execute, background: "beige", color: "black")
+}
+
 
 def validateFilePath(){
     if(!params.command_to_execute.contains("/mount") && !params.command_to_execute.contains("/tmp")){
