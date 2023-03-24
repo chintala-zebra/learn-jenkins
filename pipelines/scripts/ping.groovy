@@ -9,7 +9,7 @@ def validateParams() {
 }
 
 def setupParameterDisplay() {
-    //addShortText(border: 0, text: "ENVIRONMENT:" + ENV_TYPE, background: "azure", color: "black")
+
 }
 
 def executeJob() {
