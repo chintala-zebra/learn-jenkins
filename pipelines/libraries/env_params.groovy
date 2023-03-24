@@ -1,33 +1,12 @@
 import groovy.io.FileType
 
-def addInventoryParamsUptoApplication(){
+def addInventoryParamsUptoApplication(String jobName){
     properties([
         parameters([
-            [$class: 'ChoiceParameter',
-                choiceType: 'PT_SINGLE_SELECT',
-                filterable: false,
-                name: 'JobName',
-                script: [$class: 'GroovyScript',
-                    fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
-                    script: [
-                        classpath: [],
-                        sandbox: true,
-                        script: '''
-                            def build = Thread.currentThread().getName()
-                            def regexp= ".+?/job/([^/]+)/.*"
-                            def match = build  =~ regexp
-                            def jobName = match[0][1]
-                            def parts = jobName.split('_');
-                            return [jobName]
-                        '''.stripIndent()
-                    ]
-                ]
-            ]
-            ,[$class: 'CascadeChoiceParameter', 
+            [$class: 'ChoiceParameter', 
                 choiceType: 'PT_SINGLE_SELECT', 
                 description: 'Select the Environemnt from the Dropdown List', 
                 name: 'ENV_TYPE', 
-                referencedParameters: 'JobName', 
                 script: [
                     $class: 'GroovyScript', 
                     fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
@@ -59,7 +38,7 @@ def addInventoryParamsUptoApplication(){
                 choiceType: 'PT_SINGLE_SELECT', 
                 description: 'CLUSTER_NAME',
                 name: 'CLUSTER_NAME', 
-                referencedParameters: 'JobName,ENV_TYPE', 
+                referencedParameters: 'ENV_TYPE', 
                 script: 
                     [$class: 'GroovyScript', 
                     fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
@@ -92,7 +71,7 @@ def addInventoryParamsUptoApplication(){
                 choiceType: 'PT_SINGLE_SELECT', 
                 description: 'Application',
                 name: 'Application', 
-                referencedParameters: 'JobName,ENV_TYPE,CLUSTER_NAME', 
+                referencedParameters: 'ENV_TYPE,CLUSTER_NAME', 
                 script: 
                     [$class: 'GroovyScript', 
                     fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
@@ -125,8 +104,8 @@ def addInventoryParamsUptoApplication(){
     ])
 }
 
-def addInventoryParamsUptoHost(){
-    addInventoryParamsUptoApplication()
+def addInventoryParamsUptoHost(String jobName){
+    addInventoryParamsUptoApplication(jobName)
 
     existing = currentBuild.rawBuild.parent.properties
     .findAll { it.value instanceof hudson.model.ParametersDefinitionProperty }
@@ -138,7 +117,7 @@ def addInventoryParamsUptoHost(){
                 $class: 'CascadeChoiceParameter',
                 choiceType: 'PT_SINGLE_SELECT',
                 description: '',
-                referencedParameters: 'JobName,ENV_TYPE,CLUSTER_NAME,Application',
+                referencedParameters: 'ENV_TYPE,CLUSTER_NAME,Application',
                 name: 'SERVER',
                 script: [
                     $class: 'GroovyScript',
