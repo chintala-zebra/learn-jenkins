@@ -1,0 +1,65 @@
+def utilities
+def env_params
+def myscripts
+
+pipeline {
+    options {
+        buildDiscarder(logRotator(daysToKeepStr: '30'))
+        ansiColor('xterm')
+    }
+    agent { 
+        node {
+            label 'ansible'
+        }
+    }
+    stages {
+        stage('Init') {
+            steps {
+                script{
+                    utilities = load "pipelines/libraries/utilities.groovy"
+                    env_params = load "pipelines/libraries/env_params.groovy"
+                    myscripts = load "pipelines/scripts/quick_test.groovy"
+                }
+            }
+        }
+        stage('Setup Params') {  
+            steps {
+               script {
+                    myscripts.setupParams()
+               }
+            }
+        }
+        stage('Validate') {
+            steps {
+               script {
+                    myscripts.validateParams()
+                    myscripts.validateOptionalParams()
+               }
+            }
+        }
+        stage('Execute Job') {
+            steps {
+               script {
+                    myscripts.executeJob("$JOB_BASE_NAME")
+               }
+            }
+        }
+    }
+    post {
+        success {
+            script{
+                utilities.processSuccess()
+            }
+        }
+        failure {
+            script{
+                utilities.processError()
+            }
+        }
+        cleanup {
+            script{
+                utilities.processCleanup()
+            }
+        }
+    }
+}
