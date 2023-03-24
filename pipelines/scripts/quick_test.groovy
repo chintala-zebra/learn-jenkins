@@ -5,7 +5,7 @@ def setupParams(){
 
 def validateParams() {
     setupParameterDisplay()
-     echo "Validating Parameters code goes here..."
+     log.info("Validating Parameters code goes here...")
      if(false){
         currentBuild.result = 'NOT_BUILT'
         error "Required Parameters are empty so, skipping execution."
@@ -18,11 +18,10 @@ def setupParameterDisplay() {
 }
 
 def validateOptionalParams(){
-    echo "Validating Optional Parameters code goes here..."
+    log.info("Validating Optional Parameters code goes here...")
 }
 
 def executeJob() {
-    echo jobName
     log.info("Execute Job code goes here...")
 }
 

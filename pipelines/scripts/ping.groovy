@@ -5,7 +5,7 @@ def setupParams(){
 
 def validateParams() {
      setupParameterDisplay()
-     echo "Validating Parameters code goes here..."
+     log.info("Validating Parameters code goes here...")
 }
 
 def validateOptionalParams(){

@@ -60,7 +60,7 @@ def validateParams(){
 }
 
 def validateOptionalParams(){
-   // echo "Validating Optional Parameters code goes here..."
+   // log.info("Validating Optional Parameters code goes here...")
 }
 
 def setupParameterDisplay() {
