@@ -25,7 +25,7 @@ pipeline {
         stage('Setup Params') {  
             steps {
                script {
-                    env_params.addInventoryParamsUptoHost()
+                    env_params.addInventoryParamsUptoHost("$JOB_BASE_NAME")
                     myscripts.setupParams()
                }
             }
