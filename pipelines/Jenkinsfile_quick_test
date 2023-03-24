@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script{
                     utilities = load "pipelines/libraries/utilities.groovy"
-                    env_params = load "pipelines/libraries/env_params.groovy"
+                    env_params = load "pipelines/libraries/env_params_v2.groovy"
                     myscripts = load "pipelines/scripts/quick_test.groovy"
                 }
             }
@@ -25,7 +25,8 @@ pipeline {
         stage('Setup Params') {  
             steps {
                script {
-                    myscripts.setupParams("$JOB_BASE_NAME")
+                    env_params.addInventoryParamsUptoHost("$JOB_BASE_NAME")
+                    //myscripts.setupParams("$JOB_BASE_NAME")
                }
             }
         }
