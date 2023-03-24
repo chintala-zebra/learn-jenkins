@@ -28,9 +28,7 @@ def validateParams(){
 }
 
 def setupParameterDisplay() {
-    addShortText(border: 0, text: "ENVIRONMENT:" + ENV_TYPE, background: "azure", color: "black")
-    addShortText(border: 0, text: "CLUSTER_NAME:" + CLUSTER_NAME , background: "beige", color: "black")
-    addShortText(border: 0, text: "Application:" + Application, background: "azure", color: "black")
+    addShortText(border: 0, text: "SERVER:" + SERVER, background: "azure", color: "black")
     addShortText(border: 0, text: "File Path:" + target_file_path, background: "beige", color: "black")
 }
 
