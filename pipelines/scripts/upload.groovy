@@ -21,7 +21,7 @@ def setupParams(){
 
 def validateParams(){
     if(params.target_file_path == "" || params.file == "" || params.SERVER == ""){
-        currentBuild.result = 'FAILURE'
+        currentBuild.result = 'NOT_BUILT'
         error "Required Parameters are empty so, skipping execution."
     }
 }

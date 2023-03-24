@@ -20,7 +20,7 @@ def setupParams(){
 
 def validateParams(){
     if(params.command_to_execute == "" || params.SERVER == ""){
-        currentBuild.result = 'FAILURE'
+        currentBuild.result = 'NOT_BUILT'
         error "Required Parameters are empty so, skipping execution."
     }
 }
