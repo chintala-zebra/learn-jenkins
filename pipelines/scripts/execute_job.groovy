@@ -4,7 +4,7 @@ def setupParams(){
     params_helper = load "pipelines/libraries/env_params_helper.groovy"
     hostParams = params_helper.getInventoryParamsUptoHost()
 
-    jobParams = existing + [
+    jobParams = [
         string( name: 'command_to_execute', 
             description: """
             Please enter the job that needs executed. - <b> Must be full path to the script </b>
