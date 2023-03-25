@@ -1,7 +1,7 @@
 
 def setupParams(){
-    params_helper = load "pipelines/libraries/env_params.groovy"
-    //params_helper.addInventoryParamsUptoApplication()
+    params_helper = load "pipelines/libraries/env_params_helper.groovy"
+    //params_helper.getInventoryParamsUptoApplication()
     log.info("Additioanl Parameters code goes here...")
 }
 

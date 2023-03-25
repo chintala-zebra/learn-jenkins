@@ -1,10 +1,10 @@
 
 def setupParams(){
     params_helper = load "pipelines/libraries/env_params_helper.groovy"
-    jobParams = params_helper.getInventoryParamsUptoHost()
+    hostParams = params_helper.getInventoryParamsUptoHost()
 
     properties([
-        parameters(jobParams)
+        parameters(hostParams)
     ])
 }
 

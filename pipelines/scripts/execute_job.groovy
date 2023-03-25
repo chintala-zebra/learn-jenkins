@@ -1,9 +1,8 @@
 import java.io.File 
 
 def setupParams(){
-    existing = currentBuild.rawBuild.parent.properties
-    .findAll { it.value instanceof hudson.model.ParametersDefinitionProperty }
-    .collectMany { it.value.parameterDefinitions }
+    params_helper = load "pipelines/libraries/env_params_helper.groovy"
+    hostParams = params_helper.getInventoryParamsUptoHost()
 
     jobParams = existing + [
         string( name: 'command_to_execute', 
@@ -15,7 +14,7 @@ def setupParams(){
             """)
     ]
     properties([
-        parameters(jobParams)
+        parameters(hostParams + jobParams)
     ])
 }
 

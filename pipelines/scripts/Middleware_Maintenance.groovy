@@ -1,11 +1,8 @@
 
 def setupParams(){
-    params_helper = load "pipelines/libraries/env_params.groovy"
-    params_helper.addInventoryParamsUptoApplication()
-    
-    existing = currentBuild.rawBuild.parent.properties
-    .findAll { it.value instanceof hudson.model.ParametersDefinitionProperty }
-    .collectMany { it.value.parameterDefinitions }
+    params_helper = load "pipelines/libraries/env_params_helper.groovy"
+    applicationParams = params_helper.getInventoryParamsUptoApplication()
+
     jobParams = [
             $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
@@ -46,9 +43,8 @@ def setupParams(){
                 ]
             ]
         ]
-    allParams = existing +  jobParams
     properties([
-        parameters(allParams)
+        parameters(applicationParams + jobParams)
     ])
 }
 

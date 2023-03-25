@@ -1,21 +1,19 @@
 import java.io.File 
 
 def setupParams(){
-    existing = currentBuild.rawBuild.parent.properties
-    .findAll { it.value instanceof hudson.model.ParametersDefinitionProperty }
-    .collectMany { it.value.parameterDefinitions }
+    params_helper = load "pipelines/libraries/env_params_helper.groovy"
+    hostParams = params_helper.getInventoryParamsUptoHost()
 
-    jobParams = existing + [
+    jobParams = [
         base64File (name: 'file', description: "File to Upload"),
         string( name: 'target_file_path', 
                      description: """
                      Path to where the file needs copied - <b> Must Include the file name </b>
                      <br> Ex: /mount/test_folder/abcd.xml'
                      """)
-    ] 
-
+    ]
     properties([
-        parameters(jobParams)
+        parameters(hostParams + jobParams)
     ])
 }
 
