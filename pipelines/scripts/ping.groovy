@@ -12,8 +12,8 @@ def setupParams(){
 }
 
 def validateParams() {
-     setupParameterDisplay()
-     log.info("Validating Parameters code goes here...")
+     //setupParameterDisplay()
+     //log.info("Validating Parameters code goes here...")
 }
 
 def validateOptionalParams(){
