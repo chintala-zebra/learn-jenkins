@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script{
                     utilities = load "pipelines/libraries/utilities.groovy"
-                    env_params = load "pipelines/libraries/env_params.groovy"
+                    //env_params = load "pipelines/libraries/env_params.groovy"
                     myscripts = load "pipelines/scripts/quick_test.groovy"
                 }
             }
