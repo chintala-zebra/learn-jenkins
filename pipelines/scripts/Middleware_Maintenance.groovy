@@ -3,9 +3,7 @@ def setupParams(){
         existing = currentBuild.rawBuild.parent.properties
     .findAll { it.value instanceof hudson.model.ParametersDefinitionProperty }
     .collectMany { it.value.parameterDefinitions }
-
-    jobParams = existing +  
-        [
+    jobParams = [
             $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             referencedParameters: 'SNOWTICKET, Application',
@@ -45,9 +43,9 @@ def setupParams(){
                 ]
             ]
         ]
-
+    allParams = existing +  jobParams
     properties([
-        parameters(jobParams)
+        parameters(allParams)
     ])
 }
 
