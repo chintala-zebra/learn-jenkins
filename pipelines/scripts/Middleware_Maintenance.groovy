@@ -61,7 +61,7 @@ def validateOptionalParams(){
 }
 
 def setupParameterDisplay() {
-    addShortText(border: 0, text: "NEW_VAR:" + CLUSTER_NAME + "_" + ENV_TYPE, background: "beige", color: "black")
+    //addShortText(border: 0, text: "NEW_VAR:" + CLUSTER_NAME + "_" + ENV_TYPE, background: "beige", color: "black")
     if(params.ENV_TYPE != "" ){
         addShortText(border: 0, text: "ENVIRONMENT:" + ENV_TYPE, background: "azure", color: "black")
     }
