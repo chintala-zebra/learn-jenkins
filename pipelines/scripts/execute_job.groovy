@@ -1,9 +1,10 @@
 import java.io.File 
 
 def setupParams(){
+    // Get params from helper
     params_helper = load "pipelines/libraries/env_params_helper.groovy"
-    hostParams = params_helper.getInventoryParamsUptoHost()
-
+    helperParams = params_helper.getInventoryParamsUptoHost()
+    // Add additional params
     jobParams = [
         string( name: 'command_to_execute', 
             description: """
@@ -13,9 +14,8 @@ def setupParams(){
             <br> Note: You can't use this to execute <b>rm</b> commands
             """)
     ]
-    properties([
-        parameters(hostParams + jobParams)
-    ])
+    //setup Parameters to Job
+    params_helper.setupParams(helperParams + jobParams)
 }
 
 def validateParams(){

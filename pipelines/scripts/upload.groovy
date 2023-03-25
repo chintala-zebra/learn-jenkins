@@ -1,9 +1,10 @@
 import java.io.File 
 
 def setupParams(){
+    // Get params from helper
     params_helper = load "pipelines/libraries/env_params_helper.groovy"
-    hostParams = params_helper.getInventoryParamsUptoHost()
-
+    helperParams = params_helper.getInventoryParamsUptoHost()
+    // Add additional params
     jobParams = [
         base64File (name: 'file', description: "File to Upload"),
         string( name: 'target_file_path', 
@@ -12,9 +13,7 @@ def setupParams(){
                      <br> Ex: /mount/test_folder/abcd.xml'
                      """)
     ]
-    properties([
-        parameters(hostParams + jobParams)
-    ])
+    params_helper.setupParams(helperParams + jobParams)
 }
 
 def validateParams(){

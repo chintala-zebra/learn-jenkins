@@ -1,8 +1,9 @@
 
 def setupParams(){
+    // Get params from helper
     params_helper = load "pipelines/libraries/env_params_helper.groovy"
-    applicationParams = params_helper.getInventoryParamsUptoApplication()
-
+    helperParams = params_helper.getInventoryParamsUptoApplication()
+    // Add additional params
     jobParams = [
             $class: 'CascadeChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
@@ -43,9 +44,8 @@ def setupParams(){
                 ]
             ]
         ]
-    properties([
-        parameters(applicationParams + jobParams)
-    ])
+    //setup Parameters to Job
+    params_helper.setupParams(helperParams + jobParams)
 }
 
 def validateParams(){
