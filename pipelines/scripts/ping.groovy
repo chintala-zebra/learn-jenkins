@@ -26,7 +26,7 @@ def setupParameterDisplay() {
 
 def executeJob() {
     ansible_helper = load "pipelines/libraries/ansible_helper.groovy"
-    execute_simple_playbook("hosts/hosts.yaml","ping-play.yaml")
+    ansible_helper.execute_simple_playbook("hosts/hosts.yaml","ping-play.yaml")
 //    sh """
 //      set +x
 //      echo $ANSIBLE_VALUT > .mysecret
