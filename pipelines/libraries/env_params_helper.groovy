@@ -1,6 +1,6 @@
 import groovy.io.FileType
 
-def setupParams(ArrayList<> jobParams){
+def setupParams(ArrayList jobParams){
     properties([
         parameters(jobParams)
     ])
