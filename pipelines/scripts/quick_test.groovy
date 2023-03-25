@@ -1,6 +1,7 @@
 
 def setupParams(){
-    env_params = load "pipelines/libraries/env_params.groovy"
+    params_helper = load "pipelines/libraries/env_params.groovy"
+    params_helper.addInventoryParamsUptoHost()
 }
 
 def validateParams() {
