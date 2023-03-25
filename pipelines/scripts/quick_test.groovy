@@ -1,6 +1,6 @@
 
 def setupParams(){
-    param_helper = new env_params()
+    env_params.addInventoryParamsUptoHost()
 
 }
 
