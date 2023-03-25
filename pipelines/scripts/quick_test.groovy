@@ -1,4 +1,4 @@
-evaluate(new File("../libraries/env_params.groovy"))
+evaluate(new File("${WORKSPACE}/pipelines/libraries/env_params.groovy"))
 
 def setupParams(){
 
