@@ -1,5 +1,11 @@
 import groovy.io.FileType
 
+def setupParams(String[] jobParams){
+    properties([
+        parameters(jobParams)
+    ])
+}
+
 def getInventoryParamsUptoCluster(){
     clusterParams = [
             [$class: 'ChoiceParameter',

@@ -2,10 +2,11 @@
 def setupParams(){
     params_helper = load "pipelines/libraries/env_params_helper.groovy"
     hostParams = params_helper.getInventoryParamsUptoHost()
-
-    properties([
-        parameters(hostParams)
-    ])
+    
+    params_helper.setupParams(hostParams)
+    //properties([
+    //    parameters(hostParams)
+    //])
 }
 
 def validateParams() {
