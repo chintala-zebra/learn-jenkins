@@ -31,13 +31,13 @@ def setupParameterDisplay() {
 }
 
 def validateOptionalParams(){
+    if(!params.target_file_path.contains(".")){
+        currentBuild.result = 'NOT_BUILT'
+        error "File path is not valid (${params.target_file_path} - does not contain a DOT in path)"
+    }
     if(!params.target_file_path.contains("/tmp")){
         input "File path ${params.target_file_path} is not in allowed list. Do you still want to proceed?"
-    }
-    if(!params.target_file_path.contains(".")){
-        input "Looks like the file path is not valid (${params.target_file_path} - does not contain a DOT in path). Do you still want to proceed?"
-    }
-    
+    }    
 }
 
 def base64Decode(encodedString){
