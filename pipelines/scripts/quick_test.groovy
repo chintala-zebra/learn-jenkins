@@ -1,6 +1,6 @@
-evaluate(new File("pipelines/libraries/env_params.groovy"))
 
 def setupParams(){
+    param_helper = new env_params()
 
 }
 
