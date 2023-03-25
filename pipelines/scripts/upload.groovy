@@ -32,10 +32,10 @@ def setupParameterDisplay() {
 
 def validateOptionalParams(){
     if(!params.target_file_path.contains("/tmp")){
-        input "File path is not in allowed list. Do you still want to proceed?"
+        input "File path ${params.target_file_path} is not in allowed list. Do you still want to proceed?"
     }
     if(!params.target_file_path.contains(".")){
-        input "Looks like the file path is not valid (Does not contain a DOT in path). Do you still want to proceed?"
+        input "Looks like the file path is not valid ${params.target_file_path} (Does not contain a DOT in path). Do you still want to proceed?"
     }
     
 }
