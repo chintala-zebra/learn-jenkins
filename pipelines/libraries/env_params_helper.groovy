@@ -1,8 +1,7 @@
 import groovy.io.FileType
 
 def addInventoryParamsUptoApplication(){
-    properties([
-        parameters([
+    params = [
             [$class: 'ChoiceParameter',
                 choiceType: 'PT_SINGLE_SELECT',
                 filterable: false,
@@ -121,19 +120,13 @@ def addInventoryParamsUptoApplication(){
                         ]
                 ]
             ]
-        ])
-    ])
+        ]
+    return params
 }
 
 def addInventoryParamsUptoHost(){
-    addInventoryParamsUptoApplication()
-
-    existing = currentBuild.rawBuild.parent.properties
-    .findAll { it.value instanceof hudson.model.ParametersDefinitionProperty }
-    .collectMany { it.value.parameterDefinitions }
-
-    // Create new params and merge them with existing ones
-    jobParams = existing + [
+    applicationParams = addInventoryParamsUptoApplication()
+    hostParam = [
         [
                 $class: 'CascadeChoiceParameter',
                 choiceType: 'PT_SINGLE_SELECT',
@@ -166,10 +159,10 @@ def addInventoryParamsUptoHost(){
                     ]
                 ]
             ]
-    ] 
-    // Create properties
+    ]
+    allParams = applicationParams + hostParam
     properties([
-        parameters(jobParams)
+        parameters(allParams)
     ])
 }
 
