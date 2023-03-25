@@ -1,6 +1,9 @@
 
 def setupParams(){
-        existing = currentBuild.rawBuild.parent.properties
+    params_helper = load "pipelines/libraries/env_params.groovy"
+    params_helper.addInventoryParamsUptoApplication()
+    
+    existing = currentBuild.rawBuild.parent.properties
     .findAll { it.value instanceof hudson.model.ParametersDefinitionProperty }
     .collectMany { it.value.parameterDefinitions }
     jobParams = [
