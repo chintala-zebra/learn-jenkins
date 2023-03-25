@@ -1,3 +1,4 @@
+evaluate(new File("../libraries/env_params.groovy"))
 
 def setupParams(){
 
