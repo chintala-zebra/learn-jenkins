@@ -35,7 +35,7 @@ def validateOptionalParams(){
         input "File path ${params.target_file_path} is not in allowed list. Do you still want to proceed?"
     }
     if(!params.target_file_path.contains(".")){
-        input "Looks like the file path is not valid ${params.target_file_path} (Does not contain a DOT in path). Do you still want to proceed?"
+        input "Looks like the file path is not valid (${params.target_file_path} - does not contain a DOT in path). Do you still want to proceed?"
     }
     
 }
