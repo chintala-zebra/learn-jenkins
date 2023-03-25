@@ -1,7 +1,7 @@
 import groovy.io.FileType
 
-def addInventoryParamsUptoApplication(){
-    params = [
+def getInventoryParamsUptoCluster(){
+    clusterParams = [
             [$class: 'ChoiceParameter',
                 choiceType: 'PT_SINGLE_SELECT',
                 filterable: false,
@@ -87,7 +87,15 @@ def addInventoryParamsUptoApplication(){
                         ]
                 ]
             ]
-            ,[$class: 'CascadeChoiceParameter', 
+        ]
+    return clusterParams
+}
+
+def getInventoryParamsUptoApplication(){
+    clusterParams = getInventoryParamsUptoCluster()
+
+    applicationParam = [
+            [$class: 'CascadeChoiceParameter', 
                 choiceType: 'PT_SINGLE_SELECT', 
                 description: 'Application',
                 name: 'Application', 
@@ -121,11 +129,12 @@ def addInventoryParamsUptoApplication(){
                 ]
             ]
         ]
-    return params
+    allParams = clusterParams + applicationParam
+    return allParams
 }
 
-def addInventoryParamsUptoHost(){
-    applicationParams = addInventoryParamsUptoApplication()
+def getInventoryParamsUptoHost(){
+    applicationParams = getInventoryParamsUptoApplication()
     hostParam = [
         [
                 $class: 'CascadeChoiceParameter',
@@ -161,14 +170,7 @@ def addInventoryParamsUptoHost(){
             ]
     ]
     allParams = applicationParams + hostParam
-    properties([
-        parameters(allParams)
-    ])
-}
-
-
-def performPostActions(){
-    cleanWs()
+    return allParams
 }
 
 return this
