@@ -1,0 +1,6 @@
+---
+- name: Execute hostname and whoami roles
+  hosts: all
+  roles:
+    - role: hostname
+    - role: whoami

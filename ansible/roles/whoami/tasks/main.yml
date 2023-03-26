@@ -1,0 +1,8 @@
+---
+# tasks file for whoami
+- name: Execute whoami
+  shell: whoami
+  register: whoamiresult
+- name: Show whoami result
+  debug:
+    msg: "{{ whoamiresult.stdout }}"
