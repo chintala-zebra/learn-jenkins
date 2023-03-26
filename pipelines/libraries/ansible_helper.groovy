@@ -3,7 +3,7 @@ def setupSSHKeys() {
         set +x
         echo $ANSIBLE_VALUT > .mysecret
         export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
-        ansible-vault decrypt the-key
+        ansible-vault decrypt appadmin-key
         echo "removed the key" > .mysecret
     """
 }
@@ -15,7 +15,7 @@ def execute_simple_playbook(String inventory, String playbook) {
         set +x
         export ANSIBLE_HOST_KEY_CHECKING=False
         export ANSIBLE_FORCE_COLOR=true
-        ansible-playbook -i "${inventory}" "${playbook}" --private-key the-key
+        ansible-playbook -i "${inventory}" "${playbook}" --private-key appadmin-key
     """
     log.info("Playbook ${playbook} execution on inventory ${inventory} completed successfully.")
 }

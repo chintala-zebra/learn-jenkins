@@ -63,14 +63,12 @@ def showContent() {
 }
 
 def copyFile() {
-    sh '''
-        set +x
-        echo $ANSIBLE_VALUT > .mysecret
-        export ANSIBLE_VAULT_PASSWORD_FILE=.mysecret
-        ansible-vault decrypt the-key
-        echo "removed the key" > .mysecret
-        scp -o 'StrictHostKeyChecking no' -i the-key ${WORKSPACE}/fileName $SERVER:$target_file_path
-    '''
+    ansible_helper = load "pipelines/libraries/ansible_helper.groovy"
+    ansible_helper.setupSSHKeys()
+
+    sh """
+        scp -o 'StrictHostKeyChecking no' -i appadmin-key ${WORKSPACE}/fileName $SERVER:$target_file_path
+    """
     log.info ("Copy of file to Host : ${params.SERVER} @ Path : ${params.target_file_path} is successful!")
 }
 
