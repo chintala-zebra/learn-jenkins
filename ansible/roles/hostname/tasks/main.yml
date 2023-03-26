@@ -3,8 +3,6 @@
 - name: Execute date function
   shell: date
   register: dateresult
-  when: '(WAS_DEPLOY_NODE is defined and WAS_DEPLOY_NODE==true)'
-- name: Show date function result
   debug:
     msg: "{{ dateresult.stdout }}"
   when: '(WAS_DEPLOY_NODE is defined and WAS_DEPLOY_NODE==true)'
