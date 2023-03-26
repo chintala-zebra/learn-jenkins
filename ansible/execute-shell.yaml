@@ -1,5 +1,6 @@
 - hosts:
     - all
+  gather_facts: false
   tasks:
   - name: Exec sh script on Remote Node
     shell:
