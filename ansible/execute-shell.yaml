@@ -2,21 +2,19 @@
     - all
   gather_facts: false
   tasks:
-  - name: Show date
+  - name: Execute date function
     shell:
-      cmd: |
-        date
-    register: result
+      cmd: date
+    register: dateresult
     when: '(WAS_DEPLOY_NODE is defined and WAS_DEPLOY_NODE==true)'
-  - name: Show result
+  - name: Show date function result
     debug:
-      msg: "{{ result.stdout }}"
+      msg: "{{ dateresult.stdout }}"
     when: '(WAS_DEPLOY_NODE is defined and WAS_DEPLOY_NODE==true)'
-  - name: Show whoami
+  - name: Execute whoami
     shell:
-      cmd: |
-        whoami
-    register: displaylist
-  - name: Show result
+      cmd: whoami
+    register: whoamiresult
+  - name: Show whoami result
     debug:
-      msg: "{{ displaylist.stdout }}"
+      msg: "{{ whoamiresult.stdout }}"
