@@ -1,0 +1,13 @@
+- hosts:
+    - all
+  tasks:
+  - name: Exec sh script on Remote Node
+    shell:
+      cmd: |
+        date
+        ps -ef | grep ssh
+    register: result
+
+  - name: Show result
+    debug:
+      msg: "{{ result.stdout }}"
