@@ -6,7 +6,7 @@ def setupParams(){
     //log.info("Additioanl Parameters code goes here...")
     // Add additional params
     jobParams = [
-        choice(name: 'PLAY_BOOK', choices: ['ping-play.yaml','execute-shell.yaml'], description: 'Playbook to Execute')
+        choice(name: 'PLAY_BOOK', choices: ['ping-play.yaml','execute-shell.yaml','roles-sample.yml'], description: 'Playbook to Execute')
     ]
     //setup Parameters to Job
     params_helper.setupParams(helperParams + jobParams)
