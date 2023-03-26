@@ -6,13 +6,13 @@
     shell:
       cmd: |
         date
-    register: result
+    register: date_result
   - name: Show whoami
     shell:
       cmd: |
         date
-    register: result
+    register: whoami_result
 
   - name: Show result
     debug:
-      msg: "{{ result.stdout }}"
+      msg: "{{ result.stdout , whoami_result}}"
