@@ -2,11 +2,15 @@
     - all
   gather_facts: false
   tasks:
-  - name: Exec sh script on Remote Node
+  - name: Show date
     shell:
       cmd: |
         date
-        whoami
+    register: result
+  - name: Show whoami
+    shell:
+      cmd: |
+        date
     register: result
 
   - name: Show result
