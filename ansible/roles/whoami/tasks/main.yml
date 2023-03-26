@@ -3,6 +3,8 @@
 - name: Execute whoami
   shell: whoami
   register: whoamiresult
+  run_once: true
 - name: Show whoami result
   debug:
     msg: "{{ whoamiresult.stdout }}"
+  run_once: true
