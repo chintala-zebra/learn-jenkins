@@ -11,7 +11,7 @@ def execute_simple_playbook(String inventory, String playbook) {
         export ANSIBLE_FORCE_COLOR=true
         ansible-playbook -i "${inventory}" "${playbook}"
     """
-    log.info("Playbook ${playbook} execution on inventory ${inventory} is completed successfully.")
+    log.info("Playbook ${playbook} execution on inventory ${inventory} completed successfully.")
 }
 
 return this
