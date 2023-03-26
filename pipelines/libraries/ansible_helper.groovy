@@ -8,13 +8,18 @@ def setupSSHKeys() {
     """
 }
 
-
-def execute_simple_playbook(String inventory, String playbook) {
-    log.info("Executing Playbook ${playbook} on inventory ${inventory}")
-    setupSSHKeys()
+def setupAnsibleDefaults() {
     sh """
+        set +x
         export ANSIBLE_HOST_KEY_CHECKING=False
         export ANSIBLE_FORCE_COLOR=true
+    """
+}
+def execute_simple_playbook(String inventory, String playbook) {
+    log.info("Executing Playbook ${playbook} on inventory ${inventory}")
+    setupAnsibleDefaults()
+    setupSSHKeys()
+    sh """
         ansible-playbook -i "${inventory}" "${playbook}"
     """
     log.info("Playbook ${playbook} execution on inventory ${inventory} completed successfully.")
