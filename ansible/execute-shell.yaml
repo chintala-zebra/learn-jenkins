@@ -5,7 +5,6 @@
     shell:
       cmd: |
         date
-        ps -ef | grep ssh
     register: result
 
   - name: Show result
