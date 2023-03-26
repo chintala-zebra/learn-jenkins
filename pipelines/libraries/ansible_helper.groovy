@@ -20,6 +20,9 @@ def execute_simple_playbook(String inventory, String playbook) {
     setupAnsibleDefaults()
     setupSSHKeys()
     sh """
+        set +x
+        export ANSIBLE_HOST_KEY_CHECKING=False
+        export ANSIBLE_FORCE_COLOR=true
         ansible-playbook -i "${inventory}" "${playbook}"
     """
     log.info("Playbook ${playbook} execution on inventory ${inventory} completed successfully.")
