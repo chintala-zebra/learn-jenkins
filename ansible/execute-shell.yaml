@@ -5,6 +5,7 @@
     shell:
       cmd: |
         date
+        whoami
     register: result
 
   - name: Show result
