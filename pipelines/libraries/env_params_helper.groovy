@@ -156,7 +156,7 @@ def getInventoryParamsUptoHost(){
                         sandbox: true,
                         script:  
                         '''
-                            def command = ['/bin/sh',  '-c',  "cat /application/ansible/inventory/${ENV_TYPE}/${CLUSTER_NAME}/${Application}|grep z182|sed 's/^ *//g;s/://g'|sort -u "]
+                            def command = ['/bin/sh',  '-c',  "cat /application/ansible/inventory/${ENV_TYPE}/${CLUSTER_NAME}/${Application}|grep z18|sed 's/^ *//g;s/://g'|sort -u "]
                             def proc = command.execute()
                             proc.waitFor()              
                             def output = proc.in.text
