@@ -7,12 +7,15 @@
       cmd: |
         date
     register: date_result
+  - name: Show date result
+    debug:
+      msg: "{{ date_result.stdout }}"
+
   - name: Show whoami
     shell:
       cmd: |
         date
     register: whoami_result
-
-  - name: Show result
+  - name: Show whoami results
     debug:
-      msg: "{{ date_result.stdout , whoami_result.stdout}}"
+      msg: "{{ whoami_result.stdout}}"
