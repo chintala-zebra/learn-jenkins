@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script{
                     utilities = load "pipelines/libraries/utilities.groovy"
-                    myscripts = load "pipelines/scripts/ping.groovy"
+                    myscripts = load "pipelines/scripts/ansible_playbook.groovy"
                 }
             }
         }
