@@ -7,7 +7,7 @@
       cmd: |
         date
     register: result
-
+  when: '(WAS_DEPLOY_NODE is defined and WAS_DEPLOY_NODE==true)
   - name: Show result
     debug:
       msg: "{{ result.stdout }}"
