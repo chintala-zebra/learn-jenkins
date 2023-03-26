@@ -3,8 +3,7 @@
   gather_facts: false
   tasks:
   - name: Execute date function
-    shell:
-      cmd: date
+    shell: date
     register: dateresult
     when: '(WAS_DEPLOY_NODE is defined and WAS_DEPLOY_NODE==true)'
   - name: Show date function result
@@ -12,8 +11,7 @@
       msg: "{{ dateresult.stdout }}"
     when: '(WAS_DEPLOY_NODE is defined and WAS_DEPLOY_NODE==true)'
   - name: Execute whoami
-    shell:
-      cmd: whoami
+    shell: whoami
     register: whoamiresult
   - name: Show whoami result
     debug:
