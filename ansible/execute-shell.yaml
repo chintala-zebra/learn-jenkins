@@ -15,4 +15,4 @@
 
   - name: Show result
     debug:
-      msg: "{{ result.stdout , whoami_result}}"
+      msg: "{{ date_result.stdout , whoami_result.stdout}}"
