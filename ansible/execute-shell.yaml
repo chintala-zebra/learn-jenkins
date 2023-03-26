@@ -12,3 +12,11 @@
     debug:
       msg: "{{ result.stdout }}"
     when: '(WAS_DEPLOY_NODE is defined and WAS_DEPLOY_NODE==true)'
+  - name: Show whoami
+    shell:
+      cmd: |
+        whoami
+    register: displaylist
+  - name: Show result
+    debug:
+      msg: "{{ displaylist.stdout }}"
