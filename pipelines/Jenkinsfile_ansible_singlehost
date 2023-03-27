@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script{
                     utilities = load "pipelines/libraries/utilities.groovy"
-                    myscripts = load "pipelines/scripts/jvm_restart.groovy"
+                    myscripts = load "pipelines/scripts/ansible_singlehost.groovy"
                 }
             }
         }
