@@ -49,7 +49,7 @@ def executeJob() {
     sh """
         ssh -o 'StrictHostKeyChecking no' -i appadmin-key $SERVER "$command_to_execute"
     """
-    log.info ("${params.command_to_execute} execution is successful on ${params.SERVER}")
+    log.info ("${params.command_to_execute} execution is successful! ")
 }
 
 return this
