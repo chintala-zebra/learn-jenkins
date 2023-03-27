@@ -62,7 +62,7 @@ def getInventoryParamsUptoCluster(){
             ]
             ,[$class: 'CascadeChoiceParameter', 
                 choiceType: 'PT_SINGLE_SELECT', 
-                description: 'CLUSTER_NAME',
+                description: 'Select the Cluster from Dropdown List',
                 name: 'CLUSTER_NAME', 
                 referencedParameters: 'JobName,ENV_TYPE', 
                 script: 
@@ -103,7 +103,7 @@ def getInventoryParamsUptoApplication(){
     applicationParam = [
             [$class: 'CascadeChoiceParameter', 
                 choiceType: 'PT_SINGLE_SELECT', 
-                description: 'Application',
+                description: 'Select the Application from Dropdown List',
                 name: 'Application', 
                 referencedParameters: 'JobName,ENV_TYPE,CLUSTER_NAME', 
                 script: 
@@ -145,7 +145,7 @@ def getInventoryParamsUptoHost(){
         [
                 $class: 'CascadeChoiceParameter',
                 choiceType: 'PT_SINGLE_SELECT',
-                description: '',
+                description: 'Select the Host from Dropdown List',
                 referencedParameters: 'JobName,ENV_TYPE,CLUSTER_NAME,Application',
                 name: 'SERVER',
                 script: [
@@ -185,7 +185,7 @@ def getInventoryParamsUptoHostAsMultiSelect(){
         [
                 $class: 'CascadeChoiceParameter',
                 choiceType: 'PT_MULTI_SELECT',
-                description: '',
+                description: 'Select the applicable hosts from Dropdown List',
                 referencedParameters: 'JobName,ENV_TYPE,CLUSTER_NAME,Application',
                 name: 'SERVER',
                 script: [
