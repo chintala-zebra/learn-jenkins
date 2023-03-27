@@ -2,7 +2,7 @@
 def setupParams(){
     // Get params from helper
     params_helper = load "pipelines/libraries/env_params_helper.groovy"
-    helperParams = params_helper.getInventoryParamsUptoHost()
+    helperParams = params_helper.getInventoryParamsUptoHostAsMultiSelect()
     //log.info("Additioanl Parameters code goes here...")
     // Add additional params
     jobParams = [
