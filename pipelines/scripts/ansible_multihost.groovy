@@ -14,7 +14,7 @@ def setupParams(){
 
 def validateParams() {
     setupParameterDisplay()
-    if(params.ENV_TYPE == "" || params.CLUSTER_NAME == "" || params.Application == "" || params.JOB_NAME == "" || params.PLAY_BOOK == ""){
+    if(params.ENV_TYPE == "" || params.CLUSTER_NAME == "" || params.Application == "" || params.JOB_NAME == "" || params.SERVER == "" || params.PLAY_BOOK == ""){
         currentBuild.result = 'NOT_BUILT'
         error "Required Parameters are empty so, skipping execution."
     }
@@ -29,6 +29,9 @@ def setupParameterDisplay() {
     }
     if(params.Application != "" ){
         addShortText(border: 0, text: "Application:" + Application, background: "azure", color: "black")
+    }
+    if(params.SERVER != "" ){
+        addShortText(border: 0, text: "SERVER:" + SERVER, background: "azure", color: "black")
     }
     if(params.PLAY_BOOK != "" ){
         addShortText(border: 0, text: "Play Book:" + PLAY_BOOK, background: "azure", color: "black")
