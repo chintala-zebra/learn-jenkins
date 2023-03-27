@@ -38,7 +38,7 @@ def setupParameterDisplay() {
 
 def validateOptionalParams(){
     if(!params.command_to_execute.contains("/mount") && !params.command_to_execute.contains("/tmp")){
-        input "Script file path ${params.command_to_execute} is not in the allowed list. Do you still want to proceed?"
+        input "File path is not in allowed list. Do you still want to proceed?"
     }
 }
 
@@ -49,7 +49,7 @@ def executeJob() {
     sh """
         ssh -o 'StrictHostKeyChecking no' -i appadmin-key $SERVER "$command_to_execute"
     """
-    log.info ("${params.command_to_execute} execution is successful! ")
+    log.info ("Job execution is successful!")
 }
 
 return this
