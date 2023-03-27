@@ -179,4 +179,44 @@ def getInventoryParamsUptoHost(){
     return allParams
 }
 
+def getInventoryParamsUptoHostAsMultiSelect(){
+    applicationParams = getInventoryParamsUptoApplication()
+    hostParam = [
+        [
+                $class: 'CascadeChoiceParameter',
+                choiceType: 'PT_MULTI_SELECT',
+                description: '',
+                referencedParameters: 'JobName,ENV_TYPE,CLUSTER_NAME,Application',
+                name: 'SERVER',
+                script: [
+                    $class: 'GroovyScript',
+                    fallbackScript: [ classpath: [], sandbox: true, script: 'return ["ERROR"]' ],
+                    script: [
+                        classpath: [],
+                        sandbox: true,
+                        script:  
+                        '''
+                            def command = ['/bin/sh',  '-c',  "cat /application/ansible/inventory/${ENV_TYPE}/${CLUSTER_NAME}/${Application}|grep z18|sed 's/^ *//g;s/://g'|sort -u "]
+                            def proc = command.execute()
+                            proc.waitFor()              
+                            def output = proc.in.text
+                            def exitcode= proc.exitValue()
+                            def error = proc.err.text
+                            if (error) {
+                                return "ERROR"
+                            }
+                            else
+                            {
+                            return output.tokenize()
+                            }
+                            
+                        '''
+                    ]
+                ]
+            ]
+    ]
+    allParams = applicationParams + hostParam
+    return allParams
+}
+
 return this
