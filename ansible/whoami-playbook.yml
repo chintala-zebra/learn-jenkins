@@ -1,6 +1,6 @@
 ---
 - name: Execute hostname and whoami roles
-  hosts: all
+  hosts: "{{ HOSTS }}"
   gather_facts: false
   roles:
     - role: whoami
