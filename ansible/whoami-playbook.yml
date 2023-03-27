@@ -1,0 +1,6 @@
+---
+- name: Execute hostname and whoami roles
+  hosts: all
+  gather_facts: false
+  roles:
+    - role: whoami

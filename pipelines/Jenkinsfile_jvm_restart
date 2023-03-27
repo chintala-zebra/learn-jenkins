@@ -1,0 +1,66 @@
+def utilities
+def myscripts
+
+pipeline {
+    options {
+        buildDiscarder(logRotator(daysToKeepStr: '30'))
+        ansiColor('xterm')
+    }
+    agent { 
+        node {
+            label 'ansible'
+        }
+    }
+    stages {
+        stage('Init') {
+            steps {
+                script{
+                    utilities = load "pipelines/libraries/utilities.groovy"
+                    myscripts = load "pipelines/scripts/jvm_restart.groovy"
+                }
+            }
+        }
+        stage('Setup Params') {  
+            steps {
+               script {
+                    myscripts.setupParams()
+               }
+            }
+        }
+        stage('Validate') {
+            steps {
+               script {
+                    myscripts.validateParams()
+                    //myscripts.validateOptionalParams()
+               }
+            }
+        }
+        stage('Execute Job') {
+            environment {
+                ANSIBLE_VALUT= credentials('MID_ANSIBLE_VAULT')
+            }
+            steps {
+               script {
+                    myscripts.executeJob()
+               }
+            }
+        }
+    }
+    post {
+        success {
+            script{
+                utilities.processSuccess()
+            }
+        }
+        failure {
+            script{
+                utilities.processError()
+            }
+        }
+        cleanup {
+            script{
+                utilities.processCleanup()
+            }
+        }
+    }
+}
