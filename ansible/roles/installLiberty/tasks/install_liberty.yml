@@ -1,6 +1,6 @@
 - name: Extract IBM Liberty Files
   unarchive:
-    src: "{{ DB2_DRIVER_FOLDER }}"
+    src: "{{ LIBERTY_ARCHIVE_FILE }}"
     dest: "{{ LIBERTY_INSTALL_PATH }}"
     remote_src: yes
     creates: "{{ IBM_JAVA_INSTALL_PATH }}/IBM/WebSphere/Liberty"
