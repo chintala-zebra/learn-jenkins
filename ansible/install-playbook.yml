@@ -1,0 +1,8 @@
+---
+liberty_version: 22.0.0.6
+
+- name: Software Installation
+  hosts: "{{ HOSTS }}"
+  gather_facts: false
+  roles:
+    - role: installLiberty

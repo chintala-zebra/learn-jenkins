@@ -1,0 +1,16 @@
+---
+- name: Include version variables
+  include_vars: "v{{ liberty_version }}.yml"
+
+- name: Install IBM JDK
+  include_tasks: install_ibm_jdk.yml
+  when: '(WAS_NODE is defined and WAS_NODE==true)'
+
+- name: Install Liberty
+  include_tasks: install_liberty.yml
+  when: '(WAS_NODE is defined and WAS_NODE==true)'
+
+- name: Install DB2 Drivers
+  include_tasks: install_db2_drivers.yml
+  when: '(WAS_NODE is defined and WAS_NODE==true)'
+

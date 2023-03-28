@@ -1,0 +1,5 @@
+---
+# vars file for v20.0.0.8
+LIBERTY_ARCHIVE_FILE: /software/WAS20/RFLX_WAS20.0.0.8.tar.gz
+JAVA_ARCHIVE_FILE: /software/WAS20/RFLX_JDK80615.tar.gz
+DB2_DRIVER_FOLDER: /software/WAS20/dbdrivers

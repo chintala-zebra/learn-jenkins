@@ -1,0 +1,7 @@
+- name: Extract IBM JDK Files
+  unarchive:
+    src: "{{ JAVA_ARCHIVE_FILE }}"
+    dest: "{{ IBM_JAVA_INSTALL_PATH }}"
+    remote_src: yes
+    creates: "{{ IBM_JAVA_INSTALL_PATH }}/IBM/java"
+
