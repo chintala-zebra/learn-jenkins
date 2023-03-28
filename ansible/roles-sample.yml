@@ -1,7 +1,7 @@
 ---
-- name: Execute hostname and whoami roles
+- name: Execute date and whoami roles
   hosts: "{{ HOSTS }}"
   gather_facts: false
   roles:
-    - role: hostname
+    - role: date
     - role: whoami
