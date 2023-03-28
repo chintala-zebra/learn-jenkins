@@ -8,20 +8,12 @@ def setupSSHKeys() {
     """
 }
 
-def execute_simple_playbook(String inventory, String playbook) {
-    log.info("Executing Playbook ${playbook} on inventory ${inventory}")
-    setupSSHKeys()
-    sh """
-        set +x
-        export ANSIBLE_HOST_KEY_CHECKING=False
-        export ANSIBLE_FORCE_COLOR=true
-        ansible-playbook -i "${inventory}" -e "HOSTS=*" "${playbook}" --private-key appadmin-key
-    """
-    log.info("Playbook ${playbook} execution on inventory ${inventory} completed successfully.")
+def execute_playbook(String inventory, String playbook) {
+    execute_simple_playbook_on_host(inventory,"*",playbook)
 }
 
-def execute_simple_playbook_on_host(String inventory, String hostNames, String playbook) {
-    log.info("Executing Playbook ${playbook} on host(s) ${hostNames}")
+def execute_playbook_on_host(String inventory, String hostNames, String playbook) {
+    log.info("Executing Playbook ${playbook} on inventory ${inventory} with host(s) ${hostNames}")
     setupSSHKeys()
     sh """
         set +x
@@ -29,7 +21,7 @@ def execute_simple_playbook_on_host(String inventory, String hostNames, String p
         export ANSIBLE_FORCE_COLOR=true
         ansible-playbook -i "${inventory}" -e "HOSTS=${hostNames}" "${playbook}" --private-key appadmin-key
     """
-    log.info("Playbook ${playbook} execution on host(s) ${hostNames} completed successfully.")
+    log.info("Playbook ${playbook} execution on inventory ${inventory} with host(s) ${hostNames} completed successfully.")
 }
 
 return this

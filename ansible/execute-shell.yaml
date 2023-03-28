@@ -1,5 +1,4 @@
-- hosts:
-    - all
+- hosts: "{{ HOSTS }}"
   gather_facts: false
   tasks:
   - name: Execute date function

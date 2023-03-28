@@ -1,5 +1,4 @@
-- hosts:
-    - all
+- hosts: "{{ HOSTS }}"
   tasks:
     - action: ping
     - name: print IPv4 Address
