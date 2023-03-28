@@ -6,7 +6,7 @@ def setupParams(){
     //log.info("Additioanl Parameters code goes here...")
     // Add additional params
     jobParams = [
-        choice(name: 'PLAY_BOOK', choices: ['execute-shell.yaml','roles-sample.yml','show-ipaddress.yaml','whoami-playbook.yml'], description: 'Playbook to Execute')
+        choice(name: 'PLAY_BOOK', choices: ['liberty_install.yml','execute-shell.yaml','roles-sample.yml','show-ipaddress.yaml','whoami-playbook.yml'], description: 'Playbook to Execute')
     ]
     //setup Parameters to Job
     params_helper.setupParams(helperParams + jobParams)
