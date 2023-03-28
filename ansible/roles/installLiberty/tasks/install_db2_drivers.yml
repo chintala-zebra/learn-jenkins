@@ -1,4 +1,5 @@
 - name: Copy DB2 Driver files
-  synchronize:
+  copy:
     src: "{{ DB2_DRIVER_FOLDER }}"
     dest: "{{ DB2_DRIVER_INSTALL_PATH }}"
+    remote_src: yes
