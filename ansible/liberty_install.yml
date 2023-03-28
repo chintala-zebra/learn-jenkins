@@ -3,7 +3,7 @@
 - name: Software Installation
   hosts: "{{ HOSTS }}"
   vars:
-    - liberty_version: 22.0.0.6
+    - liberty_version: 20.0.0.8
   gather_facts: false
   roles:
     - role: installLiberty
