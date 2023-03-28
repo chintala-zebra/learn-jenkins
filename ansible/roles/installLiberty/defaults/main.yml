@@ -1,4 +1,3 @@
 LIBERTY_INSTALL_PATH: /application
 IBM_JAVA_INSTALL_PATH: /application
 DB2_DRIVER_INSTALL_PATH: /application
-
