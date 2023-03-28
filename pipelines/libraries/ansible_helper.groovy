@@ -9,7 +9,7 @@ def setupSSHKeys() {
 }
 
 def execute_playbook(String inventory, String playbook) {
-    execute_simple_playbook_on_host(inventory,"*",playbook)
+    execute_playbook_on_host(inventory,"*",playbook)
 }
 
 def execute_playbook_on_host(String inventory, String hostNames, String playbook) {
