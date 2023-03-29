@@ -1,0 +1,3 @@
+---
+# handlers file for installLiberty
+- import_tasks: handler_restart_liberty.yml

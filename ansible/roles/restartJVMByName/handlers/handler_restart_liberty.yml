@@ -1,0 +1,9 @@
+- name: Getting Application Health
+  shell:
+    "whoami"
+  register: libertyRestarted
+  listen: "Liberty Restarted"
+- name: Display Liberty Version
+  debug:
+    msg: "{{ libertyRestarted.stdout_lines }}"
+  listen: "Liberty Restarted"

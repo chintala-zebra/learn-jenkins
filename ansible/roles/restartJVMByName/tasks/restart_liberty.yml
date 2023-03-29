@@ -1,0 +1,6 @@
+- name: Restart Liberty Server
+  shell: "echo {{ pattern }} "
+  register: whoamiresult
+- name: Show whoami result
+  debug:
+    msg: "{{ whoamiresult.stdout }}"
