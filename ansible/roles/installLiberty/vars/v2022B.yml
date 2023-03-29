@@ -1,0 +1,5 @@
+---
+# vars file for v2022
+LIBERTY_ARCHIVE_FILE: /software/WAS_2022/RFLX_WAS_2022.0.0.3.tar.gz
+JAVA_ARCHIVE_FILE: /software/WAS_2022/RFLX_JDK8076.tar.gz
+DB2_DRIVER_FOLDER: /software/WAS_2022/dbdrivers

@@ -1,6 +1,4 @@
 ---
 # handlers file for installLiberty
-- name: Java Updated
-  include_tasks: roles/installLiberty/handlers/handler_ibm_jdk.yml
-- name: Liberty Updated
-  include_tasks: roles/installLiberty/handlers/handler_liberty.yml
+import_tasks: handler_ibm_jdk.yml
+import_tasks: handler_liberty.yml
