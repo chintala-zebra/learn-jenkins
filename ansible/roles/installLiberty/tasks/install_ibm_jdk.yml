@@ -4,4 +4,4 @@
     dest: "{{ IBM_JAVA_INSTALL_PATH }}"
     remote_src: yes
     creates: "{{ IBM_JAVA_INSTALL_PATH }}/IBM/java"
-
+  notify: "Java Updated"
