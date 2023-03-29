@@ -1,7 +1,5 @@
-- name: Getting Java Version
-  shell:
+- shell:
     "{{ IBM_JAVA_INSTALL_PATH }}/IBM/java/*/bin/java -version"
   register: javaversion
-- name: Display Java Version
-  debug:
+- debug:
     msg: "{{ javaversion.stdout }}"

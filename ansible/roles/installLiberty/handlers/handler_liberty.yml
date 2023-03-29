@@ -1,0 +1,9 @@
+- name: Getting Liberty Version
+  shell:
+    "{{ LIBERTY_INSTALL_PATH }}/IBM/WebSphere/Liberty/bin/productInfo version"
+  register: libertyversion
+  listen: "Liberty Updated"
+- name: Display Liberty Version
+  debug:
+    msg: "{{ libertyversion.stdout_lines }}"
+  listen: "Liberty Updated"
