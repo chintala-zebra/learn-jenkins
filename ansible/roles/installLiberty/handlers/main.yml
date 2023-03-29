@@ -10,7 +10,7 @@
 #     msg: "{{ javaversion.stderr_lines }}"
 # listen: "Java Updated"
 - name: Getting Java Version
-  import_tasks: tasks/handler_ibm_jdk.yaml
+  import_tasks: handler_ibm_jdk.yaml
   listen: "Java Updated"
 - name: Getting Liberty Version
   shell:
