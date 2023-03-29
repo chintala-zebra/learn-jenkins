@@ -9,3 +9,12 @@
   debug:
     msg: "{{ javaversion }}"
   listen: "Java Updated"
+- name: Getting Liberty Version
+  shell:
+    "{{ LIBERTY_INSTALL_PATH }}/IBM/WebSphere/Liberty/bin/productInfo version"
+  register: libertyversion
+  listen: "Liberty Updated"
+- name: Display Liberty Version
+  debug:
+    msg: "{{ libertyversion }}"
+  listen: "Liberty Updated"

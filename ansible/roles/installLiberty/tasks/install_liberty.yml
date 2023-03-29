@@ -3,5 +3,5 @@
     src: "{{ LIBERTY_ARCHIVE_FILE }}"
     dest: "{{ LIBERTY_INSTALL_PATH }}"
     remote_src: yes
-    creates: "{{ IBM_JAVA_INSTALL_PATH }}/IBM/WebSphere/Liberty"
-
+    creates: "{{ LIBERTY_INSTALL_PATH }}/IBM/WebSphere/Liberty"
+  notify: "Liberty Updated"
