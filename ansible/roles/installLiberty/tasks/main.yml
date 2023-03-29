@@ -4,13 +4,13 @@
 
 - name: Install IBM JDK
   include_tasks: install_ibm_jdk.yml
-  when: '('WAS_NODES' in group_names) || (WAS_NODE is defined and WAS_NODE==true)'
+  when: "('WAS_NODES' in group_names) or (WAS_NODE is defined and WAS_NODE==true)"
 
 - name: Install Liberty
   include_tasks: install_liberty.yml
-  when: '('WAS_NODES' in group_names) || (WAS_NODE is defined and WAS_NODE==true)'
+  when: "('WAS_NODES' in group_names) or (WAS_NODE is defined and WAS_NODE==true)"
 
 - name: Install DB2 Drivers
   include_tasks: install_db2_drivers.yml
-  when: '('WAS_NODES' in group_names) or (WAS_NODE is defined and WAS_NODE==true)'
+  when: "('WAS_NODES' in group_names) or (WAS_NODE is defined and WAS_NODE==true)"
 
