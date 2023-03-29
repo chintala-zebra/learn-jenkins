@@ -7,5 +7,5 @@
   listen: "Java Updated"
 - name: Display Java Version
   debug:
-    msg: "{{ javaversion.stdout }}"
+    msg: "{{ javaversion }}"
   listen: "Java Updated"
