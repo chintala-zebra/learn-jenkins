@@ -4,4 +4,4 @@
   register: javaversion
 - name: Display Java Version
   debug:
-    msg: "{{ javaversion.stdout }}"
+    msg: "{{ javaversion.stderr_lines }}"
