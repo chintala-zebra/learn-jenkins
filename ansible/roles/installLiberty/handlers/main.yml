@@ -7,7 +7,7 @@
   listen: "Java Updated"
 - name: Display Java Version
   debug:
-    msg: "{{ javaversion }}"
+    msg: "{{ javaversion.stderr_lines }}"
   listen: "Java Updated"
 - name: Getting Liberty Version
   shell:
@@ -16,5 +16,5 @@
   listen: "Liberty Updated"
 - name: Display Liberty Version
   debug:
-    msg: "{{ libertyversion }}"
+    msg: "{{ libertyversion.stdout_lines }}"
   listen: "Liberty Updated"
