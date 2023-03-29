@@ -2,5 +2,6 @@
 # handlers file for installLiberty
 - name: Java Updated
   import_tasks: handler_ibm_jdk.yml
+  listen: Java Updated
 - name: Liberty Updated
   import_tasks: handlers/handler_ibm_jdk.yml
