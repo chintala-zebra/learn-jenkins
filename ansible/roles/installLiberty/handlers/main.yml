@@ -9,9 +9,9 @@
 #   debug:
 #     msg: "{{ javaversion.stderr_lines }}"
 # listen: "Java Updated"
-- name: Getting Java Version
+- name: Java Updated
   import_tasks: roles/installLiberty/handlers/handler_ibm_jdk.yml
-  listen: "Java Updated"
+
 - name: Getting Liberty Version
   shell:
     "{{ LIBERTY_INSTALL_PATH }}/IBM/WebSphere/Liberty/bin/productInfo version"
