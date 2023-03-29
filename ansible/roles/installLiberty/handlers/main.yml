@@ -10,7 +10,7 @@
 #     msg: "{{ javaversion.stderr_lines }}"
 # listen: "Java Updated"
 - name: Java Updated
-  include_tasks: handler_ibm_jdk.yml
+  include_tasks: roles/installLiberty/handlers/handler_ibm_jdk.yml
 - name: Getting Liberty Version
   shell:
     "{{ LIBERTY_INSTALL_PATH }}/IBM/WebSphere/Liberty/bin/productInfo version"
