@@ -1,4 +1,4 @@
 ---
 # handlers file for installLiberty
-import_tasks: handler_ibm_jdk.yml
-import_tasks: handler_liberty.yml
+- import_tasks: handler_ibm_jdk.yml
+- import_tasks: handler_liberty.yml
