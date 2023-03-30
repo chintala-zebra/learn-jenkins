@@ -5,7 +5,7 @@
   failed_when: '"FAILED" in prior_jvm_status.stderr'
 
 - name: Executing stop on JVM Process "{{jvm_name}}"
-  shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server {{action}} {{jvm_name}} --clean"
+  shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server stop {{jvm_name}}"
   register: stop_output
   when: "'is running with' in prior_jvm_status.stdout  and (action == 'stop' or action == 'restart')"
   failed_when: "'FAILED' in stop_output.stderr or stop_output.rc|int!=0"
