@@ -26,6 +26,7 @@ def execute_playbook_on_host_with_vars(String inventory, String hostNames, Strin
     sh """
         export ANSIBLE_HOST_KEY_CHECKING=False
         export ANSIBLE_FORCE_COLOR=true
+        export ANSIBLE_DISPLAY_SKIPPED_HOSTS=false
         ansible-playbook -i "${inventory}" -e "HOSTS=${hostNames}" "${playbook}" --extra-vars="${extraVars}" --private-key appadmin-key 
     """
     log.info("Playbook ${playbook} execution on inventory ${inventory} with host(s) ${hostNames} and extravars ${extraVars} completed successfully.")
