@@ -1,6 +1,6 @@
 - name: Restart Liberty Server
   find:
-    paths: {{ LIBERTY_PROFILE_PATH }}
+    paths: "{{ LIBERTY_PROFILE_PATH }}"
     file_type: directory
     recurse: no
     patterns: '*{{ jvm_search_pattern }}*'
