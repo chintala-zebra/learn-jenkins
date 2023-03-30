@@ -24,7 +24,7 @@ def execute_playbook_on_host_with_vars(String inventory, String hostNames, Strin
     log.info("Executing Playbook ${playbook} on inventory ${inventory} with host(s) ${hostNames} and extravars ${extraVars}")
     setupSSHKeys()
     sh """
-        set +x
+        //set +x
         export ANSIBLE_HOST_KEY_CHECKING=False
         export ANSIBLE_FORCE_COLOR=true
         if(extraVars == ""){
