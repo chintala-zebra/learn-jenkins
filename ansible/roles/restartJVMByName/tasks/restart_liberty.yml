@@ -7,4 +7,5 @@
   register: findresult
 - name: Show whoami result
   debug:
-    msg: "{{ findresult }}"
+    msg: "{{ item.path }}"
+    with_items: "{{ findresult.files }}"
