@@ -1,9 +1,9 @@
 - name: Restart Liberty Server
-find:
-  paths: {{ LIBERTY_PROFILE_PATH }}
-  file_type: directory
-  recurse: no
-  patterns: '*{{ jvm_search_pattern }}*'
+  find:
+    paths: {{ LIBERTY_PROFILE_PATH }}
+    file_type: directory
+    recurse: no
+    patterns: '*{{ jvm_search_pattern }}*'
   register: findresult
 - name: Show whoami result
   debug:
