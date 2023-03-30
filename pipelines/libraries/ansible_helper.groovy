@@ -24,16 +24,9 @@ def execute_playbook_on_host_with_vars(String inventory, String hostNames, Strin
     log.info("Executing Playbook ${playbook} on inventory ${inventory} with host(s) ${hostNames} and extravars ${extraVars}")
     setupSSHKeys()
     sh """
-        //set +x
         export ANSIBLE_HOST_KEY_CHECKING=False
         export ANSIBLE_FORCE_COLOR=true
-        if(extraVars == ""){
-            log.info("1")
-            ansible-playbook -i "${inventory}" -e "HOSTS=${hostNames}" "${playbook}" --private-key appadmin-key
-        } else {
-            log.info("2")
-            ansible-playbook -i "${inventory}" -e "HOSTS=${hostNames}" "${playbook}" --extra-vars="${extraVars}" --private-key appadmin-key 
-        }
+        ansible-playbook -i "${inventory}" -e "HOSTS=${hostNames}" "${playbook}" --extra-vars="${extraVars}" --private-key appadmin-key 
     """
     log.info("Playbook ${playbook} execution on inventory ${inventory} with host(s) ${hostNames} and extravars ${extraVars} completed successfully.")
 }
