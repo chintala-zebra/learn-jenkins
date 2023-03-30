@@ -8,4 +8,4 @@
 - name: Show whoami result
   debug:
     var: item 
-  with_items: "{{ findresult.path|basename }}"
+  with_items: "{{ findresult.files|map(attribute='path'|basename)|list }}"
