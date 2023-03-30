@@ -2,7 +2,7 @@
 find:
   paths: {{ LIBERTY_PROFILE_PATH }}
   file_type: directory
-  recurse: yesno
+  recurse: no
   patterns: '*{{ jvm_search_pattern }}*'
   register: findresult
 - name: Show whoami result
