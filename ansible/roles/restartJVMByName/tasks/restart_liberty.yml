@@ -1,5 +1,5 @@
 - name: Restart Liberty Server
-  shell: "echo {{ pattern }} "
+  shell: "echo 'Write script for finding and restarting JVMs with name containing {{ pattern }}' "
   register: whoamiresult
 - name: Show whoami result
   debug:
