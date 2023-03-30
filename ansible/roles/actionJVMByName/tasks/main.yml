@@ -1,4 +1,4 @@
 ---
 - name: Restart Liberty
-  include_tasks: restart_liberty.yml
+  include_tasks: liberty_operations.yml
   when: "('WAS_NODES' in group_names) or (WAS_NODE is defined and WAS_NODE==true)"

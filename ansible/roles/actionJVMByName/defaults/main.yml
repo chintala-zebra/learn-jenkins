@@ -1,4 +1,4 @@
-LIBERTY_PATH: /application/IBM/WebSphere/Liberty
+LIBERTY_HOME: /application/IBM/WebSphere/Liberty
 LIBERTY_PROFILE_PATH: /application/IBM/WASProfiles
 LIBERTY_PROFILE_SERVER_PATH: /application/IBM/WASProfiles/servers
 
