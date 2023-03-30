@@ -7,20 +7,19 @@
 - name: Executing stop on JVM Process "{{jvm_name}}"
   shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server {{action}} {{jvm_name}} --clean"
   register: comm_output
-  when: "action == 'stop' or action == 'restart'"
-  failed_when: '"FAILED" in comm_output.stderr or comm_output.rc|int!=0'
+  when: "'is running with' in jvm_current_status.stdout  and (action == 'stop' or action == 'restart')"
+  failed_when: "'FAILED' in comm_output.stderr or comm_output.rc|int!=0"
   async: 120
   poll: 10
 
 - shell : "echo `ps aux | grep -i {{jvm_name}} | grep WebSphere | grep -v grep | grep -v stop | awk '{print $2}'`"
   register: serverpid
-  when: "action == 'stop' or action == 'restart'"
+  when: "'is running with' in jvm_current_status.stdout  and (action == 'stop' or action == 'restart')"
 
 - name: Checking if "{{jvm_name}}" running and killing if needed
   shell: "kill -9 {{serverpid.stdout}}"
   when: "(action == 'stop' or action == 'restart') and (serverpid is defined and serverpid.stdout != '' and serverpid.stdout|int > 0)"
   ignore_errors: true
-
 
 - name: Executing start on JVM Process "{{jvm_name}}"
   shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server start {{jvm_name}} --clean"
@@ -29,7 +28,6 @@
   failed_when: '"FAILED" in comm_output.stderr or comm_output.rc|int!=0'
   async: 120
   poll: 10
-
 
 - name: Executing "{{action}}" on JVM Process "{{jvm_name}}"
   shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server stop {{jvm_name}} ; /usr/bin/nohup {{LIBERTY_HOME}}/bin/server start {{jvm_name}} --clean"
