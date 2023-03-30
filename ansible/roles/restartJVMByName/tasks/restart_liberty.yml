@@ -7,5 +7,5 @@
   register: findresult
 - name: Show whoami result
   debug:
-    var: "{{ item | relpath(role_path) }}"
+    var: "{{ item | relpath(LIBERTY_PROFILE_PATH) }}"
   with_items: "{{ findresult.files|map(attribute='path')|list }}"
