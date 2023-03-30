@@ -1,7 +1,8 @@
 - name: JVM Actions Playbook
   hosts: "{{ HOSTS }}"
 #  vars:
-#    - jvm_search_pattern: hello
+#    - jvm_search_pattern: mw-inst01
+#    - jvm_actions: stop/start/restart
   gather_facts: false
   roles:
     - role: actionJVMByName
