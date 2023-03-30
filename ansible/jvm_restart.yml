@@ -1,7 +1,7 @@
 - name: Software Installation
   hosts: "{{ HOSTS }}"
 #  vars:
-#    - pattern: hello
+#    - jvm_search_pattern: hello
   gather_facts: false
   roles:
     - role: restartJVMByName
