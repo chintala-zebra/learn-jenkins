@@ -7,6 +7,6 @@
   register: findresult
 - name: Show whoami result
   debug:
-    msg: item
-#    msg: "{{ item | relpath(LIBERTY_PROFILE_PATH/servers) }}"
+    msg: "{{ item | relpath(LIBERTY_PROFILE_PATH/servers) }}"
+#    msg: item
   with_items: "{{ findresult.files|map(attribute='path')|list }}"
