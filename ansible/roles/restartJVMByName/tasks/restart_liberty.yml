@@ -1,6 +1,10 @@
 - name: Restart Liberty Server
-  shell: "echo 'Write script for finding and restarting JVMs with name containing {{ jvm_search_pattern }}' "
-  register: whoamiresult
+find:
+    paths: {{ LIBERTY_PROFILE_PATH }}
+    file_type: directory
+    recurse: yesno
+    patterns: '*{{ jvm_search_pattern }}*'
+  register: findresult
 - name: Show whoami result
   debug:
-    msg: "{{ whoamiresult.stdout }}"
+    msg: "{{ findresult }}"
