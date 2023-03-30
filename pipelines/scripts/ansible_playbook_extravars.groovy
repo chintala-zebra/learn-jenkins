@@ -9,7 +9,7 @@ def setupParams(){
         choice(name: 'PLAY_BOOK', choices: ['jvm_restart.yml','liberty_install.yml','execute-shell.yaml','roles-sample.yml','show-ipaddress.yaml','whoami-playbook.yml'], description: 'Playbook to Execute'),
         string( name: 'EXTRA_VARS', 
             description: """
-            Extra variabled that needs passed to the playbook. - <b> sample: name:value </b>
+            Extra variabled that needs passed to the playbook. - <b> sample: name=value </b>
             """)
     ]
     //setup Parameters to Job
