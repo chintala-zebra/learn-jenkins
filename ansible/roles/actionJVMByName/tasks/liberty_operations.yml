@@ -11,7 +11,8 @@
     vars:
       - jvm_name: {{ item | relpath(LIBERTY_PROFILE_SERVER_PATH) }}
       - action: restart
+    with_items: "{{ findresult.files|map(attribute='path')|list }}"
 #  debug:
 #      msg: "{{ item | relpath(LIBERTY_PROFILE_SERVER_PATH) }}"
 #    msg: item
-  with_items: "{{ findresult.files|map(attribute='path')|list }}"
+#  with_items: "{{ findresult.files|map(attribute='path')|list }}"
