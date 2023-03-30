@@ -1,4 +1,4 @@
-- name: Software Installation
+- name: JVM Restart Playbook
   hosts: "{{ HOSTS }}"
 #  vars:
 #    - jvm_search_pattern: hello
