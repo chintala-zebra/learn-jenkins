@@ -18,7 +18,7 @@
 
 - name: Checking if "{{jvm_name}}" running and killing if needed
   shell: "kill -9 {{serverpid.stdout}}"
-  when: "(action == 'stop' or action == 'restart') and (serverpid is defined and serverpid.stdout != '' and serverpid.stdout|int > 0)"
+  when: "('is running with' in jvm_current_status.stdout  and (action == 'stop' or action == 'restart')) and (serverpid is defined and serverpid.stdout != '' and serverpid.stdout|int > 0)"
   ignore_errors: true
 
 - name: Executing start on JVM Process "{{jvm_name}}"
