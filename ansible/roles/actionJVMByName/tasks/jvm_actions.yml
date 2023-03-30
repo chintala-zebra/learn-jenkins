@@ -29,14 +29,6 @@
   async: 120
   poll: 10
 
-- name: Executing "{{action}}" on JVM Process "{{jvm_name}}"
-  shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server stop {{jvm_name}} ; /usr/bin/nohup {{LIBERTY_HOME}}/bin/server start {{jvm_name}} --clean"
-  register: comm_output
-  when: "action == 'restart'"
-  failed_when: '"FAILED" in comm_output.stderr or comm_output.rc|int!=0'
-  async: 120
-  poll: 10
-
 - name: 
   shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server status {{jvm_name}}"
   register: exit_jvm_status
