@@ -8,7 +8,7 @@ def setupParams(){
     jobParams = [
         choice(name: 'PLAY_BOOK', choices: ['jvm_restart.yml','liberty_install.yml','execute-shell.yaml','roles-sample.yml','show-ipaddress.yaml','whoami-playbook.yml'], description: 'Playbook to Execute'),
             jobParams = [
-        string( name: 'extra_vars', 
+        string( name: 'EXTRA_VARS', 
             description: """
             Extra variabled that needs passed to the playbook. - <b> sample: name:value </b>
             """)
@@ -42,7 +42,7 @@ def setupParameterDisplay() {
 
 def executeJob() {
     ansible_helper = load "pipelines/libraries/ansible_helper.groovy"
-    ansible_helper.execute_playbook("/application/ansible/inventory/${ENV_TYPE}/${CLUSTER_NAME}/${Application}","${WORKSPACE}/ansible/${PLAY_BOOK}")
+    ansible_helper.execute_playbook_with_vars("/application/ansible/inventory/${ENV_TYPE}/${CLUSTER_NAME}/${Application}","${WORKSPACE}/ansible/${PLAY_BOOK}",${EXTRA_VARS})
 }
 
 return this
