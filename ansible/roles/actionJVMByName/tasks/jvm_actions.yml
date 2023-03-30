@@ -9,7 +9,7 @@
   register: comm_output
   when: "'is running with' in jvm_current_status.stdout  and (action == 'stop' or action == 'restart')"
   failed_when: "'FAILED' in comm_output.stderr or comm_output.rc|int!=0"
-  async: 120
+  async: 180
   poll: 10
 
 - shell : "echo `ps aux | grep -i {{jvm_name}} | grep WebSphere | grep -v grep | grep -v stop | awk '{print $2}'`"
@@ -26,7 +26,7 @@
   register: comm_output
   when: "('is not running' in jvm_current_status.stdout and action == 'start') or action == 'restart'"
   failed_when: '"FAILED" in comm_output.stderr or comm_output.rc|int!=0'
-  async: 120
+  async: 180
   poll: 10
 
 - name: 
