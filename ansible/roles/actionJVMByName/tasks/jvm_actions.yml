@@ -37,4 +37,4 @@
 
 - name: Printing JVM Status
   debug:
-    msg: "{{final_jvm_status.stdout}}"
+    msg: "{{final_jvm_status.stdout | trim}}"
