@@ -1,7 +1,7 @@
 - name: JVM Actions Playbook
   hosts: "{{ HOSTS }}"
   gather_facts: false
-#  vars supported:
+#  vars required:
 #    - jvm_search_pattern: mw-inst01 (* means all JVMs)
 #    - jvm_action: stop/start/restart/status
   vars:
