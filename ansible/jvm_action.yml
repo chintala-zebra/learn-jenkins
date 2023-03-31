@@ -1,9 +1,13 @@
 - name: JVM Actions Playbook
   hosts: "{{ HOSTS }}"
   gather_facts: false
-#  vars required:
-#    - jvm_search_pattern: mw-inst01 (* means all JVMs)
-#    - jvm_action: stop/start/restart/status
+#  variables required:
+#    - jvm_search_pattern=
+#        example: 
+#           jvm_search_pattern=mw-inst01 will find all JVMs with matching name of *mw-inst01*
+#           jvm_search_pattern=* means all JVMs across all WebSphere nodes in the inventory.
+#    - jvm_action=
+#           stop/start/restart/status
   vars:
     _allowed_actions:
       - stop
