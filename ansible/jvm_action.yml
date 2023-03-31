@@ -3,16 +3,15 @@
   gather_facts: false
 #  vars:
 #    - jvm_search_pattern: mw-inst01
-#    - jvm_actions: stop/start/restart
+#    - jvm_action: stop/start/restart
   vars:
     _allowed_actions:
       - stop
       - start
       - restart
       - status
-
   pre_tasks:
-    - name: Make sure mandatoparams exist
+    - name: Make sure mandatory params exist
       fail:
         msg: "jvm_action variable is not present"
       when: jvm_action is not defined
