@@ -1,18 +1,30 @@
 - name: JVM Actions Playbook
   hosts: "{{ HOSTS }}"
   gather_facts: false
-
+#  vars supported:
+#    - jvm_search_pattern: mw-inst01 (* means all JVMs)
+#    - jvm_action: stop/start/restart/status
   vars:
     _allowed_actions:
       - stop
       - start
       - restart
       - status
+    _not_allowed_search_patterns:
+      - ""
+      - "/"
   pre_tasks:
     - name: Make sure mandatory params exist
       fail:
-        msg: "jvm_action variable is not present"
-      when: jvm_action is not defined
+        msg: "Variable {{ item }} is not defined"
+      when: item not in vars
+      with_items: 
+        - jvm_search_pattern 
+        - jvm_action 
+    - name: Check jvm_search_pattern value
+      fail:
+        msg: "jvm_search_pattern Unsupported"
+      when: jvm_search_pattern in _not_allowed_search_patterns
     - name: Check jvm_action value
       fail:
         msg: "Action Unsupported"
