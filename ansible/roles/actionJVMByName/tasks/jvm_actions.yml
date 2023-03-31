@@ -1,8 +1,9 @@
 ---
-- name: 
+- name: Getting JVM Status before executing action
   shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server status {{jvm_name}}"
   register: prior_jvm_status
   failed_when: '"FAILED" in prior_jvm_status.stderr'
+  when: "action == 'stop' or action == 'start' or action == 'restart' or action == 'status'"
 
 - name: Executing stop on JVM Process "{{jvm_name}}"
   shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server stop {{jvm_name}}"
@@ -29,11 +30,11 @@
   async: 180
   poll: 10
 
-- name: 
+- name: Getting JVM Status after completing action
   shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server status {{jvm_name}}"
   register: final_jvm_status
   failed_when: '"FAILED" in final_jvm_status.stderr'
 
-- name: Printing the JVM Status after completing actions
+- name: Printing JVM Status
   debug:
     msg: "{{final_jvm_status.stdout}}"

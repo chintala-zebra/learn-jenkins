@@ -1,4 +1,5 @@
 # Local .terraform directories
+.DS_Store
 **/.terraform/*
 
 # .tfstate files
@@ -27,4 +28,3 @@ override.tf.json
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 # example: *tfplan*
-pipelines/Jenkinsfile_permissions
