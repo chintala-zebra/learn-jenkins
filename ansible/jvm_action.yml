@@ -13,7 +13,9 @@
     _not_allowed_search_patterns:
       - ""
       - "/"
+  
   pre_tasks:
+  
     - name: Make sure mandatory params exist
       fail:
         msg: "Variable {{ item }} is not defined"
@@ -21,13 +23,16 @@
       with_items: 
         - jvm_search_pattern 
         - jvm_action 
+  
     - name: Check jvm_search_pattern value
       fail:
         msg: "jvm_search_pattern Unsupported"
       when: jvm_search_pattern in _not_allowed_search_patterns
+  
     - name: Check jvm_action value
       fail:
         msg: "Action Unsupported"
       when: not jvm_action in _allowed_actions
+  
   roles:
     - role: actionJVMByName
