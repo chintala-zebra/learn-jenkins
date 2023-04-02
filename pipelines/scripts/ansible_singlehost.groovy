@@ -40,7 +40,7 @@ def setupParameterDisplay() {
 
 def executeJob() {
     ansible_helper = load "pipelines/libraries/ansible_helper.groovy"
-    ansible_helper.execute_playbook_on_host("/application/ansible/inventory/${ENV_TYPE}/${CLUSTER_NAME}/${Application}","${SERVER}","${WORKSPACE}/ansible/${PLAY_BOOK}")
+    ansible_helper.execute_playbook_on_host("/application/ansible/inventory/${ENV_TYPE}/${CLUSTER_NAME}/${Application}","${SERVER}","${WORKSPACE}/Ansible/${PLAY_BOOK}")
 }
 
 return this
