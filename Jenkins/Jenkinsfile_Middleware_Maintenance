@@ -15,8 +15,8 @@ pipeline {
         stage('Init') {
             steps {
                 script{
-                    utilities = load "pipelines/libraries/utilities.groovy"
-                    myscripts = load "pipelines/scripts/Middleware_Maintenance.groovy"
+                    utilities = load "Jenkins/libraries/utilities.groovy"
+                    myscripts = load "Jenkins/scripts/Middleware_Maintenance.groovy"
                 }
             }
         }

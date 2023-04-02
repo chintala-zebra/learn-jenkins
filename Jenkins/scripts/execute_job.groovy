@@ -2,7 +2,7 @@ import java.io.File
 
 def setupParams(){
     // Get params from helper
-    params_helper = load "pipelines/libraries/env_params_helper.groovy"
+    params_helper = load "Jenkins/libraries/env_params_helper.groovy"
     helperParams = params_helper.getInventoryParamsUptoHost()
     // Add additional params
     jobParams = [
@@ -43,7 +43,7 @@ def validateOptionalParams(){
 }
 
 def executeJob() {
-    ansible_helper = load "pipelines/libraries/ansible_helper.groovy"
+    ansible_helper = load "Jenkins/libraries/ansible_helper.groovy"
     ansible_helper.setupSSHKeys()
 
     sh """
