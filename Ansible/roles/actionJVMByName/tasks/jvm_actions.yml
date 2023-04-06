@@ -42,9 +42,8 @@
       msg: "{{core_dump_output.stdout_lines | trim}}"
   when: "(action == 'core-dump') and ('is running with' in prior_jvm_status.stdout)"
 
-- name: JVM action Skips Checks
-  debug:
-    msg: "JVM {{jvm_name}} is not running. So, skipping {{action}} action"
+- debug:
+    msg: "JVM {{jvm_name}} is not running. So, skipping {{action}}"
   when: "(action in ['thread-dump', 'heap-dump', 'core-dump', 'stop']) and 'is not running' in prior_jvm_status.stdout"
 
 - name: Executing stop on JVM Process "{{jvm_name}}"
