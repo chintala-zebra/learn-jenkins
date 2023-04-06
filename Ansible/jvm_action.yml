@@ -3,40 +3,40 @@
   gather_facts: false
 #  variables required:
 #    - jvm_search_pattern=
-#        example: 
+#        example:
 #           jvm_search_pattern=mw-inst01 will find all JVMs with matching name of *mw-inst01*
 #           jvm_search_pattern=* means all JVMs across all WebSphere nodes in the inventory.
-#    - jvm_action=
-#           stop/start/restart/status
+#    - action=
+#           stop/start/restart/status/thread-dump/heap-dump/core-dump
   vars:
     _allowed_actions:
       - stop
       - start
       - restart
       - status
+      - thread-dump
+      - heap-dump
+      - core-dump
     _not_allowed_search_patterns:
       - ""
       - "/"
-  
+
   pre_tasks:
-  
     - name: Make sure mandatory params exist
       fail:
         msg: "Variable {{ item }} is not defined"
       when: item not in vars
-      with_items: 
-        - jvm_search_pattern 
-        - jvm_action 
-  
+      with_items:
+        - jvm_search_pattern
+        - action
     - name: Check jvm_search_pattern value
       fail:
         msg: "jvm_search_pattern Unsupported"
       when: jvm_search_pattern in _not_allowed_search_patterns
-  
-    - name: Check jvm_action value
+    - name: Check action value
       fail:
         msg: "Action Unsupported"
-      when: not jvm_action in _allowed_actions
-  
+      when: not action in _allowed_actions
+
   roles:
     - role: actionJVMByName
