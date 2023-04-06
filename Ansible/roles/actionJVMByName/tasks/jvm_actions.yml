@@ -3,38 +3,82 @@
   shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server status {{jvm_name}}"
   register: prior_jvm_status
   failed_when: '"FAILED" in prior_jvm_status.stderr'
-  when: "action == 'stop' or action == 'start' or action == 'restart' or action == 'status'"
+  when: "action != 'status'"
+
+- block:
+  - name: Generating thread dump on JVM Process "{{jvm_name}}"
+    shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server javadump {{jvm_name}}"
+    register: thread_dump_output
+    failed_when: "'FAILED' in thread_dump_output.stderr or thread_dump_output.rc|int!=0"
+    async: 180
+    poll: 10
+  - name: Printing thread dump status
+    debug:
+      msg: "{{thread_dump_output.stdout_lines | trim}}"
+  when: "(action == 'thread-dump') and ('is running with' in prior_jvm_status.stdout)"
+
+- block:
+  - name: Generating heap dump on JVM Process "{{jvm_name}}"
+    shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server dump {{jvm_name}} --include=heap"
+    register: heap_dump_output
+    failed_when: "'FAILED' in heap_dump_output.stderr or heap_dump_output.rc|int!=0"
+    async: 300
+    poll: 10
+  - name: Printing heap dump status
+    debug:
+      msg: "{{heap_dump_output.stdout_lines | trim}}"
+  when: "(action == 'heap-dump') and ('is running with' in prior_jvm_status.stdout)"
+
+- block:
+  - name: Generating core dump on JVM Process "{{jvm_name}}"
+    shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server dump {{jvm_name}} --include=system"
+    register: core_dump_output
+    when: "(action == 'core-dump') and ('is running with' in prior_jvm_status.stdout)"
+    failed_when: "'FAILED' in core_dump_output.stderr or core_dump_output.rc|int!=0"
+    async: 600
+    poll: 10
+  - name: Printing core dump status
+    debug:
+      msg: "{{core_dump_output.stdout_lines | trim}}"
+  when: "(action == 'core-dump') and ('is running with' in prior_jvm_status.stdout)"
+
+- name: JVM action Skips Checks
+  debug:
+    msg: "JVM {{jvm_name}} is not running. So, skipping {{action}} action"
+  when: "(action in ['thread-dump', 'heap-dump', 'core-dump', 'stop']) and 'is not running' in prior_jvm_status.stdout"
 
 - name: Executing stop on JVM Process "{{jvm_name}}"
   shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server stop {{jvm_name}}"
   register: stop_output
-  when: "'is running with' in prior_jvm_status.stdout  and (action == 'stop' or action == 'restart')"
+  when: "(action == 'stop' or action == 'restart') and 'is running with' in prior_jvm_status.stdout"
   failed_when: "'FAILED' in stop_output.stderr or stop_output.rc|int!=0"
   async: 180
   poll: 10
 
 - shell : "echo `ps aux | grep -i {{jvm_name}} | grep WebSphere | grep -v grep | grep -v stop | awk '{print $2}'`"
   register: serverpid
-  when: "'is running with' in prior_jvm_status.stdout  and (action == 'stop' or action == 'restart')"
+  when: "(action == 'stop' or action == 'restart') and 'is running with' in prior_jvm_status.stdout"
 
 - name: Checking if "{{jvm_name}}" running and killing if needed
   shell: "kill -9 {{serverpid.stdout}}"
-  when: "('is running with' in prior_jvm_status.stdout  and (action == 'stop' or action == 'restart')) and (serverpid is defined and serverpid.stdout != '' and serverpid.stdout|int > 0)"
+  when: "(action == 'stop' or action == 'restart') and (serverpid is defined and serverpid.stdout != '' and serverpid.stdout|int > 0)"
   ignore_errors: true
 
 - name: Executing start on JVM Process "{{jvm_name}}"
   shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server start {{jvm_name}} --clean"
   register: start_output
-  when: "('is not running' in prior_jvm_status.stdout and action == 'start') or action == 'restart'"
+  when: "action == 'restart' or (action == 'start' and 'is not running' in prior_jvm_status.stdout)"
   failed_when: '"FAILED" in start_output.stderr or start_output.rc|int!=0'
   async: 180
   poll: 10
 
-- name: Getting JVM Status after completing action
-  shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server status {{jvm_name}}"
-  register: final_jvm_status
-  failed_when: '"FAILED" in final_jvm_status.stderr'
+- block:
+  - name: Get JVM Status after completing action
+    shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server status {{jvm_name}}"
+    register: final_jvm_status
+    failed_when: '"FAILED" in final_jvm_status.stderr'
 
-- name: Printing JVM Status
-  debug:
-    msg: "{{final_jvm_status.stdout | trim}}"
+  - name: Print JVM Status after completing action
+    debug:
+      msg: "{{final_jvm_status.stdout_lines | trim}}"
+  when: "action in ['stop', 'start', 'restart', 'status']"
