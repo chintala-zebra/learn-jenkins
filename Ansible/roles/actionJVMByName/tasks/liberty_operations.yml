@@ -10,7 +10,7 @@
   include_tasks: jvm_actions.yml
   vars:
     - jvm_name: "{{ item | relpath(LIBERTY_PROFILE_SERVER_PATH) }}"
-    - action: "{{ action }}"
+    - zaction: "{{ zaction }}"
   with_items: "{{ findresult.files|map(attribute='path')|list }}"
 #  debug:
 #      msg: "{{ item | relpath(LIBERTY_PROFILE_SERVER_PATH) }}"

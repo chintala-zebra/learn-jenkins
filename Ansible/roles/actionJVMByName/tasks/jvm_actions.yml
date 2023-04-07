@@ -1,22 +1,29 @@
 ---
-- name: Getting JVM Status before executing action
+- name: Getting JVM Status before executing
   shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server status {{jvm_name}}"
   register: prior_jvm_status
   failed_when: '"FAILED" in prior_jvm_status.stderr'
-  when: "action != 'status'"
+  when: "zaction != 'status'"
 
 - block:
   - name: Generating thread dump on JVM Process "{{jvm_name}}"
     shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server javadump {{jvm_name}}"
     register: thread_dump_output
     failed_when: "'FAILED' in thread_dump_output.stderr or thread_dump_output.rc|int!=0"
+    with_sequence: count=3
     async: 180
     poll: 10
-  - name: Printing thread dump status
+    loop_control:
+      loop_var: counters
+  - name: Printing thread dump details
     debug:
-      msg: "{{thread_dump_output.stdout_lines | trim}}"
-  when: "(action == 'thread-dump') and ('is running with' in prior_jvm_status.stdout)"
-
+      msg: "{{thread_dump.stdout_lines | trim}}"
+    loop: "{{thread_dump_output.results}}"
+    loop_control:
+      loop_var: thread_dump
+      label: thread_dump
+  when: "(zaction == 'thread-dump') and ('is running with' in prior_jvm_status.stdout)"
+  
 - block:
   - name: Generating heap dump on JVM Process "{{jvm_name}}"
     shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server dump {{jvm_name}} --include=heap"
@@ -27,57 +34,65 @@
   - name: Printing heap dump status
     debug:
       msg: "{{heap_dump_output.stdout_lines | trim}}"
-  when: "(action == 'heap-dump') and ('is running with' in prior_jvm_status.stdout)"
+  when: "(zaction == 'heap-dump') and ('is running with' in prior_jvm_status.stdout)"
 
 - block:
   - name: Generating core dump on JVM Process "{{jvm_name}}"
     shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server dump {{jvm_name}} --include=system"
     register: core_dump_output
-    when: "(action == 'core-dump') and ('is running with' in prior_jvm_status.stdout)"
+    when: "(zaction == 'core-dump') and ('is running with' in prior_jvm_status.stdout)"
     failed_when: "'FAILED' in core_dump_output.stderr or core_dump_output.rc|int!=0"
     async: 600
     poll: 10
   - name: Printing core dump status
     debug:
       msg: "{{core_dump_output.stdout_lines | trim}}"
-  when: "(action == 'core-dump') and ('is running with' in prior_jvm_status.stdout)"
+  when: "(zaction == 'core-dump') and ('is running with' in prior_jvm_status.stdout)"
 
 - debug:
-    msg: "JVM {{jvm_name}} is not running. So, skipping {{action}}"
-  when: "(action in ['thread-dump', 'heap-dump', 'core-dump', 'stop']) and 'is not running' in prior_jvm_status.stdout"
+    msg: "JVM {{jvm_name}} is not running. So, skipping {{zaction}}"
+  when: "(zaction in ['thread-dump', 'heap-dump', 'core-dump', 'stop']) and 'is not running' in prior_jvm_status.stdout"
+
+- debug:
+    msg: "JVM {{jvm_name}} is not running. So, skipping stop"
+  when: "zaction in ['restart'] and 'is not running' in prior_jvm_status.stdout"
 
 - name: Executing stop on JVM Process "{{jvm_name}}"
   shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server stop {{jvm_name}}"
   register: stop_output
-  when: "(action == 'stop' or action == 'restart') and 'is running with' in prior_jvm_status.stdout"
+  when: "(zaction == 'stop' or zaction == 'restart') and 'is running with' in prior_jvm_status.stdout"
   failed_when: "'FAILED' in stop_output.stderr or stop_output.rc|int!=0"
   async: 180
   poll: 10
 
 - shell : "echo `ps aux | grep -i {{jvm_name}} | grep WebSphere | grep -v grep | grep -v stop | awk '{print $2}'`"
   register: serverpid
-  when: "(action == 'stop' or action == 'restart') and 'is running with' in prior_jvm_status.stdout"
+  when: "(zaction == 'stop' or zaction == 'restart') and 'is running with' in prior_jvm_status.stdout"
 
 - name: Checking if "{{jvm_name}}" running and killing if needed
   shell: "kill -9 {{serverpid.stdout}}"
-  when: "(action == 'stop' or action == 'restart') and (serverpid is defined and serverpid.stdout != '' and serverpid.stdout|int > 0)"
+  when: "(zaction == 'stop' or zaction == 'restart') and ('is running with' in prior_jvm_status.stdout) and (serverpid is defined and serverpid.stdout != '' and serverpid.stdout|int > 0)"
   ignore_errors: true
+
+- debug:
+    msg: "JVM {{jvm_name}} is already running. So, skipping {{zaction}}"
+  when: "zaction == 'start' and 'is running with' in prior_jvm_status.stdout"
 
 - name: Executing start on JVM Process "{{jvm_name}}"
   shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server start {{jvm_name}} --clean"
   register: start_output
-  when: "action == 'restart' or (action == 'start' and 'is not running' in prior_jvm_status.stdout)"
+  when: "zaction == 'restart' or (zaction == 'start' and 'is not running' in prior_jvm_status.stdout)"
   failed_when: '"FAILED" in start_output.stderr or start_output.rc|int!=0'
   async: 180
   poll: 10
 
 - block:
-  - name: Get JVM Status after completing action
+  - name: Get JVM Status after completion
     shell: "/usr/bin/nohup {{LIBERTY_HOME}}/bin/server status {{jvm_name}}"
     register: final_jvm_status
     failed_when: '"FAILED" in final_jvm_status.stderr'
 
-  - name: Print JVM Status after completing action
+  - name: Print JVM Status after completion
     debug:
       msg: "{{final_jvm_status.stdout_lines | trim}}"
-  when: "action in ['stop', 'start', 'restart', 'status']"
+  when: "zaction in ['stop', 'start', 'restart', 'status']"
