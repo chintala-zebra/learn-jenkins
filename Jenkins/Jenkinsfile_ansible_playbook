@@ -5,6 +5,7 @@ pipeline {
     options {
         buildDiscarder(logRotator(daysToKeepStr: '30'))
         ansiColor('xterm')
+         timestamps ()
     }
     agent { 
         node {
